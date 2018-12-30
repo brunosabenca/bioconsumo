@@ -20,4 +20,8 @@ Route::get(
 
 
 Route::get('/products', 'ProductsController@index');
+Route::get('/products/create', 'ProductsController@create');
 Route::get('/products/{product}', 'ProductsController@show');
+Route::post('/products', 'ProductsController@store');
+Route::delete('/products/{product}', 'ProductsController@destroy');
+Route::patch('/products/{product}', 'ProductsController@update');
