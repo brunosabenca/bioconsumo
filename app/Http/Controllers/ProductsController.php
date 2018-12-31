@@ -73,7 +73,7 @@ class ProductsController extends Controller
     {
         $product->delete();
 
-        if ($request->wantsJson()) {
+        if (request()->wantsJson()) {
             return response([], 204);
         }
 
