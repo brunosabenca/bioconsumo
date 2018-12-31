@@ -1,9 +1,14 @@
 @forelse ($products as $product)
-<div class="card" style="width: 18rem;">
+<div class="card">
     <div class="card-body">
-        <h5 class="card-title">{{ $product->name }}</h5>
+        <h5 class="card-title"><a href="/products/{{ $product->id }}">{{ $product->name }}</a></h5>
         <p class="card-text">{{ $product->description }}</p>
-        <a href="/products/{{ $product->id }}" class="btn btn-primary">View</a>
+            <form action="{{ $product->path() }}" method="POST">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
     </div>
 </div>
 <br/>

@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <script charset="utf-8">
         window.App = {!! json_encode([
@@ -22,12 +23,12 @@
 
     @yield('head')
 </head>
-<body style="padding-bottom: 100px;">
-<div id="app">
-    @include('layouts.nav')
+<body>
+@include('layouts.nav')
 
-    @yield('content')
-</div>
+<main class="bd-content p-5" role="main">
+    <div class="my-5">@yield('content')</div>
+</main><!-- /.container -->
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
