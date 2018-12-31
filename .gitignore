@@ -169,3 +169,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/linux,windows,macos,phpstorm,laravel
+
+public/js/
+
+public/css/
