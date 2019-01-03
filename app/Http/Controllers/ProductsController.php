@@ -24,7 +24,7 @@ class ProductsController extends Controller
     {
         $products = Product::latest();
 
-        return $products->paginate(3);
+        return $products->paginate(10);
     }
 
     public function create()
