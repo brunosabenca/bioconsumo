@@ -9,12 +9,12 @@
             {{-- Editing the product--}}
             <div class="card" style="width: 18rem;" v-if="editing">
                 <div class="card-body">
-                    <input type="text" class="form-control" v-model="form.name" class="card-title" value="{{ $product->name }}" />
+                    <input type="text" class="form-control" v-model="form.name" class="card-title" value="{{ $product->name }}" maxlength="80"/>
                     <br/>
-                    <textarea class="form-control" v-model="form.description" class="card-text">{{ $product->description }}</textarea>
+                    <textarea class="form-control" v-model="form.description" class="card-text" maxlength="255">{{ $product->description }}</textarea>
                     <br/>
                     <div class="level">
-                        <input type="text" class="form-control mr-1" v-model="form.price" class="card-title" value="{{ $product->price }}" />
+                        <input type="text" class="form-control mr-1" v-model="form.price" class="card-title" value="{{ $product->price }}" maxlength="4"/>
                         <span>€/Kg</span>
                     </div>
                     <button class="btn btn-secondary btn-xs" @click="editing = true" v-show="! editing">Edit</button>
