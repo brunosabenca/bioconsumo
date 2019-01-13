@@ -19,6 +19,9 @@ Route::post('/products', 'ProductsController@store');
 Route::delete('/products/{product}', 'ProductsController@destroy');
 Route::patch('/products/{product}', 'ProductsController@update');
 
+Route::get('/orders', 'OrdersController@index');
+Route::get('/orders/create', 'OrdersController@create');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
