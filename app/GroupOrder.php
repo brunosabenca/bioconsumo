@@ -17,6 +17,11 @@ class GroupOrder extends Model
         return "/orders/{$this->id}";
     }
 
+    public function name()
+    {
+        return "Order #" . $this->id . ":" . $this->open_date . " to " . $this->close_date;
+    }
+
     public function orders()
     {
         return $this->hasMany('App\UserOrder');
