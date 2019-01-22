@@ -20,6 +20,14 @@
           <a class="dropdown-item" href="/orders/create">Create Order</a>
         </div>
       </li>
+      @auth
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
+        <div class="dropdown-menu" aria-labelledby="orders-dropdown">
+          <a class="dropdown-item" href="/user/order">Order</a>
+        </div>
+      </li>
+      @endauth
     </ul>
     <!-- Authentication Links -->
     <ul class="navbar-nav mr-sm-2">
