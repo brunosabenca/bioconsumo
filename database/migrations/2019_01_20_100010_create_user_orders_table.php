@@ -23,7 +23,7 @@ class CreateUserOrdersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('set null');
 
-            $table->integer('billing_total');
+            $table->integer('billing_total')->nullable();
             $table->boolean('delivered')->default(false);
             $table->timestamps();
         });

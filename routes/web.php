@@ -27,6 +27,9 @@ Route::post('/orders', 'GroupOrdersController@store');
 Route::delete('/orders/{order}', 'GroupOrdersController@destroy');
 Route::patch('/orders/{order}', 'GroupOrdersController@update');
 
+
+Route::get('/user/order', 'UserOrdersController@create');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
