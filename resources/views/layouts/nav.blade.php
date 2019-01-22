@@ -20,5 +20,13 @@
           <a class="dropdown-item" href="/orders/create">Create Order</a>
         </div>
       </li>
+    </ul>
+    <!-- Authentication Links -->
+    @guest
+    <ul class="navbar-nav mr-sm-2">
+          <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+    </ul>
+    @endguest
   </div>
 </nav>
