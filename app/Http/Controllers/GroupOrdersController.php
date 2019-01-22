@@ -114,7 +114,8 @@ class GroupOrdersController extends Controller
      */
     public function destroy(GroupOrder $order)
     {
-        $order->delete();
+        $order->cancelled = true;
+        $order->save();
 
         if (request()->wantsJson()) {
             return response([], 204);

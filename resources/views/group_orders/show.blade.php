@@ -30,14 +30,14 @@
             {{-- Viewing the order--}}
             <div class="card" style="width: 18rem;" v-else>
                 <div class="card-body">
-                    <h5 class="card-title">Order #<span v-text="id"></span></h5>
+                    <h5 class="card-title">Order #<span v-text="id"></span> <span v-show="cancelled" class="text-danger text-uppercase small">Cancelled</span></h5>
                     <p class="card-text">Open date: <span v-text="open_date"></span></p>
                     <p class="card-text">Close date: <span v-text="close_date"></span></p>
-                    <div class="level">
+                    <div class="level" v-show="! cancelled">
                         <form action="{{ $order->path() }}" method="POST">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger">Cancel</button>
                         </form>
                         <button class="ml-a btn btn-primary mr-1 ml-a" @click="editing = true">Edit</button>
                     </div>

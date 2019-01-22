@@ -22,6 +22,7 @@ class CreateGroupOrdersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('set null');
             
+            $table->boolean('cancelled')->default(false);
             $table->boolean('delivered')->default(false);
             $table->timestamps();
         });

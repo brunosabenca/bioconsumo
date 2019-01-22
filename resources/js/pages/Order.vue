@@ -9,6 +9,7 @@
                 id: this.order.id,
                 open_date: this.order.open_date,
                 close_date: this.order.close_date,
+                cancelled: this.order.cancelled,
                 form: {},
                 editing: false
             };
