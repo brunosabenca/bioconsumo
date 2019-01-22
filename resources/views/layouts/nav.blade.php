@@ -22,11 +22,13 @@
       </li>
     </ul>
     <!-- Authentication Links -->
-    @guest
     <ul class="navbar-nav mr-sm-2">
+    @guest
           <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
-    </ul>
+    @else
+          <li class="nav-item"><a class="nav-link" href="#">{{ auth()->user()->name }}</a></li>
     @endguest
+    </ul>
   </div>
 </nav>
