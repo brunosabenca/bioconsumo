@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\GroupOrder;
 
-use App\Order;
-
-class OrdersController extends Controller
+class GroupOrdersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,14 +20,14 @@ class OrdersController extends Controller
             return $orders;
         }
 
-        return view('orders.index', [
+        return view('group_orders.index', [
             'orders' => $orders
         ]);
     }
 
     public function getOrders()
     {
-        $orders = Order::latest();
+        $orders = GroupOrder::latest();
 
         return $orders->paginate(10);
     }
@@ -40,7 +39,7 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        return view('orders.create');
+        return view('group_orders.create');
     }
 
     /**
@@ -49,9 +48,23 @@ class OrdersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        request()->validate([
+            'open-date' => 'required',
+            'close-date' => 'required'
+        ]);
+
+        $group_order = GroupOrder::create([
+            'open_date' => request('open-date'),
+            'close_date' => request('close-date')
+        ]);
+
+        if (request()->wantsJson()) {
+            return response($group_order, 201);
+        }
+
+        return redirect($group_order->path());
     }
 
     /**
@@ -60,9 +73,9 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(GroupOrder $order)
     {
-        //
+        return view('group_orders.show', compact('order'));
     }
 
     /**
@@ -83,9 +96,14 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Order $order)
     {
-        //
+        $order->update(request()->validate([
+            'open_date' => 'required',
+            'close_date' => 'required',
+        ]));
+
+        return $order;
     }
 
     /**
@@ -94,8 +112,14 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(GroupOrder $order)
     {
-        //
+        $order->delete();
+
+        if (request()->wantsJson()) {
+            return response([], 204);
+        }
+
+        return redirect('/orders');
     }
 }
