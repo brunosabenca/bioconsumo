@@ -17,10 +17,6 @@ class CreateGroupOrdersTable extends Migration
             $table->increments('id');
             $table->date('open_date');
             $table->date('close_date');
-
-            $table->unsignedInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onUpdate('cascade')->onDelete('set null');
             
             $table->boolean('cancelled')->default(false);
             $table->boolean('delivered')->default(false);
