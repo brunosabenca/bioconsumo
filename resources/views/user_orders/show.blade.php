@@ -12,6 +12,15 @@
                 <span class="badge badge-success text-uppercase">{{ $user_order->delivered == true ? 'Delivered' : ''}}</span>
                 <span class="badge badge-secondary text-uppercase">Group Order #{{ $group_order->id }}</span>
             <p>
+
+            <h6>Cart</h6>
+            <ul>
+            @forelse ($products as $product)
+                <li>{{App\Product::where('id','=',$product->product_id)->first()->name}}</li>
+            @empty
+            @endforelse
+            </ul>
+
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-xl-3 mb-3">
                     <form method="POST" action="/user/orders">
