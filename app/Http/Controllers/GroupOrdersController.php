@@ -96,8 +96,9 @@ class GroupOrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Order $order)
+    public function update(GroupOrder $order)
     {
+        dd($order);
         $order->update(request()->validate([
             'open_date' => 'required',
             'close_date' => 'required',
