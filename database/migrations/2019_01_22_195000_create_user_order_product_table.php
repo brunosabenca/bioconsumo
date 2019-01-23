@@ -16,8 +16,8 @@ class CreateUserOrderProductTable extends Migration
         Schema::create('user_order_product', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedInteger('order_id')->nullable();
-            $table->foreign('order_id')->references('id')
+            $table->unsignedInteger('user_order_id')->nullable();
+            $table->foreign('user_order_id')->references('id')
                 ->on('user_orders')->onUpdate('cascade')->onDelete('set null');
 
             $table->unsignedInteger('product_id')->nullable();
