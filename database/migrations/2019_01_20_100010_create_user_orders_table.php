@@ -24,7 +24,10 @@ class CreateUserOrdersTable extends Migration
                 ->onUpdate('cascade')->onDelete('set null');
 
             $table->integer('billing_total')->nullable();
+
+            $table->boolean('cancelled')->default(false);
             $table->boolean('delivered')->default(false);
+
             $table->timestamps();
         });
     }
