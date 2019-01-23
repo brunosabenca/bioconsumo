@@ -40,7 +40,7 @@ class UserOrdersController extends Controller
      */
     public function create()
     {
-        $user_order = auth()->user()->orders()->where('delivered', false)->where('cancelled', false)->first();
+        $user_order = $this->getActiveOrder();
 
         if ($user_order) {
             return redirect($user_order->path());
@@ -51,6 +51,13 @@ class UserOrdersController extends Controller
                 'group_orders' => $group_orders,
             ]);
         }
+    }
+
+    public function getActiveOrder()
+    {
+        $user_order = auth()->user()->orders()->where('delivered', false)->where('cancelled', false)->first();
+
+        return $user_order;
     }
 
     /**
