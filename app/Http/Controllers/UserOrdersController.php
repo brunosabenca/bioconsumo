@@ -40,33 +40,16 @@ class UserOrdersController extends Controller
      */
     public function create()
     {
-        $user_order = auth()->user()->orders()->where('delivered', false)->first();
-        $group_order = GroupOrder::where('cancelled', false)->latest()->first();
+        $user_order = auth()->user()->orders()->where('delivered', false)->where('cancelled', false)->first();
 
-        if ($user_order === null) {
-            $group_order = GroupOrder::where('cancelled', false)->latest()->first();
-            $user_order = UserOrder::create([
-                'group_order_id' => $group_order->id,
-                'user_id' => auth()->user()->id
+        if ($user_order) {
+            return redirect($user_order->path());
+        } else {
+            $group_orders = GroupOrder::where('open', true)->latest()->get();
+
+            return view('user_orders.create', [
+                'group_orders' => $group_orders,
             ]);
-        } elseif ($group_order !== null) {
-            $this->update_group_order($user_order, $group_order);
-        }
-
-
-        return view('user_orders.show', [
-            'group_order' => $group_order
-        ]);
-    }
-
-    public function update_group_order(UserOrder $user_order, GroupOrder $group_order)
-    {
-        if ($group_order !== null) {
-            $current_group_order = GroupOrder::where('id', $user_order->group_order_id)->first();
-
-            if ($group_order->cancelled) {
-                $user_order->group_order_id = $group_order->id;
-            }
         }
     }
 
@@ -78,7 +61,20 @@ class UserOrdersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'group_order' => 'required',
+        ]);
+
+        $user_order = UserOrder::create([
+            'group_order_id' => request()->group_order,
+            'user_id' => auth()->user()->id
+        ]);
+
+        if (request()->wantsJson()) {
+            return response($user_order, 201);
+        }
+
+        return redirect($user_order->path());
     }
 
     /**
@@ -87,9 +83,14 @@ class UserOrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(UserOrder $user_order)
     {
-        //
+        $group_order = GroupOrder::where('id', '=', $user_order->group_order_id)->first();
+
+        return view('user_orders.show', [
+            'user_order' => $user_order,
+            'group_order' => $group_order
+        ]);
     }
 
     /**
@@ -121,8 +122,15 @@ class UserOrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(UserOrder $user_order)
     {
-        //
+        $user_order->cancelled = true;
+        $user_order->save();
+
+        if (request()->wantsJson()) {
+            return response([], 204);
+        }
+
+        return redirect('/user/orders/create');
     }
 }
