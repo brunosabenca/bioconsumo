@@ -98,7 +98,6 @@ class GroupOrdersController extends Controller
      */
     public function update(GroupOrder $order)
     {
-        dd($order);
         $order->update(request()->validate([
             'open_date' => 'required',
             'close_date' => 'required',
