@@ -25,7 +25,7 @@ class UserOrdersController extends Controller
      */
     public function create()
     {
-        $group_order = GroupOrder::where('cancelled', false)->first();
+        $group_order = GroupOrder::where('cancelled', false)->latest()->first();
 
         $user_order = auth()->user()->orders()->where('delivered', false)->first();
 
@@ -34,6 +34,12 @@ class UserOrdersController extends Controller
                 'group_order_id' => $group_order->id,
                 'user_id' => auth()->user()->id
             ]);
+        } else if ($group_order !== null) {
+            $current_group_order = GroupOrder::where('id', $user_order->group_order_id)->first();
+
+            if ($current_group_order->cancelled) {
+                $user_order->group_order_id = $group_order->id;
+            }
         }
 
         return view('user_orders.show', [
