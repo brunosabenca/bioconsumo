@@ -19,7 +19,7 @@ class GroupOrder extends Model
 
     public function name()
     {
-        return "Order #" . $this->id . ":" . $this->open_date . " to " . $this->close_date;
+        return "Group Order #" . $this->id;
     }
 
     public function orders()
