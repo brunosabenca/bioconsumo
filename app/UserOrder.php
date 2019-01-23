@@ -10,6 +10,8 @@ class UserOrder extends Model
         'user_id', 'group_order_id', 'billing_total', 'delivered',
     ];
 
+    protected $with = ['products'];
+
     protected $casts = [
         'delivered' => 'boolean',
     ];
@@ -31,6 +33,6 @@ class UserOrder extends Model
     
     public function products()
     {
-        return $this->belongsToMany('App\Product')->withPivot('quantity');
+        return $this->hasMany('App\UserOrderProduct');
     }
 }
