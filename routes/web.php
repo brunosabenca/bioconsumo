@@ -33,6 +33,9 @@ Route::get('/user/orders/create', 'UserOrdersController@create');
 Route::get('/user/orders/{user_order}', 'UserOrdersController@show');
 Route::delete('/user/orders/{user_order}', 'UserOrdersController@destroy');
 
+Route::post('/cart/add/{product}', 'CartController@store');
+Route::get('/cart', 'CartController@index');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
