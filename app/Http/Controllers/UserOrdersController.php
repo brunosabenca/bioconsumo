@@ -15,7 +15,22 @@ class UserOrdersController extends Controller
      */
     public function index()
     {
-        //
+        $orders = $this->getOrders();
+
+        if (request()->wantsJson()) {
+            return $orders;
+        }
+
+        return view('user_orders.index', [
+            'orders' => $orders
+        ]);
+    }
+
+    public function getOrders()
+    {
+        $orders = UserOrder::latest();
+
+        return $orders->paginate(10);
     }
 
     /**

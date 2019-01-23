@@ -14,6 +14,11 @@ class UserOrder extends Model
         'delivered' => 'boolean',
     ];
 
+    public function path()
+    {
+        return "/user/orders/{$this->id}";
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User');

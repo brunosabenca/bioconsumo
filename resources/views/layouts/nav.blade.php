@@ -9,15 +9,15 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="products-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
         <div class="dropdown-menu" aria-labelledby="products-dropdown">
-          <a class="dropdown-item" href="/products">All Products</a>
-          <a class="dropdown-item" href="/products/create">Create Product</a>
+          <a class="dropdown-item" href="/products">List all</a>
+          <a class="dropdown-item" href="/products/create">Create new</a>
         </div>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="orders-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Orders</a>
+        <a class="nav-link dropdown-toggle" href="#" id="orders-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Group Orders</a>
         <div class="dropdown-menu" aria-labelledby="orders-dropdown">
-          <a class="dropdown-item" href="/orders">View Orders</a>
-          <a class="dropdown-item" href="/orders/create">Create Order</a>
+          <a class="dropdown-item" href="/orders">List all</a>
+          <a class="dropdown-item" href="/orders/create">Create new</a>
         </div>
       </li>
       @auth
@@ -25,6 +25,7 @@
         <a class="nav-link dropdown-toggle" href="#" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
         <div class="dropdown-menu" aria-labelledby="orders-dropdown">
           <a class="dropdown-item" href="/user/order">Order</a>
+          <a class="dropdown-item" href="/user/orders">List all</a>
         </div>
       </li>
       @endauth

@@ -14,6 +14,7 @@
 Route::get('/', 'ProductsController@index');
 
 Route::get('/products', 'ProductsController@index');
+Route::post('/products', 'ProductsController@store');
 Route::get('/products/create', 'ProductsController@create');
 Route::get('/products/{product}', 'ProductsController@show');
 Route::post('/products', 'ProductsController@store');
@@ -21,13 +22,14 @@ Route::delete('/products/{product}', 'ProductsController@destroy');
 Route::patch('/products/{product}', 'ProductsController@update');
 
 Route::get('/orders', 'GroupOrdersController@index');
+Route::post('/orders', 'GroupOrdersController@store');
 Route::get('/orders/create', 'GroupOrdersController@create');
 Route::get('/orders/{order}', 'GroupOrdersController@show');
 Route::post('/orders', 'GroupOrdersController@store');
 Route::delete('/orders/{order}', 'GroupOrdersController@destroy');
 Route::patch('/orders/{order}', 'GroupOrdersController@update');
 
-
+Route::get('/user/orders', 'UserOrdersController@index');
 Route::get('/user/order', 'UserOrdersController@create');
 
 Auth::routes();
