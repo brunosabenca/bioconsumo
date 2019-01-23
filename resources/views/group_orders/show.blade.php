@@ -30,7 +30,7 @@
             {{-- Viewing the order--}}
             <div class="card" style="width: 18rem;" v-else>
                 <div class="card-body">
-                    <h5 class="card-title">Order #<span v-text="id"></span>
+                    <h5 class="card-title">Group Order #<span v-text="id"></span>
                         <span class="badge badge-danger text-uppercase">{{ $order->cancelled == true ? 'Cancelled' : ''}}</span>
                         <span class="badge badge-success text-uppercase">{{ $order->open == true ? 'Open' : ''}}</span>
                         <span class="badge badge-secondary text-uppercase">{{ $order->open == false ? 'Closed' : ''}}</span>
