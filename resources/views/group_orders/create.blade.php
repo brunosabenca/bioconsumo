@@ -10,13 +10,13 @@
 
                 <div class="form-group">
                     <label for="open-date">Open Date</label>
-                    <input class="date form-control"  id="open-date" type="date" name="open-date">
+                    <input class="date form-control"  id="open-date" type="date" name="open-date" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
 
                 </div>
 
                 <div class="form-group">
                     <label for="close-date">Close Date</label>
-                    <input class="date form-control"  id="close-date" type="date" name="close-date">
+                <input class="date form-control"  id="close-date" type="date" name="close-date" value="{{ \Carbon\Carbon::now()->addDays(3)->format('Y-m-d') }}">
                 </div>
 
                 <div class="form-group">
