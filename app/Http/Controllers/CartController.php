@@ -11,16 +11,24 @@ use App\CartItem;
 class CartController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        if (Auth::check()) {
-            $user_order = auth()->user()->orders()->where('delivered', false)->where('cancelled', false)->first();
-            return $user_order->items;
-        }
+        $user_order = auth()->user()->orders()->where('delivered', false)->where('cancelled', false)->first();
+        return $user_order->items;
     }
 
     /**
