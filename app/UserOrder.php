@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class UserOrder extends Model
 {
     protected $fillable = [
-        'user_id', 'group_order_id', 'billing_total', 'delivered',
+        'user_id', 'group_order_id', 'billing_total', 'open', 'cancelled', 'delivered',
     ];
 
     protected $with = ['products'];
 
     protected $casts = [
+        'open' => 'boolean',
+        'cancelled' => 'boolean',
         'delivered' => 'boolean',
     ];
 

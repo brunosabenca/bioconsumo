@@ -25,6 +25,7 @@ class CreateUserOrdersTable extends Migration
 
             $table->integer('billing_total')->nullable();
 
+            $table->boolean('open')->default(false);
             $table->boolean('cancelled')->default(false);
             $table->boolean('delivered')->default(false);
 

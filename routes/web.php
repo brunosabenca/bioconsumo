@@ -24,7 +24,7 @@ Route::get('/orders', 'GroupOrdersController@index');
 Route::post('/orders', 'GroupOrdersController@store');
 Route::get('/orders/create', 'GroupOrdersController@create');
 Route::get('/orders/{order}', 'GroupOrdersController@show');
-Route::delete('/orders/{order}', 'GroupOrdersController@destroy');
+Route::delete('/orders/{group_order}', 'GroupOrdersController@destroy');
 Route::patch('/orders/{order}', 'GroupOrdersController@update');
 
 Route::get('/user/orders', 'UserOrdersController@index');

@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class GroupOrder extends Model
 {
+    protected $with = ['orders'];
+
     protected $guarded = [];
+
     /**
      * Get a string path for the group order page.
      *

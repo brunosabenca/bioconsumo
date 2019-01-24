@@ -114,11 +114,19 @@ class GroupOrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GroupOrder $order)
+    public function destroy(GroupOrder $group_order)
     {
-        $order->cancelled = true;
-        $order->open = false;
-        $order->save();
+        $group_order->update([
+            'cancelled' => true,
+            'open' => false,
+        ]);
+
+        foreach ($group_order->orders as $order) {
+            $order->update([
+                'cancelled' => true,
+                'open' => false,
+            ]);
+        }
 
         if (request()->wantsJson()) {
             return response([], 204);
