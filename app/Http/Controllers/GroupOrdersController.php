@@ -57,7 +57,8 @@ class GroupOrdersController extends Controller
 
         $group_order = GroupOrder::create([
             'open_date' => request('open-date'),
-            'close_date' => request('close-date')
+            'close_date' => request('close-date'),
+            'open' => true
         ]);
 
         if (request()->wantsJson()) {
