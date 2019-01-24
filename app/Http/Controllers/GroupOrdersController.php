@@ -105,12 +105,10 @@ class GroupOrdersController extends Controller
             'open' => 'required'
         ]));
 
-        if (request()['open'] == false) {
-            foreach ($group_order->orders as $order) {
-                $order->update([
-                    'open' => false,
-                ]);
-            }
+        foreach ($group_order->orders as $order) {
+            $order->update([
+                'open' => request()['open'],
+            ]);
         }
 
         return $group_order;
