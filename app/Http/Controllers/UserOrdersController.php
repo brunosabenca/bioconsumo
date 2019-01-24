@@ -65,7 +65,11 @@ class UserOrdersController extends Controller
 
     public function getActiveOrder()
     {
-        $user_order = auth()->user()->orders()->where('delivered', false)->where('cancelled', false)->first();
+        $user_order = auth()->user()->orders()
+            ->where('delivered', false)
+            ->where('cancelled', false)
+            ->where('open', true)
+            ->first();
 
         return $user_order;
     }

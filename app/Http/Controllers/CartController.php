@@ -27,8 +27,15 @@ class CartController extends Controller
      */
     public function index()
     {
-        $user_order = auth()->user()->orders()->where('delivered', false)->where('cancelled', false)->first();
-        return $user_order->items;
+        $user_order = auth()->user()->orders()
+            ->where('delivered', false)
+            ->where('cancelled', false)
+            ->where('open', true)
+            ->first();
+
+        if ($user_order) {
+            return $user_order->items;
+        }
     }
 
     /**
@@ -59,16 +66,16 @@ class CartController extends Controller
             return redirect()->back()
                 ->with('flash-message', "Couldn't add product because there is no order open.")
                 ->with('flash-level', 'warning');
+        } else {
+            //TODO: Check if the product is already in the cart before adding it!
+            $item = CartItem::create([
+                'user_order_id' => $user_order->id,
+                'product_id' => $product->id,
+                'quantity' => 1,
+            ]);
+
+            return redirect()->back()->with('flash-message', Product::find($product->id)->name . ' added to your order.');
         }
-
-        //TODO: Check if the product is already in the cart before adding it!
-        $item = CartItem::create([
-            'user_order_id' => $user_order->id,
-            'product_id' => $product->id,
-            'quantity' => 1,
-        ]);
-
-        return redirect()->back()->with('flash-message', Product::find($product->id)->name . ' added to your order.');
     }
 
     /**
