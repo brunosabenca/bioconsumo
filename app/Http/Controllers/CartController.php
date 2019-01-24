@@ -45,7 +45,7 @@ class CartController extends Controller
 
         if ($user_order == null) {
             return redirect()->back()
-                ->with('flash-message', "Couldn't add product. You need to place and order first.")
+                ->with('flash-message', "Couldn't add product. You need to place an order first.")
                 ->with('flash-level', 'warning');
         }
 
