@@ -41,11 +41,15 @@ class CartController extends Controller
      */
     public function store(Product $product)
     {
-        $user_order = auth()->user()->orders()->where('delivered', false)->where('cancelled', false)->first();
+        $user_order = auth()->user()->orders()
+            ->where('delivered', false)
+            ->where('cancelled', false)
+            ->where('open', true)
+            ->first();
 
         if ($user_order == null) {
             return redirect()->back()
-                ->with('flash-message', "Couldn't add product. You need to place an order first.")
+                ->with('flash-message', "Couldn't add product because there is no order open.")
                 ->with('flash-level', 'warning');
         }
 
