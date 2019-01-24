@@ -74,7 +74,8 @@ class UserOrdersController extends Controller
 
         $user_order = UserOrder::create([
             'group_order_id' => request()->group_order,
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->user()->id,
+            'open' => true
         ]);
 
         if (request()->wantsJson()) {

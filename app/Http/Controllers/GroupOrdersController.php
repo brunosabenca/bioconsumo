@@ -97,15 +97,23 @@ class GroupOrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(GroupOrder $order)
+    public function update(GroupOrder $group_order)
     {
-        $order->update(request()->validate([
+        $group_order->update(request()->validate([
             'open_date' => 'required',
             'close_date' => 'required',
             'open' => 'required'
         ]));
 
-        return $order;
+        if (request()['open'] == false) {
+            foreach ($group_order->orders as $order) {
+                $order->update([
+                    'open' => false,
+                ]);
+            }
+        }
+
+        return $group_order;
     }
 
     /**
