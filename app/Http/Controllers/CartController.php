@@ -43,16 +43,20 @@ class CartController extends Controller
     {
         $user_order = auth()->user()->orders()->where('delivered', false)->where('cancelled', false)->first();
 
-        if ($user_order) {
-            //TODO: Check if the product is already in the cart before adding it!
-            CartItem::create([
-                'user_order_id' => $user_order->id,
-                'product_id' => $product->id,
-                'quantity' => 1,
-            ]);
+        if ($user_order == null) {
+            return redirect()->back()
+                ->with('flash-message', "Couldn't add product. You need to place and order first.")
+                ->with('flash-level', 'warning');
         }
 
-        return redirect()->back();
+        //TODO: Check if the product is already in the cart before adding it!
+        $item = CartItem::create([
+            'user_order_id' => $user_order->id,
+            'product_id' => $product->id,
+            'quantity' => 1,
+        ]);
+
+        return redirect()->back()->with('flash-mesage', Product::find($product->id)->name . ' added to your order.');;
     }
 
     /**
