@@ -9,18 +9,18 @@
                 {{ csrf_field() }}
 
                 <div class="form-group">
-                    <label for="product-name">Name</label>
-                    <input type="text" class="form-control" id="product-name" name="product-name" placeholder="Potatoes" maxlength="80">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Potatoes" maxlength="80">
                 </div>
 
                 <div class="form-group">
                     <label for="product-description">Description</label>
-                    <textarea class="form-control" id="product-description" name="product-description" placeholder="The best potatoes in the city" rows="3" maxlength="255"></textarea>
+                    <textarea class="form-control" id="description" name="description" placeholder="The best potatoes in the city" rows="3" maxlength="255"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="product-name">Price</label>
-                    <input type="text" class="form-control" id="product-price" name="product-price" placeholder="5" maxlength="4">
+                    <input type="text" class="form-control" id="price" name="price" placeholder="5" maxlength="4">
                 </div>
 
                 <div class="form-group">

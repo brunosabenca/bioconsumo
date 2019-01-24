@@ -44,17 +44,11 @@ class ProductsController extends Controller
 
     public function store()
     {
-        request()->validate([
-            'product-name' => 'required',
-            'product-description' => 'required',
-            'product-price' => 'required'
-        ]);
-
-        $product = Product::create([
-            'name' => request('product-name'),
-            'description' => request('product-description'),
-            'price' => request('product-price')
-        ]);
+        $product = Product::create(request()->validate([
+            'name' => 'required|max:80|unique:products',
+            'description' => 'required|max:255',
+            'price' => 'required|integer'
+        ]));
 
         if (request()->wantsJson()) {
             return response($product, 201);
@@ -71,9 +65,9 @@ class ProductsController extends Controller
     public function update(Product $product)
     {
         $product->update(request()->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'price' => 'required'
+            'name' => 'required|max:80|unique:products',
+            'description' => 'required|max:255',
+            'price' => 'required|integer'
         ]));
 
         return $product;
