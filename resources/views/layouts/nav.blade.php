@@ -24,8 +24,8 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
         <div class="dropdown-menu" aria-labelledby="orders-dropdown">
-          <a class="dropdown-item" href="/user/orders/create">Place order</a>
           <a class="dropdown-item" href="/user/orders">List all</a>
+          <a class="dropdown-item" href="/user/orders/create">Place order</a>
         </div>
       </li>
       @endauth
