@@ -98,7 +98,7 @@ class UserOrdersController extends Controller
         return view('user_orders.show', [
             'user_order' => $user_order,
             'group_order' => $group_order,
-            'products' => $user_order->products
+            'items' => $user_order->items
         ]);
     }
 

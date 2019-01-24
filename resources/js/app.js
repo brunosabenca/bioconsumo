@@ -19,6 +19,7 @@ require('./bootstrap');
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('product-view', require('./pages/Product.vue'));
 Vue.component('order-view', require('./pages/Order.vue'));
+Vue.component('cart-view', require('./pages/Cart.vue'));
 
 // const files = require.context('./', true, /\.vue$/i)
 

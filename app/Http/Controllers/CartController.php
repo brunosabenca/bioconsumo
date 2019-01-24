@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\UserOrder;
 use App\Product;
-use App\UserOrderProduct;
+use App\CartItem;
 
 class CartController extends Controller
 {
@@ -19,7 +19,7 @@ class CartController extends Controller
     {
         if (Auth::check()) {
             $user_order = auth()->user()->orders()->where('delivered', false)->where('cancelled', false)->first();
-            return $user_order->products;
+            return $user_order->items;
         }
     }
 
@@ -45,12 +45,14 @@ class CartController extends Controller
 
         if ($user_order) {
             //TODO: Check if the product is already in the cart before adding it!
-            UserOrderProduct::create([
+            CartItem::create([
                 'user_order_id' => $user_order->id,
                 'product_id' => $product->id,
                 'quantity' => 1,
             ]);
         }
+
+        return redirect()->back();
     }
 
     /**

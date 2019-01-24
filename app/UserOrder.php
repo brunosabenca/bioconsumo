@@ -10,7 +10,7 @@ class UserOrder extends Model
         'user_id', 'group_order_id', 'billing_total', 'open', 'cancelled', 'delivered',
     ];
 
-    protected $with = ['products'];
+    protected $with = ['items'];
 
     protected $casts = [
         'open' => 'boolean',
@@ -33,8 +33,8 @@ class UserOrder extends Model
         return $this->belongsTo('App\GroupOrder');
     }
     
-    public function products()
+    public function items()
     {
-        return $this->hasMany('App\UserOrderProduct');
+        return $this->hasMany('App\CartItem');
     }
 }

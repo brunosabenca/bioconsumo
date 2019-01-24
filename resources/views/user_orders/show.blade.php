@@ -14,12 +14,11 @@
             <p>
 
             <h6>Cart</h6>
-            <ul>
-            @forelse ($products as $product)
-                <li>{{App\Product::where('id','=',$product->product_id)->first()->name}}</li>
-            @empty
-            @endforelse
-            </ul>
+            <cart-view :items="{{ $items }}" inline-template>
+                <ul>
+                    <li v-for="item in items">@{{ item.product.name }}</li>
+                </ul>
+            </cart-view>
 
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-xl-3 mb-3">
