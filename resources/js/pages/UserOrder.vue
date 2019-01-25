@@ -7,7 +7,7 @@
         data() {
             return {
                 id: this.user_order.id,
-                open: this.user_order.open,
+                isOpen: this.user_order.open,
                 cancelled: this.user_order.cancelled,
                 delivered: this.user_order.delivered,
                 form: {},
@@ -26,7 +26,7 @@
                 axios.patch(uri, this.form).then(() => {
                     this.editing = false;
 
-                    this.open = this.form.open;
+                    this.isOpen = this.form.open;
 
                     flash('The order has been updated.');
                 }).catch(error => {
@@ -34,19 +34,32 @@
                 })
             },
 
-            closeOrder() {
+            close() {
                 this.form.open = false;
                 this.update();
             },
 
-            openOrder() {
+            open() {
                 this.form.open = true;
                 this.update();
             },
 
+            cancel() {
+                let uri = `/user/orders/${this.id}`;
+
+                axios.delete(uri).then(() => {
+                    this.cancelled = true;
+                    this.isOpen = false;
+
+                    flash('The order has been cancelled.', 'danger');
+                }).catch(error => {
+                    console.log(error.message);
+                })
+            },
+
             resetForm() {
                 this.form = {
-                    open: this.open,
+                    open: this.isOpen,
                 };
 
                 this.editing = false;

@@ -137,7 +137,8 @@ class UserOrdersController extends Controller
     public function update(UserOrder $user_order)
     {
         request()->validate([
-            'open' => 'required|bool'
+            'open' => 'required|bool',
+            'cancelled' => 'bool'
         ]);
 
         $user_order->open = request()['open'];
@@ -158,13 +159,17 @@ class UserOrdersController extends Controller
      */
     public function destroy(UserOrder $user_order)
     {
-        $user_order->cancelled = true;
-        $user_order->save();
+        $user_order->update([
+            'cancelled' => true,
+            'open' => false,
+        ]);
 
         if (request()->wantsJson()) {
             return response([], 204);
         }
 
-        return redirect($user_order->path());
+        return redirect($user_order->path())
+            ->with('flash-message', 'The order has been cancelled.')
+            ->with('flash-level', 'danger');
     }
 }
