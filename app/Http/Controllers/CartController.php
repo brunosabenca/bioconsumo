@@ -74,7 +74,7 @@ class CartController extends Controller
                 'quantity' => 1,
             ]);
 
-            return redirect()->back()->with('flash-message', Product::find($product->id)->name . ' added to your order.');
+            return redirect($user_order->path())->with('flash-message', $item->product->name . ' added to your order.');
         }
     }
 
