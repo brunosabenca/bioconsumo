@@ -148,6 +148,6 @@ class GroupOrdersController extends Controller
             return response([], 204);
         }
 
-        return redirect('/orders');
+        return redirect($group_order->path());
     }
 }

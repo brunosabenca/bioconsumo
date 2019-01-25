@@ -1,16 +1,15 @@
 <script>
     export default {
-        props: ['order'],
+        props: ['user_order'],
 
         components: {},
 
         data() {
             return {
-                id: this.order.id,
-                open_date: this.order.open_date,
-                close_date: this.order.close_date,
-                cancelled: this.order.cancelled,
-                open: this.order.open,
+                id: this.user_order.id,
+                open: this.user_order.open,
+                cancelled: this.user_order.cancelled,
+                delivered: this.user_order.delivered,
                 form: {},
                 editing: false
             };
@@ -22,13 +21,11 @@
 
         methods: {
             update() {
-                let uri = `/orders/${this.id}`;
+                let uri = `/user/orders/${this.id}`;
 
                 axios.patch(uri, this.form).then(() => {
                     this.editing = false;
 
-                    this.open_date = this.form.open_date;
-                    this.close_date = this.form.close_date;
                     this.open = this.form.open;
 
                     flash('The order has been updated.');
@@ -49,8 +46,6 @@
 
             resetForm() {
                 this.form = {
-                    open_date: this.open_date,
-                    close_date: this.close_date,
                     open: this.open,
                 };
 

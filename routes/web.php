@@ -32,6 +32,7 @@ Route::post('/user/orders', 'UserOrdersController@store');
 Route::get('/user/orders/create', 'UserOrdersController@create');
 Route::get('/user/orders/{user_order}', 'UserOrdersController@show');
 Route::delete('/user/orders/{user_order}', 'UserOrdersController@destroy');
+Route::patch('/user/orders/{user_order}', 'UserOrdersController@update');
 
 Route::post('/cart/add/{product}', 'CartController@store');
 Route::get('/cart', 'CartController@index');

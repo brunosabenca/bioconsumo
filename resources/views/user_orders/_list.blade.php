@@ -3,8 +3,10 @@
     <div class="card-body">
         <div class="level">
             <h5 class="card-title"><a href="{{ $order->path() }}">Order #{{ $order->id }}</a>
-                <span class="badge badge-danger text-uppercase">{{ $order->cancelled == true ? 'Cancelled' : ''}}</span>
-                <span class="badge badge-success text-uppercase">{{ $order->delivered == true ? 'Delivered' : ''}}</span>
+                <span class="badge badge-danger text-uppercase">{{ $order->cancelled ? 'Cancelled' : ''}}</span>
+                <span class="badge badge-success text-uppercase">{{ $order->open ? 'Open' : ''}}</span>
+                <span class="badge badge-secondary text-uppercase">{{ ! $order->open && ! $order->cancelled ? 'Closed' : '' }}</span>
+                <span class="badge badge-success text-uppercase">{{ $order->delivered ? 'Delivered' : ''}}</span>
         </h5>
         </div>
     </div>

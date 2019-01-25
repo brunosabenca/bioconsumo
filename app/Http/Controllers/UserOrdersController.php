@@ -134,9 +134,20 @@ class UserOrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserOrder $user_order)
     {
-        //
+        request()->validate([
+            'open' => 'required|bool'
+        ]);
+
+        $user_order->open = request()['open'];
+        $user_order->save();
+
+        if (request()->wantsJson()) {
+            return response([], 204);
+        }
+
+        return redirect($user_order->path());
     }
 
     /**
@@ -154,6 +165,6 @@ class UserOrdersController extends Controller
             return response([], 204);
         }
 
-        return redirect('/user/orders/create');
+        return redirect($user_order->path());
     }
 }

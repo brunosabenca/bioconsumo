@@ -31,9 +31,9 @@
             <div class="card" style="width: 18rem;" v-else>
                 <div class="card-body">
                     <h5 class="card-title">Group Order #<span v-text="id"></span>
-                        <span class="badge badge-danger text-uppercase" v-if="cancelled">Cancelled</span>
-                        <span class="badge badge-success text-uppercase" v-if="open">Open</span>
-                        <span class="badge badge-secondary text-uppercase" v-if="! open">Closed</span>
+                        <span class="badge badge-danger text-uppercase" v-show="cancelled">Cancelled</span>
+                        <span class="badge badge-success text-uppercase" v-show="open">Open</span>
+                        <span class="badge badge-secondary text-uppercase" v-show="! open && ! cancelled">Closed</span>
                     </h5>
                     <p class="card-text">Open date: <span v-text="open_date"></span></p>
                     <p class="card-text">Close date: <span v-text="close_date"></span></p>
