@@ -22,8 +22,8 @@
       </li>
       @auth
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</a>
-        <div class="dropdown-menu" aria-labelledby="orders-dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="user-orders-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Orders</a>
+        <div class="dropdown-menu" aria-labelledby="user-orders-dropdown">
           <a class="dropdown-item" href="/user/orders">List all</a>
           <a class="dropdown-item" href="/user/orders/create">Place order</a>
         </div>
@@ -31,13 +31,20 @@
       @endauth
     </ul>
     <!-- Authentication Links -->
+    @if (Route::has('login'))
     <ul class="navbar-nav mr-sm-2">
     @guest
           <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
     @else
-          <li class="nav-item"><a class="nav-link" href="#">{{ auth()->user()->name }}</a></li>
+      <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}</a>
+        <div class="dropdown-menu" aria-labelledby="user-dropdown">
+        <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+        </div>
+      </li>
     @endguest
     </ul>
+    @endif
   </div>
 </nav>
