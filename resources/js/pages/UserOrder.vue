@@ -1,8 +1,10 @@
 <script>
+    import Cart from '../components/Cart.vue';
+
     export default {
         props: ['user_order'],
 
-        components: {},
+        components: {Cart},
 
         data() {
             return {

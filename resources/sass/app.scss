@@ -178,11 +178,25 @@ body {
     margin-top: 20px;
 }
 
-.shopping-cart .card-header {
+.shopping-cart-item {
+    margin-bottom: 10px;
+}
+
+.shopping-cart > .card-header {
     height: 3.6em;
 }
 
 .shopping-cart .bottom-buttons {
     height: 2.6em;
     display: block;
+}
+
+/* Hide HTML5 Up and Down arrows. */
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+ 
+input[type="number"] {
+    -moz-appearance: textfield;
 }

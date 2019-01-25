@@ -14,11 +14,11 @@
                 <span class="badge badge-success text-uppercase" v-show="delivered">Delivered</span>
             </h5>
 
-            <cart-view :items="{{ $items }}" v-bind:open="isOpen">
+            <cart :cartitems="{{ $items }}" v-bind:open="isOpen">
                 {{-- <ul>
                     <li v-for="item in items">@{{ item.product.name }}</li>
                 </ul> --}}
-            </cart-view>
+            </cart>
 
             <br/>
 

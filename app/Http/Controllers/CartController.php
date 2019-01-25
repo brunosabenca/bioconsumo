@@ -118,8 +118,18 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CartItem $item)
     {
-        //
+        $deleted = $item->delete();
+
+        if (request()->expectsJson()) {
+            if ($deleted) {
+                return response(['status' => 'Item deleted']);
+            } else {
+                return response(['status' => 'Error deleting item']);
+            }
+        }
+
+        return redirect($item->order->path());
     }
 }
