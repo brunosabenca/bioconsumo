@@ -10,12 +10,6 @@
                     <div v-for="(item, index) in items" :key="item.id">
                         <cart-item :item="item" :open="open" v-on:deleted="remove(index)"></cart-item>
                     </div>
-
-                    <div class="pull-right bottom-buttons">
-                        <a href="#" class="btn btn-outline-secondary pull-right" v-if="open">
-                            Update
-                        </a>
-                    </div>
             </div>
         </div>
 
@@ -34,7 +28,8 @@
 
         data() {
             return {
-                items: this.cartitems
+                items: this.cartitems,
+                bus: new Vue(),
             };
         },
 
@@ -42,6 +37,9 @@
         },
 
         methods: {
+            updateQty() {
+
+            }
         }
     }
 </script>

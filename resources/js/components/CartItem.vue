@@ -17,7 +17,7 @@
             <div class="quantity">
                 <input type="button" value="+" class="plus" v-show="open" :disabled="! open" v-on:click="incrementQty">
                 <input type="number" title="Qty" class="qty"
-                        size="4" :disabled="! open" :value="item.quantity">
+                        size="4" :disabled="! open" v-model="form.quantity" v-on:change="updateQty">
                 <input type="button" value="-" class="minus" v-show="open" :disabled="! open" v-on:click="decrementQty">
             </div>
         </div>
@@ -38,13 +38,28 @@
         data() {
             return {
                 id: this.item.id,
+                quantity: this.item.quantity,
+                form: {},
             };
         },
 
         created() {
+            this.resetPayload();
         },
 
         methods: {
+            updateQty() {
+                let uri = `/cart/item/${this.id}`;
+
+                axios.patch(uri, this.form).then(response => {
+                    this.quantity = this.form.quantity;
+                    ;flash(this.item.product.name + "'s quantity updated to " + this.quantity);
+                }).catch(error => {
+                    this.resetPayload();
+                    console.log( error.message);
+                })
+            },
+
             destroy() {
                 let uri = `/cart/item/${this.id}`;
                 axios.delete(uri);
@@ -52,13 +67,21 @@
             },
 
             incrementQty() {
-                this.item.quantity = this.item.quantity + 1;
+                this.form.quantity = this.quantity + 1;
+                this.updateQty();
             },
 
             decrementQty() {
-                if (this.item.quantity > 1) {
-                    this.item.quantity = this.item.quantity - 1;
+                if (this.quantity > 1) {
+                    this.form.quantity = this.quantity - 1;
+                    this.updateQty();
                 }
+            },
+
+            resetPayload() {
+                this.form = {
+                    quantity: this.quantity,
+                };
             }
         }
     }
