@@ -28,26 +28,24 @@
             {{-- Viewing the product--}}
             <div class="card" style="width: 18rem;" v-else>
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <h5 class="card-title level">
                         <span v-text="name"></span>
-                        <form class="pull-right" method="POST" action="/cart/add/{{$product->id}}">
+                        <span class="ml-a"><span v-text="price"></span>€/Kg</span>
+                    </h5>
+                    <p class="card-text"><span v-text="description"></span></p>
+                    <div class="level">
+                        <button class="btn btn-secondary btn-sm" @click="editing = true">Edit</button>
+                        <form action="{{ $product->path() }}" method="POST" class="ml-1">
                             {{ csrf_field() }}
-                            <button type="submit" class="btn btn-primary btn-xs" aria-label="Add to Cart">
+                            {{ method_field('DELETE') }}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                        <form class="ml-a" method="POST" action="/cart/add/{{$product->id}}">
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn btn-primary" aria-label="Add to Cart">
                                 <i class="fa fa-cart-plus" aria-hidden="true"></i>
                             </button>
                         </form>
-                    </h5>
-                    <p class="card-text"><span v-text="description"></span></p>
-                    <p class="card-title"><span v-text="price"></span>€/Kg</p>
-                    <div class="level">
-                        <form action="{{ $product->path() }}" method="POST">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-
-
-                        <button class="ml-a btn btn-primary mr-1 ml-a" @click="editing = true">Edit</button>
                     </div>
                 </div>
             </div>
