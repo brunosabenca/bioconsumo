@@ -141,8 +141,7 @@ class UserOrdersController extends Controller
             'cancelled' => 'bool'
         ]);
 
-        $user_order->open = request()['open'];
-        $user_order->save();
+        $user_order->update(request()->only('open'));
 
         if (request()->wantsJson()) {
             return response([], 204);
