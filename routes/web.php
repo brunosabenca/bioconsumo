@@ -29,7 +29,8 @@ Route::patch('/orders/{group_order}', 'GroupOrdersController@update');
 
 Route::get('/user/orders', 'UserOrdersController@index');
 Route::post('/user/orders', 'UserOrdersController@store');
-Route::get('/user/orders/create', 'UserOrdersController@create');
+Route::get('/user/orders/create', 'UserOrdersController@create')->name('user_order.create');
+Route::get('/user/orders/current', 'UserOrdersController@showCurrent');
 Route::get('/user/orders/{user_order}', 'UserOrdersController@show');
 Route::delete('/user/orders/{user_order}', 'UserOrdersController@destroy');
 Route::patch('/user/orders/{user_order}', 'UserOrdersController@update');

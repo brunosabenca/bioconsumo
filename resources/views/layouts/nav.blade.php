@@ -5,6 +5,7 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbar">
+    @auth
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="products-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
@@ -20,16 +21,8 @@
           <a class="dropdown-item" href="/orders/create">Create new</a>
         </div>
       </li>
-      @auth
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="user-orders-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Orders</a>
-        <div class="dropdown-menu" aria-labelledby="user-orders-dropdown">
-          <a class="dropdown-item" href="/user/orders">List all</a>
-          <a class="dropdown-item" href="/user/orders/create">Place order</a>
-        </div>
-      </li>
-      @endauth
     </ul>
+    @endauth
     <!-- Authentication Links -->
     @if (Route::has('login'))
     <ul class="navbar-nav mr-sm-2">
@@ -39,8 +32,11 @@
     @else
       <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}</a>
-        <div class="dropdown-menu" aria-labelledby="user-dropdown">
-        <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
+          <a class="dropdown-item" href="/user/orders/current">Current Order</a>
+          <a class="dropdown-item" href="/user/orders/">Order History</a>
+          <hr>
+          <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
         </div>
       </li>
     @endguest

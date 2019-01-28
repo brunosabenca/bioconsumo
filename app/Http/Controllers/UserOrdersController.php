@@ -58,9 +58,15 @@ class UserOrdersController extends Controller
         } else {
             $group_orders = GroupOrder::where('open', true)->latest()->get();
 
-            return view('user_orders.create', [
-                'group_orders' => $group_orders,
-            ]);
+            if ($group_orders->count() === 1) {
+                $user_order = $this->createNewUserOrder($group_orders->first()->id);
+                return redirect($user_order->path())
+                    ->with('flash-message', 'A new order was created');
+            } else {
+                return view('user_orders.create', [
+                    'group_orders' => $group_orders,
+                ]);
+            }
         }
     }
 
@@ -83,21 +89,30 @@ class UserOrdersController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         request()->validate([
             'group_order' => 'required',
         ]);
 
-        $user_order = UserOrder::create([
-            'group_order_id' => request()->group_order,
-            'user_id' => auth()->user()->id,
-            'open' => true
-        ]);
+        $user_order = $this->createNewUserOrder();
 
         if (request()->wantsJson()) {
             return response($user_order, 201);
         }
 
-        return redirect($user_order->path());
+        return redirect($user_order->path())
+            ->with('flash-message', 'A new order was created');
+    }
+
+    protected function createNewUserOrder(int $group_order_id)
+    {
+        $user_order = UserOrder::create([
+            'group_order_id' => $group_order_id,
+            'user_id' => auth()->user()->id,
+            'open' => true
+        ]);
+
+        return $user_order;
     }
 
     /**
@@ -126,6 +141,22 @@ class UserOrdersController extends Controller
                 'products' => Product::latest()->paginate(6),
                 'items' => $user_order->items
             ]);
+        }
+    }
+
+    /**
+     * Redirects to the currently active order page.
+     */
+    public function showCurrent()
+    {
+        $user_order = $this->getActiveOrder();
+
+        if ($user_order) {
+            return redirect($user_order->path());
+        } else {
+            return redirect(route('user_order.create'))
+                ->with('flash-message', 'Please create a new order first')
+                ->with('flash-level', 'warning');
         }
     }
 

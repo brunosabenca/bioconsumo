@@ -79,7 +79,6 @@ class CartController extends Controller
                 $item->incrementQty(1);
                 return redirect($user_order->path())->with('flash-message', $product->name . "'s quantity updated to " . $item->quantity);
             }
-
         }
     }
 
