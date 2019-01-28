@@ -19,7 +19,9 @@ class CartItem extends Model
 
     public function order()
     {
-        return $this->belongsTo('App\UserOrder');
+        return $this->belongsTo('App\UserOrder', 'user_order_id', 'id');
+    }
+
     public function incrementQty(int $qty = 1)
     {
         $this->quantity = $this->quantity + $qty;
