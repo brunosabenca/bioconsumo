@@ -74,18 +74,19 @@ class CartController extends Controller
                     'product_id' => $product->id,
                     'quantity' => 1,
                 ]);
+                return redirect($user_order->path())->with('flash-message', $item->product->name . ' added to your order.');
             } else {
                 $item->incrementQty(1);
+                return redirect($user_order->path())->with('flash-message', $product->name . "'s quantity updated to " . $item->quantity);
             }
 
-            return redirect($user_order->path())->with('flash-message', $item->product->name . ' added to your order.');
         }
     }
 
     protected function findCartItemInOrderByProductId(int $userOrderId, int $productId)
     {
         return CartItem::where('user_order_id', $userOrderId)->where('product_id', $productId)->first();
-    } 
+    }
 
     /**
      * Display the specified resource.
