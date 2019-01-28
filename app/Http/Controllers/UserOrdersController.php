@@ -93,7 +93,7 @@ class UserOrdersController extends Controller
             'group_order' => 'required',
         ]);
 
-        $user_order = $this->createNewUserOrder();
+        $user_order = $this->createNewUserOrder(request()['group_order']);
 
         if (request()->wantsJson()) {
             return response($user_order, 201);
