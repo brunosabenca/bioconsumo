@@ -28,7 +28,7 @@
                     this.description = this.form.description;
                     this.price = this.form.price;
 
-                    //flash('The product has been updated.');
+                    flash('The product has been updated.');
                 })
             },
 
