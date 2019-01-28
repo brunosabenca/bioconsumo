@@ -17,7 +17,7 @@
             <div class="quantity">
                 <input type="button" value="+" class="plus" v-show="open" :disabled="! open" v-on:click="incrementQty">
                 <input type="number" title="Qty" class="qty"
-                        size="4" :disabled="! open" v-model="form.quantity" v-on:change="updateQty">
+                        size="4" :disabled="! open" v-model.number="form.quantity" v-on:change="updateQty">
                 <input type="button" value="-" class="minus" v-show="open" :disabled="! open" v-on:click="decrementQty">
             </div>
         </div>
@@ -50,7 +50,7 @@
         methods: {
             updateQty() {
                 let uri = `/cart/item/${this.id}`;
-
+                this.form.quantity 
                 axios.patch(uri, this.form).then(response => {
                     this.quantity = this.form.quantity;
                     ;flash(this.item.product.name + "'s quantity updated to " + this.quantity);
