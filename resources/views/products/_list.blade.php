@@ -1,28 +1,17 @@
 @forelse ($products as $product)
 <div class="card">
     <div class="card-body">
-        <div class="level">
-            <h5 class="card-title"><a href="/products/{{ $product->id }}">{{ $product->name }}</a></h5>
-            <span class="ml-a">{{ $product->price }} €/Kg</span>
-        </div>
+        <h5 class="card-title">
+            <a href="/products/{{ $product->id }}">{{ $product->name }}</a>
+            <form class="pull-right" method="POST" action="/cart/add/{{$product->id}}">
+                {{ csrf_field() }}
+                <button type="submit" class="btn btn-primary btn-xs" aria-label="Add to Cart">
+                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                </button>
+            </form>
+        </h5>
+        <span class="ml-a">{{ $product->price }} €/Kg</span>
         <p class="card-text">{{ $product->description }}</p>
-
-        @auth
-        <form method="POST" action="/cart/add/{{$product->id}}">
-            {{ csrf_field() }}
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Add</button>
-            </div>
-
-            @if(count($errors))
-                <ul class="alert alert-danger">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            @endif
-        </form>
-        @endauth
     </div>
 </div>
 <br/>
