@@ -89,7 +89,6 @@ class UserOrdersController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         request()->validate([
             'group_order' => 'required',
         ]);
