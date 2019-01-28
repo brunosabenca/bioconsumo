@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-12">
             {{-- Editing the order --}}
-            <div class="card" style="width: 18rem;" v-if="editing">
+            <div class="card" v-if="editing">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="open-date">Open Date</label>
@@ -28,7 +28,7 @@
                 </div>
             </div>
             {{-- Viewing the order--}}
-            <div class="card" style="width: 18rem;" v-else>
+            <div class="card" v-else>
                 <div class="card-body">
                     <h5 class="card-title">Group Order #<span v-text="id"></span>
                         <span class="badge badge-danger text-uppercase" v-show="cancelled">Cancelled</span>
@@ -38,14 +38,14 @@
                     <p class="card-text">Open date: <span v-text="open_date"></span></p>
                     <p class="card-text">Close date: <span v-text="close_date"></span></p>
                     <div class="level" v-show="! cancelled">
-                        <form action="{{ $order->path() }}" method="POST">
+                        <form action="{{ $order->path() }}" method="POST" class="mr-1">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger">Cancel</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
                         </form>
-                        <button class="ml-a btn btn-secondary mr-1" @click="closeOrder" v-show="open">Close</button>
-                        <button class="ml-a btn btn-success mr-1" @click="openOrder" v-show="! open">Open</button>
-                        <button class="ml-a btn btn-primary mr-1 ml-a" @click="editing = true">Edit</button>
+                        <button class="btn btn-secondary btn-sm mr-1" @click="closeOrder" v-show="open">Close</button>
+                        <button class="btn btn-success btn-sm mr-1" @click="openOrder" v-show="! open">Open</button>
+                        <button class="btn btn-primary btn-sm mr-1" @click="editing = true">Edit</button>
                     </div>
                 </div>
             </div>

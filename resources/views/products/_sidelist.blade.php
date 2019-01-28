@@ -2,7 +2,7 @@
 <div class="row">
     @forelse ($products as $product)
     <div class="col-md-6">
-        <div class="card" style="width: 18rem;">
+        <div class="card">
             <div class="card-body">
                 <h5 class="level card-title">
                     <a href="/products/{{ $product->id }}">{{ $product->name }}</a>

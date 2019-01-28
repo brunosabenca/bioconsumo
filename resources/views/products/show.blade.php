@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-12">
             {{-- Editing the product--}}
-            <div class="card" style="width: 18rem;" v-if="editing">
+            <div class="card" v-if="editing">
                 <div class="card-body">
                     <input type="text" class="form-control" v-model="form.name" class="card-title" value="{{ $product->name }}" maxlength="80"/>
                     <br/>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             {{-- Viewing the product--}}
-            <div class="card" style="width: 18rem;" v-else>
+            <div class="card" v-else>
                 <div class="card-body">
                     <h5 class="card-title level">
                         <span v-text="name"></span>
