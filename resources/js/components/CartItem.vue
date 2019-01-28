@@ -50,7 +50,6 @@
         methods: {
             updateQty() {
                 let uri = `/cart/item/${this.id}`;
-                this.form.quantity 
                 axios.patch(uri, this.form).then(response => {
                     this.quantity = this.form.quantity;
                     ;flash(this.item.product.name + "'s quantity updated to " + this.quantity);
