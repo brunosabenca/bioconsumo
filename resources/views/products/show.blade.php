@@ -28,7 +28,15 @@
             {{-- Viewing the product--}}
             <div class="card" style="width: 18rem;" v-else>
                 <div class="card-body">
-                    <h5 class="card-title"><span v-text="name"></span></h5>
+                    <h5 class="card-title">
+                        <span v-text="name"></span>
+                        <form class="pull-right" method="POST" action="/cart/add/{{$product->id}}">
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn btn-primary btn-xs" aria-label="Add to Cart">
+                                <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    </h5>
                     <p class="card-text"><span v-text="description"></span></p>
                     <p class="card-title"><span v-text="price"></span>€/Kg</p>
                     <div class="level">
@@ -37,6 +45,8 @@
                             {{ method_field('DELETE') }}
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
+
+
                         <button class="ml-a btn btn-primary mr-1 ml-a" @click="editing = true">Edit</button>
                     </div>
                 </div>
