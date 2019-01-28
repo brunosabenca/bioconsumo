@@ -52,7 +52,7 @@
                 let uri = `/cart/item/${this.id}`;
                 axios.patch(uri, this.form).then(response => {
                     this.quantity = this.form.quantity;
-                    ;flash(this.item.product.name + "'s quantity updated to " + this.quantity);
+                    flash(this.item.product.name + "'s quantity updated to " + this.quantity);
                 }).catch(error => {
                     this.resetPayload();
                     console.log( error.message);
