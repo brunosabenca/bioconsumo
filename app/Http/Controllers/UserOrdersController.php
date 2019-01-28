@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\GroupOrder;
 use App\UserOrder;
+use App\Product;
 
 class UserOrdersController extends Controller
 {
@@ -109,11 +110,23 @@ class UserOrdersController extends Controller
     {
         $group_order = GroupOrder::where('id', '=', $user_order->group_order_id)->first();
 
-        return view('user_orders.show', [
-            'user_order' => $user_order,
-            'group_order' => $group_order,
-            'items' => $user_order->items
-        ]);
+        $withProducts = request()->query('withProducts');
+
+        if ($withProducts) {
+            return view('user_orders.withProducts.show', [
+                    'user_order' => $user_order,
+                    'group_order' => $group_order,
+                    'products' => Product::latest()->paginate(6),
+                    'items' => $user_order->items
+                ]);
+        } else {
+            return view('user_orders.show', [
+                'user_order' => $user_order,
+                'group_order' => $group_order,
+                'products' => Product::latest()->paginate(6),
+                'items' => $user_order->items
+            ]);
+        }
     }
 
     /**

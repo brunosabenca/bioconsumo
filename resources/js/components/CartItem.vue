@@ -63,6 +63,7 @@
                 let uri = `/cart/item/${this.id}`;
                 axios.delete(uri);
                 this.$emit('deleted', this.id);
+                flash(this.item.product.name + ' removed from your order', 'danger');
             },
 
             incrementQty() {

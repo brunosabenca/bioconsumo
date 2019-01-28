@@ -34,7 +34,7 @@ class ProductsController extends Controller
     {
         $products = Product::latest();
 
-        return $products->paginate(10);
+        return $products->paginate(6);
     }
 
     public function create()

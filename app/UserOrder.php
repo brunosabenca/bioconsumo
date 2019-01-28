@@ -20,7 +20,7 @@ class UserOrder extends Model
 
     public function path()
     {
-        return "/user/orders/{$this->id}";
+        return "/user/orders/{$this->id}/?withProducts=1";
     }
 
     public function user()

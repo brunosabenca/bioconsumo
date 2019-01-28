@@ -1,6 +1,6 @@
 <template>
     <div class="alert alert-flash"
-         :class="'alert-'+level"
+         :class="'alert-'+alert_level"
          role="alert"
          v-show="show"
          v-text="body">
@@ -14,8 +14,8 @@
         data() {
             return {
                 body: this.message,
-                level: this.level,
-                show: false
+                show: false,
+                alert_level: this.level,
             }
         },
 
@@ -33,7 +33,7 @@
             flash(data) {
                 if (data) {
                     this.body = data.message;
-                    this.level = data.level;
+                    this.alert_level = data.level;
                 }
 
                 this.show = true;
