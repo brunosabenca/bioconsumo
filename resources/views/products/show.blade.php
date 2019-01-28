@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <h2>Product Details</h2>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             {{-- Editing the product--}}
             <div class="card" style="width: 18rem;" v-if="editing">
                 <div class="card-body">
