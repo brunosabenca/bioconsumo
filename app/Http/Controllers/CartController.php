@@ -67,16 +67,25 @@ class CartController extends Controller
                 ->with('flash-message', "Couldn't add product because there is no order open.")
                 ->with('flash-level', 'warning');
         } else {
-            //TODO: Check if the product is already in the cart before adding it!
-            $item = CartItem::create([
-                'user_order_id' => $user_order->id,
-                'product_id' => $product->id,
-                'quantity' => 1,
-            ]);
+            $item = $this->findCartItemInOrderByProductId($user_order->id, $product->id);
+            if ($item == null) {
+                $item = CartItem::create([
+                    'user_order_id' => $user_order->id,
+                    'product_id' => $product->id,
+                    'quantity' => 1,
+                ]);
+            } else {
+                $item->incrementQty(1);
+            }
 
             return redirect($user_order->path())->with('flash-message', $item->product->name . ' added to your order.');
         }
     }
+
+    protected function findCartItemInOrderByProductId(int $userOrderId, int $productId)
+    {
+        return CartItem::where('user_order_id', $userOrderId)->where('product_id', $productId)->first();
+    } 
 
     /**
      * Display the specified resource.

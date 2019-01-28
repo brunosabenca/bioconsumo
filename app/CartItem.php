@@ -20,5 +20,14 @@ class CartItem extends Model
     public function order()
     {
         return $this->belongsTo('App\UserOrder');
+    public function incrementQty(int $qty = 1)
+    {
+        $this->quantity = $this->quantity + $qty;
+        $this->save();
+    }
+    public function decrementQty(int $qty = 1)
+    {
+        $this->quantity = $this->quantity - $qty ;
+        $this->save();
     }
 }
