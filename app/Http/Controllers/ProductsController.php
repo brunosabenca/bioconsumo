@@ -32,9 +32,9 @@ class ProductsController extends Controller
 
     public function getProducts()
     {
-        $products = Product::latest();
+        $products = Product::latest()->get();
 
-        return $products->paginate(6);
+        return $products;
     }
 
     public function create()

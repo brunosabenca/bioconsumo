@@ -19,6 +19,7 @@ require('./bootstrap');
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('flash', require("./components/Flash.vue"));
 Vue.component('product-view', require('./pages/Product.vue'));
+Vue.component('product-listing-view', require('./pages/ProductListing.vue'));
 Vue.component('order-view', require('./pages/Order.vue'));
 Vue.component('user-order-view', require('./pages/UserOrder.vue'));
 Vue.component('cart', require('./components/Cart.vue'));

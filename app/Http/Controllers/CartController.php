@@ -47,6 +47,8 @@ class CartController extends Controller
      */
     public function store(Product $product)
     {
+        request()->validate(['quantity' => 'required|numeric|min:1']);
+
         $group_order = $this->getActiveGroupOrder();
         if ($group_order) {
             $user_order = UserOrder::firstOrCreate(
@@ -68,11 +70,11 @@ class CartController extends Controller
             $item = CartItem::create([
                 'user_order_id' => $user_order->id,
                 'product_id' => $product->id,
-                'quantity' => 1,
+                'quantity' => request()['quantity'],
             ]);
             return redirect($user_order->path())->with('flash-message', $item->product->name . ' added to your order');
         } else {
-            $item->incrementQty(1);
+            $item->incrementQty(request()['quantity']);
             return redirect($user_order->path())->with('flash-message', $product->name . "'s quantity updated to " . $item->quantity);
         }
     }
