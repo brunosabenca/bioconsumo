@@ -12,6 +12,8 @@ class UserOrder extends Model
 
     protected $with = ['items'];
 
+    protected $appends = array('is_active');
+
     protected $casts = [
         'open' => 'boolean',
         'cancelled' => 'boolean',
@@ -30,11 +32,16 @@ class UserOrder extends Model
 
     public function order()
     {
-        return $this->belongsTo('App\GroupOrder');
+        return $this->belongsTo('App\GroupOrder', 'group_order_id', 'id');
     }
     
     public function items()
     {
         return $this->hasMany('App\CartItem');
+    }
+
+    public function getIsActiveAttribute()
+    {
+        return $this->load('order')->order->is_active;
     }
 }

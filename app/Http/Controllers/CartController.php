@@ -27,15 +27,6 @@ class CartController extends Controller
      */
     public function index()
     {
-        $user_order = auth()->user()->orders()
-            ->where('delivered', false)
-            ->where('cancelled', false)
-            ->where('open', true)
-            ->first();
-
-        if ($user_order) {
-            return $user_order->items;
-        }
     }
 
     /**
@@ -56,30 +47,47 @@ class CartController extends Controller
      */
     public function store(Product $product)
     {
-        $user_order = auth()->user()->orders()
-            ->where('delivered', false)
-            ->where('cancelled', false)
-            ->where('open', true)
-            ->first();
-
-        if ($user_order == null) {
-            return redirect()->back()
-                ->with('flash-message', "Couldn't add product because there is no order open.")
-                ->with('flash-level', 'warning');
+        $group_order = $this->getActiveGroupOrder();
+        if ($group_order) {
+            $user_order = UserOrder::firstOrCreate(
+                [
+                    'user_id' => auth()->user()->id,
+                    'delivered' => false,
+                    'cancelled' => false,
+                ],
+                [
+                    'group_order_id' => $group_order->id
+                ]
+            );
         } else {
-            $item = $this->findCartItemInOrderByProductId($user_order->id, $product->id);
-            if ($item == null) {
-                $item = CartItem::create([
-                    'user_order_id' => $user_order->id,
-                    'product_id' => $product->id,
-                    'quantity' => 1,
-                ]);
-                return redirect($user_order->path())->with('flash-message', $item->product->name . ' added to your order');
-            } else {
-                $item->incrementQty(1);
-                return redirect($user_order->path())->with('flash-message', $product->name . "'s quantity updated to " . $item->quantity);
-            }
+            return redirect()->back()->with('flash-message', 'There is currently no active group order')->with('flash-level', 'danger');
         }
+
+        $item = $this->findCartItemInOrderByProductId($user_order->id, $product->id);
+        if ($item == null) {
+            $item = CartItem::create([
+                'user_order_id' => $user_order->id,
+                'product_id' => $product->id,
+                'quantity' => 1,
+            ]);
+            return redirect($user_order->path())->with('flash-message', $item->product->name . ' added to your order');
+        } else {
+            $item->incrementQty(1);
+            return redirect($user_order->path())->with('flash-message', $product->name . "'s quantity updated to " . $item->quantity);
+        }
+    }
+
+    protected function getActiveGroupOrder()
+    {
+            $group_orders = \App\GroupOrder::where('cancelled', false)->latest()->get();
+
+            foreach ($group_orders as $order) {
+                if ($order->isActive) {
+                    return $order;
+                }
+            }
+            
+            return null;
     }
 
     protected function findCartItemInOrderByProductId(int $userOrderId, int $productId)

@@ -15,13 +15,13 @@
         </div>
         <div class="col-4 col-sm-4 col-md-4">
             <div class="quantity">
-                <input type="button" value="+" class="plus" v-show="open" :disabled="! open" v-on:click="incrementQty">
+                <input type="button" value="+" class="plus" v-show="is_active" :disabled="! is_active" v-on:click="incrementQty">
                 <input type="number" title="Qty" class="qty"
-                        size="4" :disabled="! open" v-model.number="form.quantity" v-on:change="updateQty">
-                <input type="button" value="-" class="minus" v-show="open" :disabled="! open" v-on:click="decrementQty">
+                        size="4" :disabled="! is_active" v-model.number="form.quantity" v-on:change="updateQty">
+                <input type="button" value="-" class="minus" v-show="is_active" :disabled="! is_active" v-on:click="decrementQty">
             </div>
         </div>
-        <div class="col-2 col-sm-2 col-md-2 text-right" v-show="open">
+        <div class="col-2 col-sm-2 col-md-2 text-right" v-show="is_active">
             <button type="button" class="btn btn-outline-danger btn-xs" v-on:click="destroy">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
@@ -33,7 +33,7 @@
 
 <script>
     export default {
-        props: ['item', 'open'],
+        props: ['item', 'is_active'],
 
         data() {
             return {

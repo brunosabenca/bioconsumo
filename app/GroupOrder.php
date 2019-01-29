@@ -3,10 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class GroupOrder extends Model
 {
-    protected $with = ['orders'];
+    protected $appends = array('is_active');
 
     protected $guarded = [];
 
@@ -28,5 +29,31 @@ class GroupOrder extends Model
     public function orders()
     {
         return $this->hasMany('App\UserOrder');
+    }
+
+    protected function isActive()
+    {
+        $date = Carbon::now();
+
+        $overlapsCount = GroupOrder::where('id', $this->id)->where('cancelled', false)->where(function ($query) use ($date) {
+            $query->where(function ($query) use ($date) {
+                    $query->where('open_date', '<=', $date)
+                    ->where('close_date', '>=', $date);
+            })->orWhere(function ($query) use ($date) {
+                    $query->where('open_date', '<=', $date)
+                        ->where('close_date', '>=', $date);
+            });
+        })->count();
+
+        if ($overlapsCount > 0) {
+            return true;
+        } else {
+            return false;
+        };
+    }
+
+    public function getIsActiveAttribute()
+    {
+        return $this->isActive();
     }
 }

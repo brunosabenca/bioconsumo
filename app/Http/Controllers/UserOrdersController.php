@@ -51,34 +51,67 @@ class UserOrdersController extends Controller
      */
     public function create()
     {
-        $user_order = $this->getActiveOrder();
+        $group_order = $this->getActiveGroupOrder();
 
-        if ($user_order) {
+        if ($group_order) {
+            $user_order = UserOrder::firstOrCreate(
+                [
+                    'user_id' => auth()->user()->id,
+                    'delivered' => false,
+                    'cancelled' => false,
+                ],
+                [
+                    'group_order_id' => $group_order->id
+                ]
+            );
+
+            if (request()->wantsJson()) {
+                return $user_order;
+            }
+
             return redirect($user_order->path());
         } else {
-            $group_orders = GroupOrder::where('open', true)->latest()->get();
-
-            if ($group_orders->count() === 1) {
-                $user_order = $this->createNewUserOrder($group_orders->first()->id);
-                return redirect($user_order->path())
-                    ->with('flash-message', 'A new order was created');
-            } else {
-                return view('user_orders.create', [
-                    'group_orders' => $group_orders,
-                ]);
-            }
+            return redirect()->back()->with('flash-message', 'There is currently no active group order')->with('flash-level', 'danger');
         }
     }
 
-    public function getActiveOrder()
+    public function createAutomatically()
     {
-        $user_order = auth()->user()->orders()
-            ->where('delivered', false)
-            ->where('cancelled', false)
-            ->where('open', true)
-            ->first();
+        $group_order = $this->getActiveGroupOrder();
 
-        return $user_order;
+        if ($group_order) {
+            $user_order = UserOrder::firstOrCreate(
+                [
+                    'user_id' => auth()->user()->id,
+                    'delivered' => false,
+                    'cancelled' => false,
+                ],
+                [
+                    'group_order_id' => $group_order->id
+                ]
+            );
+
+            if (request()->wantsJson()) {
+                return $user_order;
+            }
+
+            return redirect($user_order->path());
+        } else {
+            return redirect()->back()->with('flash-message', 'There is currently no active group order')->with('flash-level', 'danger');
+        }
+    }
+
+    protected function getActiveGroupOrder()
+    {
+            $group_orders = GroupOrder::where('cancelled', false)->latest()->get();
+
+            foreach ($group_orders as $order) {
+                if ($order->isActive) {
+                    return $order;
+                }
+            }
+            
+            return null;
     }
 
     /**
@@ -93,7 +126,12 @@ class UserOrdersController extends Controller
             'group_order' => 'required',
         ]);
 
-        $user_order = $this->createNewUserOrder(request()['group_order']);
+        $group_order_id = request()['group_order'];
+
+        $user_order = UserOrder::create([
+            'group_order_id' => $group_order_id,
+            'user_id' => auth()->user()->id,
+        ]);
 
         if (request()->wantsJson()) {
             return response($user_order, 201);
@@ -101,17 +139,6 @@ class UserOrdersController extends Controller
 
         return redirect($user_order->path())
             ->with('flash-message', 'A new order was created');
-    }
-
-    protected function createNewUserOrder(int $group_order_id)
-    {
-        $user_order = UserOrder::create([
-            'group_order_id' => $group_order_id,
-            'user_id' => auth()->user()->id,
-            'open' => true
-        ]);
-
-        return $user_order;
     }
 
     /**
@@ -148,7 +175,10 @@ class UserOrdersController extends Controller
      */
     public function showCurrent()
     {
-        $user_order = $this->getActiveOrder();
+        $user_order = auth()->user()->orders()
+            ->where('delivered', false)
+            ->where('cancelled', false)
+            ->first();
 
         if ($user_order) {
             return redirect($user_order->path());
@@ -203,7 +233,6 @@ class UserOrdersController extends Controller
     {
         $user_order->update([
             'cancelled' => true,
-            'open' => false,
         ]);
 
         if (request()->wantsJson()) {

@@ -10,7 +10,7 @@
                 open_date: this.order.open_date,
                 close_date: this.order.close_date,
                 cancelled: this.order.cancelled,
-                open: this.order.open,
+                is_active: this.order.is_active,
                 form: {},
                 editing: false
             };
@@ -29,7 +29,6 @@
 
                     this.open_date = this.form.open_date;
                     this.close_date = this.form.close_date;
-                    this.open = this.form.open;
 
                     flash('The order has been updated.');
                 }).catch(error => {
@@ -37,21 +36,10 @@
                 })
             },
 
-            closeOrder() {
-                this.form.open = false;
-                this.update();
-            },
-
-            openOrder() {
-                this.form.open = true;
-                this.update();
-            },
-
             resetForm() {
                 this.form = {
                     open_date: this.open_date,
                     close_date: this.close_date,
-                    open: this.open,
                 };
 
                 this.editing = false;

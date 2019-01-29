@@ -15,7 +15,6 @@ class GroupOrdersTableSeeder extends Seeder
         DB::table('group_orders')->insert([
                 'open_date' => Carbon::now(),
                 'close_date' => Carbon::now()->addDays(3),
-                'open' => 1,
             ]);
     }
 }

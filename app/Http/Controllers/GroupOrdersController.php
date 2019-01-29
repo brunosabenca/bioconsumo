@@ -64,18 +64,41 @@ class GroupOrdersController extends Controller
             'open-date' => 'required',
             'close-date' => 'required'
         ]);
+        
+        $overlaps = $this->getOverlapsCount(
+            request()['open-date'],
+            request()['close-date']
+        );
 
-        $group_order = GroupOrder::create([
-            'open_date' => request('open-date'),
-            'close_date' => request('close-date'),
-            'open' => true
-        ]);
+        if ($overlaps === 0) {
+            $group_order = GroupOrder::create([
+                'open_date' => request('open-date'),
+                'close_date' => request('close-date'),
+            ]);
+        } else {
+            return redirect()->back()->with('flash-message', 'The dates you selected overlap with an existing order')->with('flash-level', 'danger');
+        }
 
         if (request()->wantsJson()) {
             return response($group_order, 201);
         }
 
         return redirect($group_order->path());
+    }
+
+    public function getOverlapsCount($openDate, $closeDate)
+    {
+
+        //(StartA <= EndB) and (EndA >= StartB)
+        // from https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
+        $overlapsCount = GroupOrder::where('cancelled', false)->where(function ($query) use ($openDate, $closeDate) {
+            $query->where(function ($query) use ($openDate, $closeDate) {
+                    $query->where('open_date', '<=', $closeDate)
+                    ->where('close_date', '>=', $openDate);
+            });
+        })->count();
+
+        return $overlapsCount;
     }
 
     /**
@@ -111,15 +134,8 @@ class GroupOrdersController extends Controller
     {
         $group_order->update(request()->validate([
             'open_date' => 'required',
-            'close_date' => 'required',
-            'open' => 'required'
+            'close_date' => 'required'
         ]));
-
-        foreach ($group_order->orders as $order) {
-            $order->update([
-                'open' => request()['open'],
-            ]);
-        }
 
         return $group_order;
     }
@@ -134,13 +150,11 @@ class GroupOrdersController extends Controller
     {
         $group_order->update([
             'cancelled' => true,
-            'open' => false,
         ]);
 
         foreach ($group_order->orders as $order) {
             $order->update([
                 'cancelled' => true,
-                'open' => false,
             ]);
         }
 

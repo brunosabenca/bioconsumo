@@ -18,7 +18,6 @@ class CreateGroupOrdersTable extends Migration
             $table->date('open_date');
             $table->date('close_date');
             
-            $table->boolean('open')->default(false);
             $table->boolean('cancelled')->default(false);
             $table->boolean('delivered')->default(false);
 

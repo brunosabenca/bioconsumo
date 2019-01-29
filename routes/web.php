@@ -38,7 +38,6 @@ Route::patch('/user/orders/{user_order}', 'UserOrdersController@update');
 Route::post('/cart/add/{product}', 'CartController@store');
 Route::delete('/cart/item/{item}', 'CartController@destroy');
 Route::patch('/cart/item/{item}', 'CartController@update');
-Route::get('/cart', 'CartController@index');
 
 Auth::routes();
 
