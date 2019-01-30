@@ -84,9 +84,14 @@
             addToCart() {
                 let uri = `/cart/add/${this.id}`;
 
-                axios.post(uri, this.form).then(() => {
-                    flash(`${this.name} (${this.form.quantity}) added to the cart`);
-                });
+                if (this.form.quantity >= 1) {
+                    axios.post(uri, this.form).then(() => {
+                        flash(`${this.name} (${this.form.quantity}) added to the cart`);
+                    });
+                } else {
+                        flash('Please input a valid quantity', 'danger');
+                }
+
 
             }, 
 
