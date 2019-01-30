@@ -15,9 +15,16 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->unsignedInteger('seller_id')->nullable();
+            $table->foreign('seller_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('set null');
+
             $table->string('name');
             $table->string('description');
             $table->unsignedInteger('price');
+            $table->unsignedInteger('stock')->default('0');
+            $table->string('stock_unit_type')->default('Kg');
             $table->timestamps();
         });
     }

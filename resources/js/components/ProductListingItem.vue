@@ -7,7 +7,7 @@
         <br/>
         <div class="level">
             <input type="text" class="card-title mr-1" v-model="price"  maxlength="4"/>
-            <span>€/Kg</span>
+            <span> per <span v-text="stock_unit_type"></span></span>
         </div>
         <button class="btn btn-secondary btn-sm" @click="editing = true" v-show="! editing">Edit</button>
         <br/>
@@ -20,10 +20,15 @@
 <div class="card" v-else>
     <div class="card-body">
         <h5 class="card-title level">
-            <span v-text="name"></span>
-            <span class="ml-a"><span v-text="price"></span>€/Kg</span>
+            <span class="text-muted" v-if="seller"><span v-text="seller"></span>'s</span>
+            <span class="ml-1" v-text="name"></span>
+            <span class="ml-a">
+                <span v-text="price"></span>€
+                <span class="ml-1 small"> / <span v-text="stock_unit_type"></span></span>
+            </span>
         </h5>
         <p class="card-text"><span v-text="description"></span></p>
+        <p class="card-text">Stock: <span v-text="stock"></span></p>
         <button class="btn btn-secondary btn-sm" @click="editing = true">Edit</button>
         <button class="btn btn-danger btn-sm ml-1" @click="destroy">Delete</button>
 
@@ -33,7 +38,7 @@
                     v-clear-zero
                     value="0"
                     class="qty"
-                    currency="g"
+                    :currency="unit_symbol"
                     currency-symbol-position="suffix"
                     :minus="false"
                     :precision="0"
@@ -64,8 +69,12 @@
             return {
                 id: this.product.id,
                 name: this.product.name,
+                seller: this.product.seller.name,
                 description: this.product.description,
                 price: this.product.price,
+                stock: this.product.stock,
+                stock_unit: this.product.stock_unit,
+                stock_unit_type: this.product.stock_unit_type,
                 quantity: 0,
                 path: '/products/' + this.product.id,
                 form: {},
@@ -74,6 +83,13 @@
         },
 
         computed: {
+            unit_symbol: function() {
+                if (this.stock_unit_type == 'Kg' || this.stock_unit_type == 'g') {
+                    return this.stock_unit_type;
+                } else {
+                    return '';
+                }
+            }
         },
 
         created() {
@@ -86,7 +102,7 @@
 
                 if (this.form.quantity >= 1) {
                     axios.post(uri, this.form).then(() => {
-                        flash(`${this.name} (${this.form.quantity}) added to the cart`);
+                        flash(`${this.form.quantity} ${this.stock_unit_type} of ${this.name} added to the cart`);
                     });
                 } else {
                         flash('Please input a valid quantity', 'danger');

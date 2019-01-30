@@ -16,4 +16,9 @@ class Product extends Model
     {
         return "/products/{$this->id}";
     }
+
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class);
+    }
 }

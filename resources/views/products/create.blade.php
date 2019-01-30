@@ -24,6 +24,21 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="product-name">Stock</label>
+                    <input type="text" class="form-control" id="stock" name="stock" placeholder="100" maxlength="4">
+                </div>
+
+                <div class="form-group">
+                    <label for="seller">Seller</label>
+                    <select class="form-control" id="seller" name="seller_id">
+                    @forelse ($sellers as $seller)
+                    <option value="{{ $seller->id }}">{{ $seller->name }}</option>
+                    @empty
+                    @endforelse
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
 

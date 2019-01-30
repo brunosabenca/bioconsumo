@@ -11,9 +11,9 @@
     </div>
     <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
         <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 13px">
-            <h6><strong><span v-text="item.product.price"></span>€ <span class="text-muted">x</span></strong></h6>
+            <h6><strong><span v-text="price"></span>€</strong></h6>
         </div>
-        <div class="col-4 col-sm-4 col-md-4">
+        <div class="col-2 col-sm-2 col-md-2">
             <div class="quantity">
                 <input type="button" value="+" class="plus" v-show="is_active" :disabled="! is_active" v-on:click="incrementQty">
                 <input type="number" title="Qty" class="qty"
@@ -21,7 +21,10 @@
                 <input type="button" value="-" class="minus" v-show="is_active" :disabled="! is_active" v-on:click="decrementQty">
             </div>
         </div>
-        <div class="col-2 col-sm-2 col-md-2 text-right" v-show="is_active">
+        <div class="col-2 col-sm-2 col-md-3 text-md-left" style="padding-top: 13px;">
+            <h6><strong><span class="text-muted">x</span></strong> <span v-text="unit" class="big"></span></h6>
+        </div>
+        <div class="col-2 col-sm-2 col-md-1 text-right" v-show="is_active">
             <button type="button" class="btn btn-outline-danger btn-xs" v-on:click="destroy">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
@@ -39,12 +42,19 @@
             return {
                 id: this.item.id,
                 quantity: this.item.quantity,
+                unit: this.item.product.stock_unit_type,
                 form: {},
             };
         },
 
         created() {
             this.resetPayload();
+        },
+
+        computed: {
+            price : function () {
+                return this.item.product.price * this.quantity;
+            }
         },
 
         methods: {

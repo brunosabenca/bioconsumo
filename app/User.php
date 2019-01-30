@@ -5,10 +5,19 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tightenco\Parental\HasChildren;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use HasChildren;
+    use \Tightenco\Parental\HasChildren;
+
+    protected $childTypes = [
+        'admin' => Admin::class,
+        'guest' => Guest::class,
+        'seller' => Seller::class,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'type'
     ];
 
     /**

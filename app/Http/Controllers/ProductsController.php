@@ -32,14 +32,18 @@ class ProductsController extends Controller
 
     public function getProducts()
     {
-        $products = Product::latest()->get();
+        $products = Product::latest()->where('stock','>',0)->with('seller')->get();
 
         return $products;
     }
 
     public function create()
     {
-        return view('products.create');
+        $sellers = \App\Seller::all();
+
+        return view('products.create', [
+            'sellers' => $sellers
+        ]);
     }
 
     public function store()
@@ -47,7 +51,9 @@ class ProductsController extends Controller
         $product = Product::create(request()->validate([
             'name' => 'required|max:80|unique:products',
             'description' => 'required|max:255',
-            'price' => 'required|integer'
+            'price' => 'required|integer|min:0',
+            'stock' => 'required|integer|min:0',
+            'seller_id' => 'required'
         ]));
 
         if (request()->wantsJson()) {
