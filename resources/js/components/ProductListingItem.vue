@@ -25,7 +25,7 @@
         </h5>
         <p class="card-text"><span v-text="description"></span></p>
         <button class="btn btn-secondary btn-sm" @click="editing = true">Edit</button>
-        <button class="btn btn-danger btn-sm ml-1" @click="deleteProduct">Delete</button>
+        <button class="btn btn-danger btn-sm ml-1" @click="destroy">Delete</button>
 
         <div class="pull-right">
             <div class="quantity">
@@ -74,8 +74,11 @@
 
             }, 
 
-            deleteProduct() {
-
+            destroy() {
+                axios.delete(this.path).then(() => {
+                    this.$emit('deleted', this.id);
+                    flash(`${this.name} deleted`, 'danger');
+                });
             }, 
 
             update() {

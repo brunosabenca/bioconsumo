@@ -9,24 +9,26 @@
 
         mixins: [collection],
 
-        computed: {
-            chunkedProducts () {
-                return _.chunk(this.products,3)
-            }
-        },
-
-
         data() {
             return {
-                items: this.products
+                items: this.products,
             };
+        },
+
+        computed: {
+            chunks () {
+                return _.chunk(this.items,3)
+            }
         },
 
         created() {
         },
 
         methods: {
-
+            removeProduct(product) {
+                let index = this.items.indexOf(product)
+                this.remove(index);
+            }
         }
     }
 </script>
