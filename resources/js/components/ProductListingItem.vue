@@ -1,13 +1,34 @@
 <template>
 <div class="card" v-if="editing">
     <div class="card-body">
-        <input type="text" class="card-title" v-model="name" maxlength="80"/>
-        <br/>
-        <textarea class="card-text" v-model="description"  maxlength="255"></textarea>
-        <br/>
-        <div class="level">
-            <input type="text" class="card-title mr-1" v-model="price"  maxlength="4"/>
-            <span> per <span v-text="stock_unit_type"></span></span>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="card-title form-control" id="name" v-model="name" maxlength="80"/>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="card-text form-control" id="description" v-model="description" maxlength="255" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col">
+                    <label for="price">Price</label>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <input type="text" class="card-title form-control" id="price" v-model="price"  maxlength="4"/>
+                        </div>
+                        <div class="form-col">
+                            <label for="price" class="ml-1" style="padding-top: 6px;">/ <span v-text="stock_unit_type"></span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="stock">Stock</label>
+                        <input type="text" class="card-title form-control" v-model="stock"  maxlength="4"/>
+                    </div>
+                </div>
+            </div>
         </div>
         <button class="btn btn-secondary btn-sm" @click="editing = true" v-show="! editing">Edit</button>
         <br/>
