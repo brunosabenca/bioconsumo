@@ -45,6 +45,10 @@ body {
     display: none;
 }
 
+input::placeholder, textarea::placeholder {
+    opacity: 0.5 !important;
+}
+
 // Cart
 .quantity {
     float: left;
@@ -108,6 +112,7 @@ body {
 .quantity .minus {
     bottom: 0
 }
+
 .shopping-cart {
     margin-top: 20px;
 }
