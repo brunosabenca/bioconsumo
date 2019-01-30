@@ -76,9 +76,9 @@
 
             destroy() {
                 axios.delete(this.path).then(() => {
-                    this.$emit('deleted', this.id);
                     flash(`${this.name} deleted`, 'danger');
                 });
+                this.$emit('deleted', this.id);
             }, 
 
             update() {
