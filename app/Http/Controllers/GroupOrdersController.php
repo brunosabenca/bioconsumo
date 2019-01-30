@@ -61,8 +61,8 @@ class GroupOrdersController extends Controller
     public function store()
     {
         request()->validate([
-            'open-date' => 'required',
-            'close-date' => 'required'
+            'open-date' => 'required|date|after_or_equal:today',
+            'close-date' => 'required|date|after:open-date'
         ]);
         
         $overlaps = $this->getOverlapsCount(
