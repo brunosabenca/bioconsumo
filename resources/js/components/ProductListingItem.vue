@@ -29,8 +29,18 @@
 
         <div class="pull-right">
             <div class="quantity">
-                <input type="number" title="Qty" class="qty"
-                        size="4" v-model.number="form.quantity">
+                 <vue-numeric
+                    v-clear-zero
+                    value="0"
+                    class="qty"
+                    currency="g"
+                    currency-symbol-position="suffix"
+                    :minus="false"
+                    :precision="0"
+                    :empty-value="0"
+                    v-bind:min="0"
+                    v-bind:max="10000"
+                    v-model.number="form.quantity" ></vue-numeric>
             </div>
             <button class="btn btn-primary" @click="addToCart" aria-label="Add to Cart">
                 <i class="fa fa-cart-plus" aria-hidden="true"></i>
@@ -41,8 +51,14 @@
 </template>
 
 <script>
+    import VueNumeric from 'vue-numeric';
+
     export default {
         props: ['product'],
+
+        components: {
+            VueNumeric
+        },
 
         data() {
             return {
@@ -50,7 +66,7 @@
                 name: this.product.name,
                 description: this.product.description,
                 price: this.product.price,
-                quantity: 1,
+                quantity: 0,
                 path: '/products/' + this.product.id,
                 form: {},
                 editing: false
