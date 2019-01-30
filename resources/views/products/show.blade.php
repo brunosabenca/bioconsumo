@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <h2>Product Details</h2>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 v-cloak">
             {{-- Editing the product--}}
             <div class="card" v-if="editing">
                 <div class="card-body">
