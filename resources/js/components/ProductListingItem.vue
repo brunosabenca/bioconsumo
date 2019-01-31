@@ -56,7 +56,6 @@
         <div class="pull-right">
             <div class="quantity">
                  <vue-numeric
-                    v-clear-zero
                     value="0"
                     class="qty"
                     :currency="unit_symbol"
