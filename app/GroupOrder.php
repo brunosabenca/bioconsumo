@@ -31,6 +31,11 @@ class GroupOrder extends Model
         return $this->hasMany('App\UserOrder');
     }
 
+    public function sellers()
+    {
+        return $this->belongsToMany('App\Seller');
+    }
+
     protected function isActive()
     {
         $date = Carbon::now();

@@ -10,4 +10,9 @@ class Seller extends User
     {
         return $this->hasMany(Product::class);
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(GroupOrder::class);
+    }
 }

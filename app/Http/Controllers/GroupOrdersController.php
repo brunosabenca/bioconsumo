@@ -49,7 +49,10 @@ class GroupOrdersController extends Controller
      */
     public function create()
     {
-        return view('group_orders.create');
+        $sellers = \App\Seller::all();
+        return view('group_orders.create',[
+            'sellers' => $sellers
+        ]);
     }
 
     /**
@@ -61,22 +64,28 @@ class GroupOrdersController extends Controller
     public function store()
     {
         request()->validate([
-            'open-date' => 'required|date|after_or_equal:today',
-            'close-date' => 'required|date|after:open-date'
+            'open_date' => 'required|date|after_or_equal:today',
+            'close_date' => 'required|date|after:open_date',
+            'active_sellers' => 'required'
         ]);
         
         $overlaps = $this->getOverlapsCount(
-            request()['open-date'],
-            request()['close-date']
+            request()['open_date'],
+            request()['close_date']
         );
 
         if ($overlaps === 0) {
             $group_order = GroupOrder::create([
-                'open_date' => request('open-date'),
-                'close_date' => request('close-date'),
+                'open_date' => request('open_date'),
+                'close_date' => request('close_date'),
             ]);
+            $group_order->sellers()->sync(request('active_sellers'));
         } else {
-            return redirect()->back()->with('flash-message', 'The dates you selected overlap with an existing order')->with('flash-level', 'danger');
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'open_date' => ['The interval selected must not overlap with an existing order.'],
+                'close_date' => ['The interval selected must not overlap with an existing order.'],
+            ]);
+            throw $error;
         }
 
         if (request()->wantsJson()) {
