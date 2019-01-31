@@ -65,15 +65,17 @@ class ProductsController extends Controller
 
     public function show(Product $product)
     {
+        $product->load('seller');
         return view('products.show', compact('product'));
     }
 
     public function update(Product $product)
     {
         $product->update(request()->validate([
-            'name' => 'required|max:80|unique:products',
+            'name' => 'required|max:80',
             'description' => 'required|max:255',
-            'price' => 'required|integer'
+            'price' => 'required|integer',
+            'stock' => 'required|integer'
         ]));
 
         return $product;

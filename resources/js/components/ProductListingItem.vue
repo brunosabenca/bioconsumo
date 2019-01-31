@@ -1,34 +1,35 @@
 <template>
+<!-- Editing -->
 <div class="card" v-if="editing">
     <div class="card-body">
         <div class="form-group">
             <div class="form-row">
                 <label for="name">Name</label>
-                <input type="text" class="card-title form-control" id="name" v-model="name" maxlength="80"/>
+                <input type="text" class="card-title form-control" id="name" v-model="form.name" maxlength="80"/>
             </div>
         </div>
 
         <div class="form-group">
             <div class="form-row">
                 <label for="description">Description</label>
-                <textarea class="card-text form-control" id="description" v-model="description" maxlength="255" rows="4"></textarea>
+                <textarea class="card-text form-control" id="description" v-model="form.description" maxlength="255" rows="4"></textarea>
             </div>
         </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <div class="form-col">
-                        <label for="stock">Stock</label>
-                        <input type="text" class="card-title form-control" v-model="stock"  maxlength="4"/>
-                    </div>
-                </div>
-                <div class="form-group ml-a">
-                    <div class="form-col">
-                        <label for="price">Price / <span v-text="stock_unit_type"></span></label>
-                        <input type="text" class="card-title form-control" id="price" v-model="price"  maxlength="4"/>
-                    </div>
+        <div class="form-row">
+            <div class="form-group">
+                <div class="form-col">
+                    <label for="stock">Stock</label>
+                    <input type="text" class="card-title form-control" v-model="form.stock"  maxlength="4"/>
                 </div>
             </div>
+            <div class="form-group ml-a">
+                <div class="form-col">
+                    <label for="price">Price / <span v-text="stock_unit_type"></span></label>
+                    <input type="text" class="card-title form-control" id="price" v-model="form.price"  maxlength="4"/>
+                </div>
+            </div>
+        </div>
 
         <button class="btn btn-secondary btn-sm" @click="editing = true" v-show="! editing">Edit</button>
         <br/>
@@ -38,11 +39,13 @@
         </div>
     </div>
 </div>
+<!-- Viewing -->
 <div class="card" v-else>
     <div class="card-body">
         <h5 class="card-title level">
             <span class="text-muted" v-if="seller"><span v-text="seller"></span>'s</span>
-            <span class="ml-1" v-text="name"></span>
+            <span class="ml-1" v-text="name" v-if="single"></span>
+            <a class="ml-1" v-text="name" :href="`/products/${product.id}`" v-else></a>
             <span class="ml-a">
                 <span v-text="price"></span>€
                 <span class="ml-1 small"> / <span v-text="stock_unit_type"></span></span>
@@ -79,7 +82,13 @@
     import VueNumeric from 'vue-numeric';
 
     export default {
-        props: ['product'],
+        props: {
+            product : {},
+            single: {
+              type: Boolean,
+              default: false
+            }
+        },
 
         components: {
             VueNumeric
@@ -156,7 +165,8 @@
                     name: this.product.name,
                     description: this.product.description,
                     price: this.product.price,
-                    quantity: this.quantity
+                    quantity: this.quantity,
+                    stock: this.stock
                 };
 
                 this.editing = false;
