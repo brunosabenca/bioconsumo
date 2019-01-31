@@ -32,7 +32,7 @@ class ProductsController extends Controller
 
     public function getProducts()
     {
-        $products = Product::latest()->where('stock','>',0)->with('seller')->get();
+        $products = Product::latest()->with('seller')->get();
 
         return $products;
     }

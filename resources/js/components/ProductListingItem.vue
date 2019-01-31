@@ -56,7 +56,7 @@
         <button class="btn btn-secondary btn-sm" @click="editing = true">Edit</button>
         <button class="btn btn-danger btn-sm ml-1" @click="destroy">Delete</button>
 
-        <div class="pull-right">
+        <div class="pull-right" v-if="stock > 0">
             <div class="quantity">
                  <vue-numeric
                     value="0"
@@ -92,6 +92,12 @@
 
         components: {
             VueNumeric
+        },
+
+        computed: {
+            has_stock: function () {
+                return (this.product.stock > 0 ? true : false);
+            }
         },
 
         data() {
@@ -155,6 +161,7 @@
                     this.name = this.form.name;
                     this.description = this.form.description;
                     this.price = this.form.price;
+                    this.stock = this.form.stock;
 
                     flash('The product has been updated.');
                 })
