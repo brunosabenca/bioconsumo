@@ -7,20 +7,8 @@
   <div class="collapse navbar-collapse" id="navbar">
     @auth
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="products-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
-        <div class="dropdown-menu" aria-labelledby="products-dropdown">
-          <a class="dropdown-item" href="/products">List all</a>
-          <a class="dropdown-item" href="/products/create">Create new</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="orders-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Group Orders</a>
-        <div class="dropdown-menu" aria-labelledby="orders-dropdown">
-          <a class="dropdown-item" href="/orders">List all</a>
-          <a class="dropdown-item" href="/orders/create">Create new</a>
-        </div>
-      </li>
+      <li class="nav-item"><a class="nav-link" href="/products">Products</a></li>
+      <li class="nav-item"><a class="nav-link" href="/orders">Group Orders</a></li>
     </ul>
     @endauth
     <!-- Authentication Links -->
