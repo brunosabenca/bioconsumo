@@ -2,34 +2,34 @@
 <div class="card" v-if="editing">
     <div class="card-body">
         <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="card-title form-control" id="name" v-model="name" maxlength="80"/>
+            <div class="form-row">
+                <label for="name">Name</label>
+                <input type="text" class="card-title form-control" id="name" v-model="name" maxlength="80"/>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea class="card-text form-control" id="description" v-model="description" maxlength="255" rows="4"></textarea>
-        </div>
+
         <div class="form-group">
             <div class="form-row">
-                <div class="col">
-                    <label for="price">Price</label>
-                    <div class="form-row">
-                        <div class="form-col">
-                            <input type="text" class="card-title form-control" id="price" v-model="price"  maxlength="4"/>
-                        </div>
-                        <div class="form-col">
-                            <label for="price" class="ml-1" style="padding-top: 6px;">/ <span v-text="stock_unit_type"></span></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-col">
-                    <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="card-text form-control" id="description" v-model="description" maxlength="255" rows="4"></textarea>
+            </div>
+        </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <div class="form-col">
                         <label for="stock">Stock</label>
                         <input type="text" class="card-title form-control" v-model="stock"  maxlength="4"/>
                     </div>
                 </div>
+                <div class="form-group ml-a">
+                    <div class="form-col">
+                        <label for="price">Price / <span v-text="stock_unit_type"></span></label>
+                        <input type="text" class="card-title form-control" id="price" v-model="price"  maxlength="4"/>
+                    </div>
+                </div>
             </div>
-        </div>
+
         <button class="btn btn-secondary btn-sm" @click="editing = true" v-show="! editing">Edit</button>
         <br/>
         <div class="level">
