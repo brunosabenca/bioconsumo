@@ -58,9 +58,23 @@ if (token) {
 /**
  * Vue
  */
+let authorizations = require('./authorizations');
 
 window.events = new Vue();
 
 window.flash = function (message, level = 'success') {
     window.events.$emit('flash', {message, level});
 };
+
+window.Vue.prototype.authorize = function (...params) {
+    if (!window.App.signedIn) return false;
+    if (window.App.isAdmin) return true;
+
+    if (typeof params[0] === 'string') {
+        return authorizations[params[0]](params[1]);
+    }
+    return params[0](window.App.user);
+};
+
+window.Vue.prototype.signedIn = window.App.signedIn;
+window.Vue.prototype.isAdmin = window.App.isAdmin;

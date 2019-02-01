@@ -9,7 +9,8 @@
     <script charset="utf-8">
         window.App = {!! json_encode([
             'user' => auth()->user(),
-            'signedIn' => auth()->check()
+            'signedIn' => auth()->check(),
+            'isAdmin' => auth()->user()->hasRole('super-admin')
         ]) !!};
     </script>
 

@@ -37,6 +37,7 @@
                     </h5>
                     <p class="card-text">Open date: <span v-text="open_date"></span></p>
                     <p class="card-text">Close date: <span v-text="close_date"></span></p>
+                    @can('edit group order')
                     <div class="level" v-show="! cancelled">
                         <form action="{{ $order->path() }}" method="POST" class="mr-1">
                             {{ csrf_field() }}
@@ -45,6 +46,7 @@
                         </form>
                         <button class="btn btn-primary btn-sm mr-1" @click="editing = true">Edit</button>
                     </div>
+                    @endcan
                 </div>
             </div>
         </div>

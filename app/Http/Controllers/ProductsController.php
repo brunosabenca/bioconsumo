@@ -53,7 +53,7 @@ class ProductsController extends Controller
             'description' => 'required|max:255',
             'price' => 'required|integer|min:0',
             'stock' => 'required|integer|min:0',
-            'seller_id' => 'required'
+            'user_id' => 'required'
         ]));
 
         if (request()->wantsJson()) {

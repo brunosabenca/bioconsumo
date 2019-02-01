@@ -30,7 +30,7 @@
 
                 <div class="form-group">
                     <label for="seller">Seller</label>
-                    <select class="form-control" id="seller" name="seller_id">
+                    <select class="form-control" id="seller" name="user_id">
                     @forelse ($sellers as $seller)
                     <option value="{{ $seller->id }}">{{ $seller->name }}</option>
                     @empty
@@ -39,7 +39,8 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a href="/products" role="button" class="btn btn-secondary">Return</a>
+                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
                 </div>
 
                 @if(count($errors))

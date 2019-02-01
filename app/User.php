@@ -6,18 +6,20 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tightenco\Parental\HasChildren;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use Notifiable;
     use HasChildren;
-    use \Tightenco\Parental\HasChildren;
+    use HasRoles;
 
     protected $childTypes = [
         'admin' => Admin::class,
-        'guest' => Guest::class,
         'seller' => Seller::class,
     ];
+
+    protected $guard_name = 'web';
 
     /**
      * The attributes that are mass assignable.
