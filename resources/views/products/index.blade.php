@@ -5,7 +5,7 @@
 
 <div class="container-fluid">
     <h2>Products
-        @can('create product')<a href="/products/create" role="button" class="small" aria-label="Create new product"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>@endcan
+        @can('create products')<a href="/products/create" role="button" class="small" aria-label="Create new product"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>@endcan
     </h2>
 
     <div class="row" v-for="chunk in chunks">

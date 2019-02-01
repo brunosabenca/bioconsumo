@@ -17,32 +17,35 @@ class RolesAndPermissionsSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
-        Permission::create(['name' => 'create product']);
-        Permission::create(['name' => 'edit product']);
-        Permission::create(['name' => 'delete product']);
+        Permission::create(['name' => 'create products']);
+        Permission::create(['name' => 'edit products']);
+        Permission::create(['name' => 'delete products']);
 
-        Permission::create(['name' => 'create group order']);
-        Permission::create(['name' => 'edit group order']);
-        Permission::create(['name' => 'cancel group order']);
+        Permission::create(['name' => 'edit any product']);
+        Permission::create(['name' => 'delete any product']);
 
-        Permission::create(['name' => 'create order']);
-        Permission::create(['name' => 'edit order']);
-        Permission::create(['name' => 'cancel order']);
+        Permission::create(['name' => 'create group orders']);
+        Permission::create(['name' => 'edit group orders']);
+        Permission::create(['name' => 'cancel group orders']);
 
-        Permission::create(['name' => 'add item to cart']);
-        Permission::create(['name' => 'remove item from cart']);
-        Permission::create(['name' => 'edit cart content']);
+        Permission::create(['name' => 'create orders']);
+        Permission::create(['name' => 'edit orders']);
+        Permission::create(['name' => 'cancel orders']);
+
+        Permission::create(['name' => 'add items to cart']);
+        Permission::create(['name' => 'remove items from cart']);
+        Permission::create(['name' => 'edit cart contents']);
 
         // create roles and assign created permissions
         $seller = Role::create(['name' => 'seller'])
             ->givePermissionTo([
-                'create product', 'edit product', 'delete product',
+                'create products', 'edit products', 'delete products',
             ]);
 
         $buyer = Role::create(['name' => 'buyer'])
             ->givePermissionTo([
-                'create order', 'edit order', 'cancel order',
-                'add item to cart', 'remove item from cart', 'edit cart content'
+                'create orders', 'edit orders', 'cancel orders',
+                'add items to cart', 'remove items from cart', 'edit cart contents'
             ]);
 
         $admin = Role::create(['name' => 'admin']);

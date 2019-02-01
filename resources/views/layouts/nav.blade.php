@@ -21,7 +21,7 @@
       <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}</a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
-          @can('create order')<a class="dropdown-item" href="/user/orders/current">Current Order</a>
+          @can('create orders')<a class="dropdown-item" href="/user/orders/current">Current Order</a>
           <a class="dropdown-item" href="/user/orders/">Order History</a>
           <hr>
           @endcan

@@ -95,9 +95,10 @@ class ProductsController extends Controller
 
     public function destroy(Product $product)
     {
-        $productBelongsToAuthenticatedUser = auth()->user()->products->contains($product->id);
+        $user = auth()->user();
+        $productBelongsToAuthenticatedUser = optional($user->products)->contains($product->id);
         
-        if ($productBelongsToAuthenticatedUser) {
+        if ($productBelongsToAuthenticatedUser || $user->can('delete any product')) {
             $product->delete();
 
             if (request()->wantsJson()) {

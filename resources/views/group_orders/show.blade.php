@@ -41,7 +41,7 @@
                     <ul>
                         <li v-for="seller in order.sellers" v-text="seller.name"></li>
                     </ul>
-                    @can('edit group order')
+                    @can('edit group orders')
                     <div class="level" v-show="! cancelled">
                         <form action="{{ $order->path() }}" method="POST" class="mr-1">
                             {{ csrf_field() }}
