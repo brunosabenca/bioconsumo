@@ -9,8 +9,9 @@
     <script charset="utf-8">
         window.App = {!! json_encode([
             'user' => auth()->user(),
+            'userPermissions' => optional(auth()->user())->all_permissions,
             'signedIn' => auth()->check(),
-            'isAdmin' => auth()->user()->hasRole('super-admin')
+            'isAdmin' => optional(auth()->user())->hasRole('super-admin') ?? false,
         ]) !!};
     </script>
 

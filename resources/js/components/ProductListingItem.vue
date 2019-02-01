@@ -54,8 +54,8 @@
         <p class="card-text"><span v-text="description"></span></p>
         <p class="card-text">Stock: <span v-text="stock"></span></p>
 
-        <button class="btn btn-secondary btn-sm" v-if="authorize('owns', product)" @click="editing = true">Edit</button>
-        <button class="btn btn-danger btn-sm ml-1" v-if="authorize('owns', product)" @click="destroy">Delete</button>
+        <button class="btn btn-secondary btn-sm" v-if="authorize('owns', product) && authorize('can','delete product')" @click="editing = true">Edit</button>
+        <button class="btn btn-danger btn-sm ml-1" v-if="authorize('owns', product) && authorize('can', 'edit product')" @click="destroy">Delete</button>
 
         <div class="pull-right" v-if="stock > 0">
             <div class="quantity">
@@ -84,7 +84,9 @@
 
     export default {
         props: {
-            product : {},
+            product: {
+                required: true
+            },
             single: {
               type: Boolean,
               default: false

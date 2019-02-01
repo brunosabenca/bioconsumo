@@ -43,4 +43,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\UserOrder');
     }
+
+    public function getAllPermissionsAttribute()
+    {
+        $all_permissions =  $this->getAllPermissions()->toArray();
+        return array_column($all_permissions, 'name');
+    }
 }
