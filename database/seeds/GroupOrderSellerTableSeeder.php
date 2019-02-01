@@ -13,11 +13,7 @@ class GroupOrderSellerTableSeeder extends Seeder
     {
         DB::table('group_order_seller')->insert([
                 'group_order_id' => 1,
-                'seller_id' => 2,
-        ]);
-        DB::table('group_order_seller')->insert([
-                'group_order_id' => 1,
-                'seller_id' => 3,
+                'user_id' => 3,
         ]);
     }
 }

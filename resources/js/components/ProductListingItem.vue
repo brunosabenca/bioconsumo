@@ -151,9 +151,11 @@
 
             destroy() {
                 axios.delete(this.path).then(() => {
-                    flash(`${this.name} deleted`, 'danger');
+                    this.$emit('deleted', this.id);
+                    flash(`${this.name} deleted`, 'success');
+                }).catch((error) => {
+                    flash("You don't have permission to delete this product.", 'danger');
                 });
-                this.$emit('deleted', this.id);
             }, 
 
             update() {
@@ -167,7 +169,9 @@
                     this.stock = this.form.stock;
 
                     flash('The product has been updated.');
-                })
+                }).catch((error) => {
+                    flash("You don't have permission to update this product.", 'danger');
+                });
             },
 
             resetForm() {

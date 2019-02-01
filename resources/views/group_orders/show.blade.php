@@ -37,6 +37,10 @@
                     </h5>
                     <p class="card-text">Open date: <span v-text="open_date"></span></p>
                     <p class="card-text">Close date: <span v-text="close_date"></span></p>
+                    <h6>Active Sellers:</h6>
+                    <ul>
+                        <li v-for="seller in order.sellers" v-text="seller.name"></li>
+                    </ul>
                     @can('edit group order')
                     <div class="level" v-show="! cancelled">
                         <form action="{{ $order->path() }}" method="POST" class="mr-1">

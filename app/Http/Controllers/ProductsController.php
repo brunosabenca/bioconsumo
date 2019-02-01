@@ -71,22 +71,42 @@ class ProductsController extends Controller
 
     public function update(Product $product)
     {
-        $product->update(request()->validate([
-            'name' => 'required|max:80',
-            'description' => 'required|max:255',
-            'price' => 'required|integer',
-            'stock' => 'required|integer'
-        ]));
+        $productBelongsToAuthenticatedUser = auth()->user()->products->contains($product->id);
+        
+        if ($productBelongsToAuthenticatedUser) {
+            $product->update(request()->validate([
+                'name' => 'required|max:80',
+                'description' => 'required|max:255',
+                'price' => 'required|integer',
+                'stock' => 'required|integer'
+            ]));
+
+            if (request()->wantsJson()) {
+                return response([], 204);
+            }
+        } else {
+            if (request()->wantsJson()) {
+                return response([], 403);
+            }
+        }
 
         return $product;
     }
 
     public function destroy(Product $product)
     {
-        $product->delete();
+        $productBelongsToAuthenticatedUser = auth()->user()->products->contains($product->id);
+        
+        if ($productBelongsToAuthenticatedUser) {
+            $product->delete();
 
-        if (request()->wantsJson()) {
-            return response([], 204);
+            if (request()->wantsJson()) {
+                return response([], 204);
+            }
+        } else {
+            if (request()->wantsJson()) {
+                return response([], 403);
+            }
         }
 
         return redirect('/products');

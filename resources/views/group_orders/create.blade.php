@@ -6,7 +6,7 @@
     <h2>Create new group order</h4>
     <div class="row">
         <div class="col-sm-6 col-md-4 col-xl-3 mb-3">
-            <div class="alert alert-success" v-if="submitted">
+            <div class="alert alert-success" v-if="submitted" v-cloak>
                 Group order successfully created!
             </div>
             <div class="form-group">

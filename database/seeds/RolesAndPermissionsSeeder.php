@@ -34,17 +34,18 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'edit cart content']);
 
         // create roles and assign created permissions
-        $role = Role::create(['name' => 'seller'])
+        $seller = Role::create(['name' => 'seller'])
             ->givePermissionTo([
                 'create product', 'edit product', 'delete product',
             ]);
-        $role = Role::create(['name' => 'buyer'])
+
+        $buyer = Role::create(['name' => 'buyer'])
             ->givePermissionTo([
                 'create order', 'edit order', 'cancel order',
                 'add item to cart', 'remove item from cart', 'edit cart content'
             ]);
 
-        $role = Role::create(['name' => 'super-admin']);
-        $role->givePermissionTo(Permission::all());
+        $admin = Role::create(['name' => 'admin']);
+        $admin->givePermissionTo(Permission::all());
     }
 }

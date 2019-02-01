@@ -15,8 +15,9 @@ class User extends Authenticatable
     use HasRoles;
 
     protected $childTypes = [
-        'admin' => Admin::class,
+        'buyer' => Buyer::class,
         'seller' => Seller::class,
+        'admin' => Admin::class,
     ];
 
     protected $guard_name = 'web';

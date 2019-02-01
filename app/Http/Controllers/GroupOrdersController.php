@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\GroupOrder;
+use App\Seller;
 
 class GroupOrdersController extends Controller
 {
@@ -49,7 +50,8 @@ class GroupOrdersController extends Controller
      */
     public function create()
     {
-        $sellers = \App\Seller::all();
+        $sellers = Seller::all();
+
         return view('group_orders.create',[
             'sellers' => $sellers
         ]);
@@ -118,6 +120,8 @@ class GroupOrdersController extends Controller
      */
     public function show(GroupOrder $order)
     {
+        $order->load('sellers');
+        
         return view('group_orders.show', compact('order'));
     }
 
@@ -157,6 +161,17 @@ class GroupOrdersController extends Controller
      */
     public function destroy(GroupOrder $group_order)
     {
+        $this->cancelGroupOrder($group_order);
+
+        if (request()->wantsJson()) {
+            return response([], 204);
+        }
+
+        return redirect($group_order->path());
+    }
+
+    protected function cancelGroupOrder(GroupOrder $group_order)
+    {
         $group_order->update([
             'cancelled' => true,
         ]);
@@ -166,11 +181,5 @@ class GroupOrdersController extends Controller
                 'cancelled' => true,
             ]);
         }
-
-        if (request()->wantsJson()) {
-            return response([], 204);
-        }
-
-        return redirect($group_order->path());
     }
 }

@@ -8,11 +8,6 @@ class Seller extends User
 
     protected $guard_name = 'web';
 
-    public function __construct()
-    {
-        $this->assignRole('seller');
-    }
-
     public function products()
     {
         return $this->hasMany(Product::class);
@@ -20,6 +15,6 @@ class Seller extends User
 
     public function group_orders()
     {
-        return $this->belongsToMany(GroupOrder::class);
+        return $this->belongsToMany(GroupOrder::class, 'group_order_seller');
     }
 }

@@ -20,8 +20,8 @@ class CreateGroupOrderSellerTable extends Migration
             $table->foreign('group_order_id')->references('id')
                 ->on('group_orders')->onUpdate('cascade')->onDelete('set null');
 
-            $table->unsignedInteger('seller_id')->nullable();
-            $table->foreign('seller_id')->references('id')
+            $table->unsignedInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')
                 ->on('users')->onUpdate('cascade')->onDelete('set null');
 
             $table->timestamps();

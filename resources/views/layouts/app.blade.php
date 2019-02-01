@@ -11,7 +11,7 @@
             'user' => auth()->user(),
             'userPermissions' => optional(auth()->user())->all_permissions,
             'signedIn' => auth()->check(),
-            'isAdmin' => optional(auth()->user())->hasRole('super-admin') ?? false,
+            'isAdmin' => optional(auth()->user())->hasRole('admin') ?? false,
         ]) !!};
     </script>
 
