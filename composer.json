@@ -1,4 +1,4 @@
-    {
+{
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
@@ -9,6 +9,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
+        "spatie/laravel-permission": "^2.30",
         "tightenco/parental": "dev-master#4eafd3d as 0.5.1-dev"
     },
     "require-dev": {
