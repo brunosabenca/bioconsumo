@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Cknow\Money\Money as Money;
 
 class CartItem extends Model
 {
@@ -11,6 +12,8 @@ class CartItem extends Model
     protected $fillable = ['user_order_id', 'product_id', 'quantity'];
 
     protected $with = ['product'];
+
+    public $appends = [ 'price' ];
 
     public function product()
     {
@@ -27,9 +30,15 @@ class CartItem extends Model
         $this->quantity = $this->quantity + $qty;
         $this->save();
     }
+    
     public function decrementQty(int $qty = 1)
     {
         $this->quantity = $this->quantity - $qty ;
         $this->save();
+    }
+
+    public function getPriceAttribute()
+    {
+        return Money::parse($this->product->price)->multiply($this->quantity)->formatByDecimal();
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\GroupOrder;
 use App\UserOrder;
 use App\Product;
+use Cknow\Money\Money;
 
 class UserOrdersController extends Controller
 {
@@ -35,6 +36,11 @@ class UserOrdersController extends Controller
         return view('user_orders.index', [
             'orders' => $orders
         ]);
+    }
+
+    public function showPrice(UserOrder $user_order)
+    {
+        return $user_order->price;
     }
 
     public function getOrders()

@@ -25,6 +25,8 @@ class CreateCartItemTable extends Migration
                 ->on('products')->onUpdate('cascade')->onDelete('set null');
 
             $table->unsignedInteger('quantity');
+            $table->unsignedInteger('delivered_quantity')->nullable();
+
             $table->timestamps();
         });
     }

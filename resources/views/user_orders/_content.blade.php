@@ -6,6 +6,6 @@
     <span class="badge badge-success text-uppercase" v-show="delivered">Delivered</span>
 </h5>
 
-<cart :cartitems="{{ $items }}" :is_active="is_active"></cart>
+<cart :user_order_id="id" :cartitems="{{ $items }}" :is_active="is_active"></cart>
 
 <br/>

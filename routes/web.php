@@ -32,12 +32,13 @@ Route::post('/user/orders', 'UserOrdersController@store')->middleware('permissio
 Route::get('/user/orders/create', 'UserOrdersController@create')->middleware('permission:create orders')->name('user_order.create');
 Route::get('/user/orders/current', 'UserOrdersController@showCurrent')->middleware('permission:create orders')->name('user_order.showCurrent');
 Route::get('/user/orders/{user_order}', 'UserOrdersController@show')->middleware('permission:create orders')->name('user_order.show');
+Route::get('/user/orders/{user_order}/price', 'UserOrdersController@showPrice');
 Route::delete('/user/orders/{user_order}', 'UserOrdersController@destroy')->middleware('permission:cancel orders')->name('user_order.destroy');
 Route::patch('/user/orders/{user_order}', 'UserOrdersController@update')->middleware('permission:edit orders')->name('user_order.update');
 
-Route::post('/cart/add/{product}', 'CartController@store')->middleware('permission:add items to cart');
-Route::delete('/cart/item/{item}', 'CartController@destroy')->middleware('permission:remove items from cart');
-Route::patch('/cart/item/{item}', 'CartController@update')->middleware('permission:edit cart contents');
+Route::post('/cart/add/{product}', 'CartItemController@store')->middleware('permission:add items to cart');
+Route::delete('/cart/item/{item}', 'CartItemController@destroy')->middleware('permission:remove items from cart');
+Route::patch('/cart/item/{item}', 'CartItemController@update')->middleware('permission:edit cart contents');
 
 Auth::routes();
 

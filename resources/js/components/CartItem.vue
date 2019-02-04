@@ -11,7 +11,7 @@
     </div>
     <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
         <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 13px">
-            <h6><strong><span v-text="price"></span>€</strong></h6>
+            <h6><strong><span v-text="formattedPrice"></span></strong></h6>
         </div>
         <div class="col-2 col-sm-2 col-md-2">
             <div class="quantity">
@@ -43,6 +43,7 @@
                 id: this.item.id,
                 quantity: this.item.quantity,
                 unit: this.item.product.stock_unit_type,
+                price: this.item.price,
                 form: {},
             };
         },
@@ -52,8 +53,8 @@
         },
 
         computed: {
-            price : function () {
-                return this.item.product.price * this.quantity;
+            formattedPrice : function () {
+                return '€' + this.price;
             }
         },
 
@@ -63,6 +64,9 @@
                 axios.patch(uri, this.form).then(response => {
                     this.quantity = this.form.quantity;
                     flash(this.item.product.name + "'s quantity updated to " + this.quantity);
+                    this.item.price = response.data;
+                    this.price = this.item.price;
+                    this.$emit('updated');
                 }).catch(error => {
                     this.resetPayload();
                     console.log( error.message);
@@ -73,7 +77,7 @@
                 let uri = `/cart/item/${this.id}`;
                 axios.delete(uri);
                 this.$emit('deleted', this.id);
-                flash(this.item.product.name + ' removed from your order', 'danger');
+                flash(this.item.product.name + ' removed from your order');
             },
 
             incrementQty() {

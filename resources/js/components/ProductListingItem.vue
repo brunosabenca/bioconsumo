@@ -26,7 +26,7 @@
             <div class="form-group ml-a">
                 <div class="form-col">
                     <label for="price">Price / <span v-text="stock_unit_type"></span></label>
-                    <input type="text" class="card-title form-control" id="price" v-model="form.price"  maxlength="4"/>
+                    <money class="form-control" v-model="form.price" v-bind="money"></money>
                 </div>
             </div>
         </div>
@@ -47,15 +47,15 @@
             <span class="ml-1" v-text="name" v-if="single"></span>
             <a class="ml-1" v-text="name" :href="`/products/${product.id}`" v-else></a>
             <span class="ml-a">
-                <span v-text="price"></span>€
+                <span v-text="price"></span>
                 <span class="ml-1 small"> / <span v-text="stock_unit_type"></span></span>
             </span>
         </h5>
         <p class="card-text"><span v-text="description"></span></p>
         <p class="card-text">Stock: <span v-text="stock"></span></p>
 
-        <button class="btn btn-secondary btn-sm" v-if="authorize('owns', product) && authorize('can','delete product')" @click="editing = true">Edit</button>
-        <button class="btn btn-danger btn-sm ml-1" v-if="authorize('owns', product) && authorize('can', 'edit product')" @click="destroy">Delete</button>
+        <button class="btn btn-secondary btn-sm" v-if="authorize('owns', product) || authorize('can','delete any product')" @click="editing = true">Edit</button>
+        <button class="btn btn-danger btn-sm ml-1" v-if="authorize('owns', product) || authorize('can', 'edit any product')" @click="destroy">Delete</button>
 
         <div class="pull-right" v-if="stock > 0 && authorize('can','add item to cart')">
             <div class="quantity">
@@ -81,6 +81,7 @@
 
 <script>
     import VueNumeric from 'vue-numeric';
+    import {Money} from 'v-money';
 
     export default {
         props: {
@@ -94,7 +95,8 @@
         },
 
         components: {
-            VueNumeric
+            VueNumeric,
+            Money
         },
 
         computed: {
@@ -116,9 +118,18 @@
                 quantity: 0,
                 path: '/products/' + this.product.id,
                 form: {},
-                editing: false
-            };
+                editing: false,
+                money: {
+                    decimal: ',',
+                    thousands: '.',
+                    prefix: '€',
+                    suffix: '',
+                    precision: 2,
+                    masked: false
+                }
+            }
         },
+
 
         computed: {
             unit_symbol: function() {
@@ -165,7 +176,7 @@
                     this.editing = false;
                     this.name = this.form.name;
                     this.description = this.form.description;
-                    this.price = this.form.price;
+                    this.price = '€' + this.form.price;
                     this.stock = this.form.stock;
 
                     flash('The product has been updated.');

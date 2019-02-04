@@ -8,8 +8,9 @@
             </div>
             <div class="card-body">
                     <div v-for="(item, index) in items" :key="item.id">
-                        <cart-item :item="item" :is_active="is_active" v-on:deleted="remove(index)"></cart-item>
+                        <cart-item :item="item" :is_active="is_active" v-on:updated="updateTotal()" v-on:deleted="remove(index)"></cart-item>
                     </div>
+                    <h5 v-text="total" class="pull-right"></h5>
             </div>
         </div>
 
@@ -22,22 +23,45 @@
     export default {
         components: {CartItem},
 
-        props: ['cartitems', 'is_active'],
+        props: ['user_order_id', 'cartitems', 'is_active'],
 
         mixins: [collection],
 
         data() {
             return {
                 items: this.cartitems,
+                total: '',
             };
         },
 
         created() {
+            this.updateTotal();
         },
 
         methods: {
-            updateQty() {
+            sumPrices(items) {
+                let total = 0;
+                _.forEach(items, function (item) {
+                    total += +item.price;
+                })
+                return total;
+            }, 
 
+            updateTotal() {
+                this.total = '€' + this.sumPrices(this.items).toFixed(2);
+                let uri = `/user/orders/${this.user_order_id}/price`;
+                axios.get(uri, this.form).then(response => {
+                    this.total = response.data;
+                }).catch(error => {
+                    console.log(error.message);
+                })
+            },
+
+            remove(index) {
+                this.items.splice(index, 1);
+
+                this.$emit('removed');
+                this.updateTotal();
             }
         }
     }

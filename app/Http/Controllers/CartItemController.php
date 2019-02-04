@@ -8,7 +8,7 @@ use App\UserOrder;
 use App\Product;
 use App\CartItem;
 
-class CartController extends Controller
+class CartItemController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -132,7 +132,11 @@ class CartController extends Controller
             'quantity' => 'required|numeric|min:0'
         ]);
         
-        $item->update(request()->only('quantity'));
+        if ($item->update(request()->only('quantity'))) {
+            if (request()->wantsJson()) {
+                return response($item->price, 201);
+            }
+        }
     }
 
     /**

@@ -22,10 +22,12 @@ class CreateProductsTable extends Migration
 
             $table->string('name');
             $table->string('description');
-            $table->unsignedInteger('price');
+            $table->string('price');
             $table->unsignedInteger('stock')->default('0');
             $table->string('stock_unit_type')->default('Kg');
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

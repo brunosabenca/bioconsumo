@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Cknow\Money\Money;
 
 class UserOrder extends Model
 {
@@ -22,7 +23,7 @@ class UserOrder extends Model
 
     public function path()
     {
-        return "/user/orders/{$this->id}/?withProducts=1";
+        return "/user/orders/{$this->id}/";
     }
 
     public function user()
@@ -43,5 +44,16 @@ class UserOrder extends Model
     public function getIsActiveAttribute()
     {
         return $this->load('order')->order->is_active;
+    }
+
+    public function getPriceAttribute()
+    {
+        $total = '€0.00';
+        foreach ($this->items as $item) {
+            $item_price = money_parse_by_decimal($item->price, 'EUR');
+            $total = money_parse($total)->add($item_price)->format();
+        }
+
+        return $total;
     }
 }

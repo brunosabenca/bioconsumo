@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Seller;
+use Cknow\Money\Money;
 
 class ProductsController extends Controller
 {
@@ -20,13 +22,15 @@ class ProductsController extends Controller
     public function index()
     {
         $products = $this->getProducts();
+        $sellers = Seller::all();
 
         if (request()->wantsJson()) {
             return $products;
         }
 
         return view('products.index', [
-            'products' => $products
+            'products' => $products,
+            'sellers' => $sellers
         ]);
     }
 
@@ -51,10 +55,13 @@ class ProductsController extends Controller
         $product = Product::create(request()->validate([
             'name' => 'required|max:80|unique:products',
             'description' => 'required|max:255',
-            'price' => 'required|integer|min:0',
+            'price' => 'required|min:0',
             'stock' => 'required|integer|min:0',
             'user_id' => 'required'
         ]));
+        dd(Money::EUR(request()['price']));
+
+        $product = Product::create(request()->get());
 
         if (request()->wantsJson()) {
             return response($product, 201);
@@ -71,15 +78,22 @@ class ProductsController extends Controller
 
     public function update(Product $product)
     {
-        $productBelongsToAuthenticatedUser = auth()->user()->products->contains($product->id);
+        $user = auth()->user();
+        $productBelongsToAuthenticatedUser = optional($user->products)->contains($product->id);
         
-        if ($productBelongsToAuthenticatedUser) {
-            $product->update(request()->validate([
+        if ($productBelongsToAuthenticatedUser || $user->can('edit any product')) {
+           request()->validate([
                 'name' => 'required|max:80',
                 'description' => 'required|max:255',
-                'price' => 'required|integer',
+                'price' => 'required',
                 'stock' => 'required|integer'
-            ]));
+            ]);
+
+            $product->name = request()['name'];
+            $product->description = request()['description'];
+            $product->price = Money::parseByIntlLocalizedDecimal((string) request()['price'], 'EUR');
+            $product->stock = request()['stock'];
+            $product->save();
 
             if (request()->wantsJson()) {
                 return response([], 204);
