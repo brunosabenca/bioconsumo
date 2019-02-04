@@ -52,16 +52,21 @@ class ProductsController extends Controller
 
     public function store()
     {
-        $product = Product::create(request()->validate([
+        request()->validate([
             'name' => 'required|max:80|unique:products',
             'description' => 'required|max:255',
             'price' => 'required|min:0',
             'stock' => 'required|integer|min:0',
             'user_id' => 'required'
-        ]));
-        dd(Money::EUR(request()['price']));
+        ]);
 
-        $product = Product::create(request()->get());
+        $product = Product::create([
+            'name' => request()['name'],
+            'description' => request()['description'],
+            'price' => Money::parseByIntlLocalizedDecimal((string) request()['price'], 'EUR'),
+            'stock' => request()['stock'],
+            'user_id' => request()['user_id']
+        ]);
 
         if (request()->wantsJson()) {
             return response($product, 201);
