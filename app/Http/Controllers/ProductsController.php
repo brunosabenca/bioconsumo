@@ -21,8 +21,15 @@ class ProductsController extends Controller
 
     public function index()
     {
-        $products = $this->getProducts();
-        $sellers = Seller::all();
+        $user = auth()->user();
+        if ($user->hasRole('seller')) {
+            $user->load('products');
+            $products = $user->products;
+            $sellers = collect([$products]);
+        } else {
+            $products = $this->getProducts();
+            $sellers = Seller::all();
+        }
 
         if (request()->wantsJson()) {
             return $products;
