@@ -24,8 +24,8 @@ class ProductsController extends Controller
         $user = auth()->user();
         if ($user->hasRole('seller')) {
             $user->load('products');
-            $products = $user->products;
-            $sellers = collect([$products]);
+            $products = $this->getUserProducts($user->id);
+            $sellers = collect([$user]);
         } else {
             $products = $this->getProducts();
             $sellers = Seller::all();
@@ -44,6 +44,13 @@ class ProductsController extends Controller
     public function getProducts()
     {
         $products = Product::latest()->with('seller')->get();
+
+        return $products;
+    }
+
+    public function getUserProducts($id)
+    {
+        $products = Product::latest()->with('seller')->where('user_id', $id)->get();
 
         return $products;
     }

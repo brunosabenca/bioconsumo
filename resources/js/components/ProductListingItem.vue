@@ -109,7 +109,7 @@
             return {
                 id: this.product.id,
                 name: this.product.name,
-                seller: this.product.seller.name,
+                seller: this.seller,
                 description: this.product.description,
                 price: this.product.price,
                 stock: this.product.stock,
