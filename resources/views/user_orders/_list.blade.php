@@ -1,7 +1,7 @@
 @forelse ($orders as $order)
 <div class="card">
     <div class="card-body">
-        <div class="level">
+        <div class="level v-cloak">
             <h5 class="card-title"><a href="{{ $order->path() }}">Order #{{ $order->id }}</a>
                 <span class="badge badge-danger text-uppercase">{{ $order->cancelled ? 'Cancelled' : ''}}</span>
                 <span class="badge badge-success text-uppercase">{{ $order->is_active ? 'Open' : ''}}</span>
