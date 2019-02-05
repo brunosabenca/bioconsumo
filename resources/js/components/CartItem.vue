@@ -1,19 +1,21 @@
 <template>
-<div class="row shopping-cart-item" :id="'item-' + id">
-    <div class="col-12 col-sm-12 col-md-2 text-center">
+<div class="d-flex flex-row flex-wrap flex-md-nowrap shopping-cart-item flex-grow-0 flex-shrink-0 mt-2" :id="'item-' + id">
+    <div class="flex-column flex-shrink-0 flex-grow-0 p-2">
             <img class="img-responsive" src="http://placehold.it/120x80" alt="preview" width="120" height="80">
     </div>
-    <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
+
+    <div class="flex-column flex-shrink-1 flex-grow-0 p-2" style="flex-basis: 60em;">
         <h4 class="product-name"><strong v-text="item.product.name"></strong></h4>
         <h5>
             <small v-text="item.product.description"></small>
         </h5>
     </div>
-    <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
-        <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 13px">
+
+    <div class="d-flex justify-content-end flex-fill">
+        <div class="flex-column align-self-center flex-shrink-0 flex-grow-0 px-1 pt-2">
             <h6><strong><span v-text="formattedPrice"></span></strong></h6>
         </div>
-        <div class="col-2 col-sm-2 col-md-2">
+        <div class="flex-column align-self-center flex-grow-0 flex-shrink-0 px-1">
             <div class="quantity">
                 <input type="button" value="+" class="plus" v-show="is_active" :disabled="! is_active" v-on:click="incrementQty">
                 <input type="number" title="Qty" class="qty"
@@ -21,10 +23,12 @@
                 <input type="button" value="-" class="minus" v-show="is_active" :disabled="! is_active" v-on:click="decrementQty">
             </div>
         </div>
-        <div class="col-2 col-sm-2 col-md-3 text-md-left" style="padding-top: 13px;">
+
+        <div class="unit flex-column align-self-center flex-grow-0 flex-shrink-0 pt-2 text-left">
             <h6><strong><span class="text-muted">x</span></strong> <span v-text="unit" class="big"></span></h6>
         </div>
-        <div class="col-2 col-sm-2 col-md-1 text-right" v-show="is_active">
+
+        <div class="flex-column align-self-center flex-grow-0 flex-shrink-0 px-1 " v-show="is_active">
             <button type="button" class="btn btn-outline-danger btn-xs" v-on:click="destroy">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
@@ -32,7 +36,6 @@
     </div>
 </div>
 </template>
-
 
 <script>
     export default {
@@ -55,6 +58,10 @@
         computed: {
             formattedPrice : function () {
                 return '€' + this.price;
+            },
+
+            last() {
+                return Object.keys(this.person).length-1;
             }
         },
 

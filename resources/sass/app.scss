@@ -20,6 +20,15 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 100%;               
+  background-color:#DFDFDF;
+  height: 1px;
+}
+
 body {
     padding-bottom: 5rem;
 }
@@ -111,6 +120,11 @@ input::placeholder, textarea::placeholder {
 
 .quantity .minus:hover, .quantity .plus:hover {
     background-color: #dad8da
+}
+
+.unit {
+    margin-left: -14px;
+    width: 40px;
 }
 
 .quantity .minus {

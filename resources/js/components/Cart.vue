@@ -6,13 +6,20 @@
                 <a href="/products" class="btn btn-outline-info btn-sm pull-right" v-if="is_active">Continue adding products</a>
                 <div class="clearfix"></div>
             </div>
+
             <div class="card-body">
-                    <div v-for="(item, index) in items" :key="item.id">
-                        <cart-item :item="item" :is_active="is_active" v-on:updated="updateTotal()" v-on:deleted="remove(index)"></cart-item>
-                    </div>
-                    <h5 v-text="total" class="pull-right"></h5>
+                <div class="d-flex flex-column">
+                    <cart-item v-for="(item, index) in items" :key="item.id" :item="item" :is_active="is_active" v-on:updated="updateTotal()" v-on:deleted="remove(index)"></cart-item>
+                </div>
             </div>
-        </div>
+
+            <div class="card-footer">
+                <div class="pull-right">
+                    <h4><strong><span v-text="total"></span></strong></h4>
+                </div>
+            </div>
+            
+    </div>
 
 </template>
 
@@ -48,9 +55,9 @@
             }, 
 
             updateTotal() {
-                this.total = '€' + this.sumPrices(this.items).toFixed(2);
+                //this.total = '€' + this.sumPrices(this.items).toFixed(2);
                 let uri = `/user/orders/${this.user_order_id}/price`;
-                axios.get(uri, this.form).then(response => {
+                axios.get(uri).then(response => {
                     this.total = response.data;
                 }).catch(error => {
                     console.log(error.message);
@@ -59,9 +66,8 @@
 
             remove(index) {
                 this.items.splice(index, 1);
-
-                this.$emit('removed');
                 this.updateTotal();
+                this.$emit('removed');
             }
         }
     }

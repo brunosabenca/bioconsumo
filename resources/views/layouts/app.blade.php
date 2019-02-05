@@ -28,7 +28,7 @@
 <body>
 @include('layouts.nav')
 
-<main id="app" class="bd-content p-5" role="main">
+<main id="app" class="bd-content py-3" role="main">
     <div class="my-5">@yield('content')</div>
     <flash message="{{ session('flash-message') }}" level="{{ session('flash-level') ? session('flash-level') : 'success'}}"></flash>
 </main><!-- /.container -->
