@@ -14,6 +14,11 @@
             <option :value="null">All Sellers</option>
             <option v-for="seller in sellers" :value="seller.id">@{{seller.name}}</option>
         </select>
+        <label for="search" class="form-label col-auto ml-1">Search</label>
+        <vue-fuse name="search" class="col-md-2 form-control form-control-sm" :keys="keys" :list="items" :default-tall="true" event-name="results"></vue-fuse>
+    </div>
+
+    <div class="form-row mt-2" >
     </div>
 
     <div class="row mt-2" v-for="chunk in filteredChunks">

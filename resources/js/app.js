@@ -6,6 +6,9 @@
  */
 window.Vue = require('vue');
 
+import VueFuse from 'vue-fuse';
+Vue.use(VueFuse);
+
 require('./bootstrap');
 
 /**

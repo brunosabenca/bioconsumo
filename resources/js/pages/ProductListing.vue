@@ -5,13 +5,17 @@
     export default {
         props: ['products', 'sellers'],
 
-        components: {ProductListingItem},
+        components: {
+            ProductListingItem
+        },
 
         mixins: [collection],
 
         data() {
             return {
                 items: this.products,
+                results: [],
+                keys: ['name', 'description'],
                 seller_id: null
             };
         },
@@ -23,6 +27,9 @@
         },
 
         created() {
+            this.$on('results', results => {
+                this.results = results
+            })
         },
 
         methods: {
@@ -33,12 +40,16 @@
 
             filteredItems (items, seller_id) {
                 if (seller_id != null){
-                    return this.items.filter(function (item) {
+                    return this.results.filter(function (item) {
                         return item.seller.id === seller_id;
                     });
                 } else {
-                    return this.items;
+                    return this.results;
                 }
+            },
+
+            setItems(items) {
+                this.items = items;
             }
         }
     }
