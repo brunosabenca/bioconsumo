@@ -109,7 +109,7 @@
             return {
                 id: this.product.id,
                 name: this.product.name,
-                seller: this.seller,
+                seller: this.product.seller.name,
                 description: this.product.description,
                 price: this.product.price,
                 stock: this.product.stock,
@@ -165,7 +165,7 @@
                     this.$emit('deleted', this.id);
                     flash(`${this.name} deleted`, 'success');
                 }).catch((error) => {
-                    flash("You don't have permission to delete this product.", 'danger');
+                    flash("The product couldn't be deleted.", 'danger');
                 });
             }, 
 
@@ -181,7 +181,7 @@
 
                     flash('The product has been updated.');
                 }).catch((error) => {
-                    flash("You don't have permission to update this product.", 'danger');
+                    flash("The product couldn't be updated.", 'danger');
                 });
             },
 
