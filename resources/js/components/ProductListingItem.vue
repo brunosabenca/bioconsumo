@@ -57,7 +57,7 @@
         <button class="btn btn-secondary btn-sm" v-if="authorize('owns', product) || authorize('can','delete any product')" @click="editing = true">Edit</button>
         <button class="btn btn-danger btn-sm ml-1" v-if="authorize('owns', product) || authorize('can', 'edit any product')" @click="destroy">Delete</button>
 
-        <div class="pull-right" v-if="stock > 0 && authorize('can','add item to cart')">
+        <div class="pull-right" v-if="stock > 0 && authorize('can','add items to cart')">
             <div class="quantity">
                  <vue-numeric
                     value="0"
