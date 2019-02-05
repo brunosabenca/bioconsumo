@@ -29,28 +29,33 @@
             </div>
             {{-- Viewing the order--}}
             <div class="card" v-else>
-                <div class="card-body">
-                    <h5 class="card-title">Group Order #<span v-text="id"></span>
-                        <span class="badge badge-danger text-uppercase" v-show="cancelled">Cancelled</span>
-                        <span class="badge badge-success text-uppercase" v-show="is_active">Open</span>
-                        <span class="badge badge-secondary text-uppercase" v-show="! is_active && ! cancelled">Closed</span>
-                    </h5>
-                    <p class="card-text">Open date: <span v-text="open_date"></span></p>
-                    <p class="card-text">Close date: <span v-text="close_date"></span></p>
-                    <h6>Active Sellers:</h6>
-                    <ul>
-                        <li v-for="seller in order.sellers" v-text="seller.name"></li>
-                    </ul>
-                    @can('edit group orders')
-                    <div class="level" v-show="! cancelled">
-                        <form action="{{ $order->path() }}" method="POST" class="mr-1">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
-                        </form>
-                        <button class="btn btn-primary btn-sm mr-1" @click="editing = true">Edit</button>
+                <div class="card-body row">
+                    <div class="col-md-3">
+                        <h5 class="card-title">Order of {{ \Carbon\Carbon::parse($order->open_date)->toFormattedDateString() }}
+                            <div v-cloak>
+                                <span class="badge badge-danger text-uppercase" v-show="cancelled">Cancelled</span>
+                                <span class="badge badge-success text-uppercase" v-show="is_active">Open</span>
+                                <span class="badge badge-secondary text-uppercase" v-show="! is_active && ! cancelled">Closed</span>
+                            </div>
+                        </h5>
+                        <h6><span class="text-uppercase small"><strong>closing {{ \Carbon\Carbon::parse($order->close_date)->diffForHumans() }}</strong></span></h6>
+                        @can('edit group orders')
+                        <div class="level" v-show="! cancelled">
+                            <form action="{{ $order->path() }}" method="POST" class="mr-1">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                            </form>
+                            <button class="btn btn-primary btn-sm mr-1" @click="editing = true">Edit</button>
+                        </div>
+                        @endcan
                     </div>
-                    @endcan
+                    <div class="col-md-8">
+                        <h6>Active Sellers:</h6>
+                        <ul>
+                            <li v-for="seller in order.sellers" v-text="seller.name"></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

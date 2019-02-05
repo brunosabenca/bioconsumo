@@ -27,27 +27,20 @@ class UserOrdersController extends Controller
      */
     public function index()
     {
-        $orders = $this->getOrders();
+        $my_orders = auth()->user()->orders;
 
         if (request()->wantsJson()) {
-            return $orders;
+            return $my_orders;
         }
 
         return view('user_orders.index', [
-            'orders' => $orders
+            'orders' => $my_orders
         ]);
     }
 
     public function showPrice(UserOrder $user_order)
     {
         return $user_order->price;
-    }
-
-    public function getOrders()
-    {
-        $orders = UserOrder::latest();
-
-        return $orders->paginate(10);
     }
 
     /**
@@ -157,11 +150,16 @@ class UserOrdersController extends Controller
     {
         $group_order = GroupOrder::where('id', '=', $user_order->group_order_id)->first();
 
-        return view('user_orders.show', [
-            'user_order' => $user_order,
-            'group_order' => $group_order,
-            'items' => $user_order->items
-        ]);
+        if ($user_order->user_id == auth()->user()->id) {
+            return view('user_orders.show', [
+                'user_order' => $user_order,
+                'group_order' => $group_order,
+                'items' => $user_order->items
+            ]);
+        } else {
+            return redirect()->back()
+                ->with('flash-message', "You don't have permission to view that order.");
+        }
     }
 
     /**
@@ -203,18 +201,6 @@ class UserOrdersController extends Controller
      */
     public function update(UserOrder $user_order)
     {
-        request()->validate([
-            'open' => 'required|bool',
-            'cancelled' => 'bool'
-        ]);
-
-        $user_order->update(request()->only('open'));
-
-        if (request()->wantsJson()) {
-            return response([], 204);
-        }
-
-        return redirect($user_order->path());
     }
 
     /**
@@ -225,16 +211,5 @@ class UserOrdersController extends Controller
      */
     public function destroy(UserOrder $user_order)
     {
-        $user_order->update([
-            'cancelled' => true,
-        ]);
-
-        if (request()->wantsJson()) {
-            return response([], 204);
-        }
-
-        return redirect($user_order->path())
-            ->with('flash-message', 'The order has been cancelled.')
-            ->with('flash-level', 'danger');
     }
 }
