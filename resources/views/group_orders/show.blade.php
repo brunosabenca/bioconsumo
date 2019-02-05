@@ -38,7 +38,7 @@
                                 <span class="badge badge-secondary text-uppercase" v-show="! is_active && ! cancelled">Closed</span>
                             </div>
                         </h5>
-                        <h6><span class="text-uppercase small"><strong>closing {{ \Carbon\Carbon::parse($order->close_date)->diffForHumans() }}</strong></span></h6>
+                        <h6 v-if="! cancelled"><span class="text-uppercase small"><strong>closing {{ \Carbon\Carbon::parse($order->close_date)->diffForHumans() }}</strong></span></h6>
                         @can('edit group orders')
                         <div class="level" v-show="! cancelled">
                             <form action="{{ $order->path() }}" method="POST" class="mr-1">

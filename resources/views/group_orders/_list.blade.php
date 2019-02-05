@@ -9,7 +9,7 @@
                 <span class="badge badge-success text-uppercase">{{ $order->delivered ? 'Delivered' : ''}}</span>
             </h5>
         </div>
-        <h6><span class="text-uppercase small"><strong>closing {{ \Carbon\Carbon::parse($order->close_date)->diffForHumans() }}</strong></span></h6>
+        @if ($order->cancelled == false)<h6><span class="text-uppercase small"><strong>closing {{ \Carbon\Carbon::parse($order->close_date)->diffForHumans() }}</strong></span></h6>@endif
     </div>
 </div>
 
