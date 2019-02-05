@@ -27,6 +27,7 @@ Vue.component('order-view', require('./pages/Order.vue'));
 Vue.component('user-order-view', require('./pages/UserOrder.vue'));
 Vue.component('cart', require('./components/Cart.vue'));
 Vue.component('new-group-order-view', require('./pages/NewGroupOrder.vue'));
+Vue.component('new-product-view', require('./pages/NewProduct.vue'));
 
 // const files = require.context('./', true, /\.vue$/i)
 
