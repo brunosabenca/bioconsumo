@@ -65,7 +65,7 @@
                     :currency="unit_symbol"
                     currency-symbol-position="suffix"
                     :minus="false"
-                    :precision="0"
+                    :precision="unit_precision"
                     :empty-value="0"
                     v-bind:min="0"
                     v-bind:max="10000"
@@ -99,12 +99,6 @@
             Money
         },
 
-        computed: {
-            has_stock() {
-                return (this.product.stock > 0 ? true : false);
-            },
-        },
-
         data() {
             return {
                 id: this.product.id,
@@ -113,7 +107,6 @@
                 description: this.product.description,
                 price: this.product.price,
                 stock: this.product.stock,
-                stock_unit: this.product.stock_unit,
                 stock_unit_type: this.product.stock_unit_type,
                 quantity: 0,
                 path: '/products/' + this.product.id,
@@ -130,7 +123,6 @@
             }
         },
 
-
         computed: {
             unit_symbol: function() {
                 if (this.stock_unit_type == 'Kg' || this.stock_unit_type == 'g') {
@@ -138,6 +130,14 @@
                 } else {
                     return '';
                 }
+            },
+
+            has_stock() {
+                return (this.product.stock > 0 ? true : false);
+            },
+
+            unit_precision() {
+                return (this.stock_unit_type == 'Kg' || this.stock_unit_type == 'g' ? 2 : 0);
             }
         },
 
@@ -152,9 +152,11 @@
                 if (this.form.quantity >= 1) {
                     axios.post(uri, this.form).then(() => {
                         flash(`${this.form.quantity} ${this.stock_unit_type} of ${this.name} added to the cart`);
+                    }).catch( (error) => {
+                        flash(error.response.data.message, 'danger');
                     });
                 } else {
-                        flash('Please input a valid quantity', 'danger');
+                    flash('Please input a valid quantity', 'danger');
                 }
 
 

@@ -62,6 +62,9 @@ class CartItemController extends Controller
                 ]
             );
         } else {
+            if (request()->wantsJson()) {
+                return response(['message'=>'There is currently no active group order.'], 412);
+            }
             return redirect()->back()->with('flash-message', 'There is currently no active group order')->with('flash-level', 'danger');
         }
 
