@@ -12,9 +12,6 @@
                 uri: '/orders',
                 submitted: false,
                 form: {
-                    open_date: '',
-                    close_date: '',
-                    active_sellers: []
                 },
                 errors: []
             };
@@ -36,7 +33,6 @@
             },
 
             postAddNewGroupOrder() {
-                var searchUrl = this.uri
                 return axios.post(this.uri, this.form).then( (response) =>  {
                     this.resetForm();
                     this.submitted = true;
