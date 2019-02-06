@@ -9,6 +9,9 @@ window.Vue = require('vue');
 import VueFuse from 'vue-fuse';
 Vue.use(VueFuse);
 
+import VueScrollTo from 'vue-scrollto';
+Vue.use(VueScrollTo)
+
 require('./bootstrap');
 
 /**

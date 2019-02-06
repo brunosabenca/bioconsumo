@@ -94,11 +94,15 @@
 
         methods: {
             update() {
-                axios.patch(this.path, this.form).then(() => {
+                axios.patch(this.path, this.form).then((response) => {
                     this.editing = false;
 
                     this.open_date = this.form.open_date;
                     this.close_date = this.form.close_date;
+
+                    this.$emit('order-updated', response);
+
+                    this.is_active = response.is_active;
 
                     flash('The order has been updated.');
                 }).catch(error => {
@@ -107,8 +111,12 @@
             },
 
             destroy() {
-                axios.delete(this.path).then(() => {
+                axios.delete(this.path).then((response) => {
                     this.cancelled = true;
+                    this.is_active = false;
+                    
+                    this.$emit('order-updated', response);
+
                     flash('The order has been cancelled.', 'success');
                 }).catch((error) => {
                     flash("The order couldn't be cancelled.", 'danger');

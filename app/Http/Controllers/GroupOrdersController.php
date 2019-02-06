@@ -26,13 +26,16 @@ class GroupOrdersController extends Controller
     public function index()
     {
         $group_orders = $this->getOrders();
+        $sellers = Seller::all();
 
         if (request()->wantsJson()) {
             return $group_orders;
         }
 
+
         return view('group_orders.index', [
-            'group_orders' => $group_orders
+            'group_orders' => $group_orders,
+            'sellers' => $sellers
         ]);
     }
 
@@ -146,8 +149,8 @@ class GroupOrdersController extends Controller
     public function update(GroupOrder $group_order)
     {
         $group_order->update(request()->validate([
-            'open_date' => 'required',
-            'close_date' => 'required'
+            'open_date' => 'required|date|after_or_equal:today',
+            'close_date' => 'required|date|after:open_date',
         ]));
 
         return $group_order;
