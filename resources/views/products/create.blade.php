@@ -31,8 +31,10 @@
 
             <div class="form-group">
                 <label for="price">Price</label>
-                <input type="text" class="form-control" id="price" name="price" placeholder="5" maxlength="4" v-model="form.price"
-                    :class="errors.price ? 'is-invalid' : ''">
+
+                <money class="form-control" v-model="form.price" v-bind="money" name="price"
+                    :class="errors.price ? 'is-invalid' : ''"></money>
+
                 <form-error v-if="errors.price" :errors="errors">
                     @{{ errors.price[0] }}
                 </form-error>

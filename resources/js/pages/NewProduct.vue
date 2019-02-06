@@ -1,11 +1,12 @@
 <script>
     var moment = require('moment');
     import FormError from '../components/FormError.vue';
+    import {Money} from 'v-money';
 
     export default {
         props: ['sellers'],
 
-        components: {FormError},
+        components: {FormError, Money},
 
         data() {
             return {
@@ -13,7 +14,15 @@
                 submitted: false,
                 form: {
                 },
-                errors: []
+                errors: [],
+                money: {
+                    decimal: ',',
+                    thousands: '.',
+                    prefix: '€',
+                    suffix: '',
+                    precision: 2,
+                    masked: false
+                }
             };
         },
 
