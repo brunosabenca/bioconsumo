@@ -25,22 +25,22 @@ class GroupOrdersController extends Controller
      */
     public function index()
     {
-        $orders = $this->getOrders();
+        $group_orders = $this->getOrders();
 
         if (request()->wantsJson()) {
-            return $orders;
+            return $group_orders;
         }
 
         return view('group_orders.index', [
-            'orders' => $orders
+            'group_orders' => $group_orders
         ]);
     }
 
     public function getOrders()
     {
-        $orders = GroupOrder::latest();
+        $group_orders = GroupOrder::latest()->with('sellers')->get();
 
-        return $orders->paginate(10);
+        return $group_orders;
     }
 
     /**
@@ -118,11 +118,11 @@ class GroupOrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(GroupOrder $order)
+    public function show(GroupOrder $group_order)
     {
-        $order->load('sellers');
+        $group_order->load('sellers');
         
-        return view('group_orders.show', compact('order'));
+        return view('group_orders.show', compact('group_order'));
     }
 
     /**
@@ -176,8 +176,8 @@ class GroupOrdersController extends Controller
             'cancelled' => true,
         ]);
 
-        foreach ($group_order->orders as $order) {
-            $order->update([
+        foreach ($group_order->orders as $group_order) {
+            $group_order->update([
                 'cancelled' => true,
             ]);
         }

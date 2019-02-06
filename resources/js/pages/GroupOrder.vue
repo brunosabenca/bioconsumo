@@ -1,16 +1,19 @@
 <script>
+    var moment = require('moment');
+
     export default {
-        props: ['order'],
+        props: ['group_order'],
 
         components: {},
 
         data() {
             return {
-                id: this.order.id,
-                open_date: this.order.open_date,
-                close_date: this.order.close_date,
-                cancelled: this.order.cancelled,
-                is_active: this.order.is_active,
+                id: this.group_order.id,
+                open_date: this.group_order.open_date,
+                close_date: this.group_order.close_date,
+                cancelled: this.group_order.cancelled,
+                is_active: this.group_order.is_active,
+                date_format: 'YYYY-MM-DD',
                 form: {},
                 editing: false
             };
@@ -18,6 +21,12 @@
 
         created() {
             this.resetForm();
+        },
+
+        computed: {
+            date: function (date) {
+                return moment(date).format(this.date_format);
+            }
         },
 
         methods: {
