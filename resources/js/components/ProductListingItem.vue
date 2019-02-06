@@ -41,39 +41,51 @@
 </div>
 <!-- Viewing -->
 <div class="card" v-else>
+    <h5 class="card-header level">
+        <span class="text-muted" v-if="seller"><span v-text="seller"></span>'s</span>
+        <span class="ml-1" v-text="name" v-if="single"></span>
+        <a class="ml-1" v-text="name" :href="`/products/${product.id}`" v-else></a>
+        <span class="ml-a">
+            <span v-text="price"></span>
+            <span class="ml-1 small"> / <span v-text="stock_unit_type"></span></span>
+        </span>
+    </h5>
+
     <div class="card-body">
-        <h5 class="card-title level">
-            <span class="text-muted" v-if="seller"><span v-text="seller"></span>'s</span>
-            <span class="ml-1" v-text="name" v-if="single"></span>
-            <a class="ml-1" v-text="name" :href="`/products/${product.id}`" v-else></a>
-            <span class="ml-a">
-                <span v-text="price"></span>
-                <span class="ml-1 small"> / <span v-text="stock_unit_type"></span></span>
-            </span>
-        </h5>
         <p class="card-text"><span v-text="description"></span></p>
         <p class="card-text">Stock: <span v-text="stock"></span></p>
+    </div>
 
-        <button class="btn btn-secondary btn-sm" v-if="authorize('owns', product) || authorize('can','delete any product')" @click="editing = true">Edit</button>
-        <button class="btn btn-danger btn-sm ml-1" v-if="authorize('owns', product) || authorize('can', 'edit any product')" @click="destroy">Delete</button>
-
-        <div class="pull-right" v-if="stock > 0 && authorize('can','add items to cart')">
-            <div class="quantity">
-                 <vue-numeric
-                    value="0"
-                    class="qty"
-                    :currency="unit_symbol"
-                    currency-symbol-position="suffix"
-                    :minus="false"
-                    :precision="unit_precision"
-                    :empty-value="0"
-                    v-bind:min="0"
-                    v-bind:max="10000"
-                    v-model.number="form.quantity" ></vue-numeric>
-            </div>
-            <button class="btn btn-primary" @click="addToCart" aria-label="Add to Cart">
-                <i class="fa fa-cart-plus" aria-hidden="true"></i>
+    <div class="card-footer d-flex flex-row">
+        <div class="flex-grow-0">
+            <button class="flex-grow-0 btn btn-danger btn-sm" v-if="authorize('owns', product) || authorize('can', 'edit any product')" @click="destroy" aria-label="Delete">
+                <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
+        </div>
+
+        <div class="flex-grow-1 ml-1">
+            <button class="flex-grow-1 btn btn-secondary btn-sm" v-if="authorize('owns', product) || authorize('can','delete any product')" @click="editing = true">Edit</button>
+        </div>
+
+        <div class="flex-grow-0">
+            <div class="input-group" v-if="stock > 0 && authorize('can','add items to cart')">
+                <vue-numeric
+                value="0"
+                class="form-control"
+                :currency="unit_symbol"
+                currency-symbol-position="suffix"
+                :minus="false"
+                :precision="unit_precision"
+                :empty-value="0"
+                v-bind:min="0"
+                v-bind:max="10000"
+                v-model.number="form.quantity" ></vue-numeric>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" @click="addToCart" aria-label="Add to Cart">
+                        <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
