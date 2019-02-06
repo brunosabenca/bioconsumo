@@ -23,7 +23,7 @@ Route::patch('/products/{product}', 'ProductsController@update')->middleware('pe
 Route::get('/orders', 'GroupOrdersController@index')->name('group_orders.index');
 Route::post('/orders', 'GroupOrdersController@store')->name('group_orders.store');
 Route::get('/orders/create', 'GroupOrdersController@create')->middleware('permission:create group orders')->name('group_orders.create');
-Route::get('/orders/{order}', 'GroupOrdersController@show')->name('group_orders.show');
+Route::get('/orders/{group_order}', 'GroupOrdersController@show')->name('group_orders.show');
 Route::delete('/orders/{group_order}', 'GroupOrdersController@destroy')->middleware('permission:cancel group orders')->name('group_orders.destroy');
 Route::patch('/orders/{group_order}', 'GroupOrdersController@update')->middleware('permission:edit group orders')->name('group_orders.update');
 

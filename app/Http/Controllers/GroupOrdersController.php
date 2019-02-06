@@ -124,8 +124,12 @@ class GroupOrdersController extends Controller
     public function show(GroupOrder $group_order)
     {
         $group_order->load('sellers');
+        $sellers = Seller::all();
         
-        return view('group_orders.show', compact('group_order'));
+        return view('group_orders.show', [
+            'group_order' => $group_order,
+            'sellers' => $sellers
+        ]);
     }
 
     /**

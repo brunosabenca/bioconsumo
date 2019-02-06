@@ -1,10 +1,13 @@
 <script>
+    import GroupOrderListingItem from '../components/GroupOrderListingItem.vue';
     var moment = require('moment');
 
     export default {
         props: ['group_order'],
 
-        components: {},
+        components: {
+            GroupOrderListingItem
+        },
 
         data() {
             return {
