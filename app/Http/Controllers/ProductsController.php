@@ -66,13 +66,22 @@ class ProductsController extends Controller
 
     public function store()
     {
+        $user = auth()->user();
+        $user_id = $user->id;
+
         request()->validate([
             'name' => 'required|max:80|unique:products',
             'description' => 'required|max:255',
             'price' => 'required|min:0',
-            'stock' => 'required|integer|min:0',
-            'user_id' => 'required'
+            'stock' => 'required|integer|min:0'
         ]);
+
+        if (! $user->hasRole('seller')) {
+            request()->validate([
+                'user_id' => 'required'
+            ]);
+            $user_id = request()['user_id'];
+        }
 
         $product = Product::create([
             'name' => request()['name'],
@@ -91,8 +100,16 @@ class ProductsController extends Controller
 
     public function show(Product $product)
     {
-        $product->load('seller');
-        return view('products.show', compact('product'));
+        $user = auth()->user();
+        if ($user->hasRole('seller') && $product->user_id !== $user->id) {
+            if (request()->wantsJson()) {
+                return response(['message' => "You don't have permission to view this product."], 403);
+            }
+            return redirect('/products')->with('flash-message', "You don't have permission to view this product.")->with('flash-level','danger');
+        } else {
+            $product->load('seller');
+            return view('products.show', compact('product'));
+        }
     }
 
     public function update(Product $product)

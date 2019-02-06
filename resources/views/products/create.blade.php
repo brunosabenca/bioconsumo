@@ -47,7 +47,7 @@
                 </form-error>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" v-if="authorize('can','edit any product')">
                 <label for="user_id">Seller</label>
                 <select class="form-control" id="user_id" name="user_id" v-model="form.user_id"
                     :class="errors.user_id ? 'is-invalid' : ''">
