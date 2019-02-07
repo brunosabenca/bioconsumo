@@ -18,8 +18,8 @@
         <vue-fuse name="search" class="col-md-2 form-control form-control-sm" :keys="keys" :list="items" :default-tall="true" event-name="results"></vue-fuse>
     </div>
 
-    <div class="form-row" v-for="chunk in filteredChunks">
-        <div class="col-md-4" v-for="product in chunk" :key="product.id">
+    <div class="form-row" >
+        <div class="col-sm-12 col-md-6 col-lg-4" v-for="product in this.items" :key="product.id">
             <product-listing-item :product="product" v-on:deleted="removeProduct(product)" class="m-3"></product-listing-item>
         </div>
     </div>
