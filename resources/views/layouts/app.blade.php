@@ -28,7 +28,7 @@
 <body>
 @include('layouts.nav')
 
-<main id="app" class="bd-content py-3" role="main">
+<main id="app" class="bd-content pl-4 pt-5" role="main">
     <div class="my-5">@yield('content')</div>
     <flash message="{{ session('flash-message') }}" level="{{ session('flash-level') ? session('flash-level') : 'success'}}"></flash>
 </main><!-- /.container -->
@@ -36,6 +36,12 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
-@yield('scripts')
+
+<script>
+    $( document ).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
+    });
+    @yield('scripts')
+</script>
 </body>
 </html>

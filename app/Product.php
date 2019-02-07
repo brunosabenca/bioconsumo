@@ -4,10 +4,20 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Cknow\Money\Money;
 
 class Product extends Model
 {
     use SoftDeletes;
+
+    protected $attributes = [
+        'stock' => 0,
+        'stock_unit_type' => 'Kg',
+    ];
+
+     protected $casts = [
+        'price' => 'string',
+    ];
 
     /**
      * The attributes that should be mutated to dates.

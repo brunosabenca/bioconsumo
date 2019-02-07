@@ -37,13 +37,16 @@
         },
 
         methods: {
-            addProduct() {
-
+            cancelCreation() {
+                this.$emit('creation-cancelled');
             },
 
             postAddNewProduct() {
                 return axios.post(this.uri, this.form).then( (response) =>  {
+                    this.$emit('creation-success', response.data);
+
                     this.resetForm();
+
                     this.submitted = true;
                 }).catch( (error) => {
                     // Error
@@ -59,7 +62,7 @@
             },
 
             resetForm() {
-                 this.form.name = "";
+                this.form.name = "";
                 this.form.description = "";
                 this.form.price = "";
                 this.form.stock = "";

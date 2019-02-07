@@ -3,22 +3,25 @@
 @section('content')
 <group-order-listing-view :group_orders="{{ $group_orders }}" inline-template>
 <div class="container-fluid">
-    <h2>Group Orders
+    <h2 class="m-4">Group Orders
         @can('create group orders')
-        <a href="#"  id="create-product" @click="creating ? creating = false : creating = true"
-            role="button" class="small" aria-label="Create new group order">
-            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+        <a href="#"  @click="creating ? creating = false : creating = true"
+            role="button" class="small" aria-label="Create new group order"
+            data-toggle="tooltip" title="Create new group order">
+            <i v-if="creating" class="fa fa-minus-square" aria-hidden="true"></i>
+            <i v-else class="fa fa-plus-square" aria-hidden="true" v-cloak></i>
         </a>
         @endcan
     </h2>
-    <div v-if="creating" v-cloak class="mb-4">
+
+    <div v-if="creating" v-cloak class="mx-4">
         <new-group-order-view :sellers="{{ $sellers }}" inline-template
             v-on:creation-cancelled="creating = false"
             v-on:creation-success="addGroupOrder">
 
             <div class="card">
                 <h6 class="card-header">Create new group order</h6>
-                <div class="row card-body">
+                <div class="card-body">
                     <div class="col-sm-6 col-md-4 col-xl-3 mb-3">
                         <div class="form-group">
                             <label for="open-date">Open Date</label>
@@ -72,8 +75,9 @@
     </div>
 
     <div class="row">
-        <group-order-listing-item  v-for="(item, index) in items" v-bind:key="item.id" :group_order="item"
-            class="col-sm-12 col-md-6 col-lg-4" v-on:updated-order="updateGroupOrder"></group-order-listing-item>
+        <div class="col-sm-12 col-md-6 col-lg-4" v-for="(item, index) in items" v-bind:key="item.id" >
+            <group-order-listing-item :group_order="item" class="m-4" v-on:updated-order="updateGroupOrder"></group-order-listing-item>
+        </div>
     </div>
 </div>
 </group-order-listing-view>

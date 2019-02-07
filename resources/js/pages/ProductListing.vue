@@ -16,7 +16,9 @@
                 items: this.products,
                 results: [],
                 keys: ['name', 'description'],
-                seller_id: null
+                seller_id: null,
+                creating: false,
+                created: false,
             };
         },
 
@@ -33,6 +35,18 @@
         },
 
         methods: {
+            addProduct(product) {
+                this.created = true;
+                this.creating = false;
+                this.items.splice(0, 0, product);
+
+                flash('Product created.')
+            },
+
+            updateProduct(index, data) {
+                this.items.splice(index, 1, data);
+            },
+
             removeProduct(product) {
                 let index = this.items.indexOf(product)
                 this.remove(index);

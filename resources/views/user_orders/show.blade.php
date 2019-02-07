@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <div class="row">
     @if ($group_order)
-        <div class="col-md-12">
+        <div class="col mx-4">
             @include('user_orders._content')
         </div>
     @else

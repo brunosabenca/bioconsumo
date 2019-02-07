@@ -17,10 +17,13 @@
         </div>
         <div class="flex-column align-self-center flex-grow-0 flex-shrink-0 px-1">
             <div class="quantity">
-                <input type="button" value="+" class="plus" v-show="is_active" :disabled="! is_active" v-on:click="incrementQty">
-                <input type="number" title="Qty" class="qty"
-                        size="4" :disabled="! is_active" v-model.number="form.quantity" v-on:change="updateQty">
-                <input type="button" value="-" class="minus" v-show="is_active" :disabled="! is_active" v-on:click="decrementQty">
+                <input type="button" value="+" class="plus" v-show="is_active" :disabled="! is_active" v-on:click="incrementQty"
+                    aria-label="Increment quantity" data-toggle="tooltip" title="Increment quantity">
+                <input type="number" class="qty"
+                        size="4" :disabled="! is_active" v-model.number="form.quantity" v-on:change="updateQty"
+                        aria-label="Quantity" data-toggle="tooltip" title="Quantity">
+                <input type="button" value="-" class="minus" v-show="is_active" :disabled="! is_active" v-on:click="decrementQty"
+                    aria-label="Decrement quantity" data-toggle="tooltip" title="Decrement quantity">
             </div>
         </div>
 
@@ -29,8 +32,9 @@
         </div>
 
         <div class="flex-column align-self-center flex-grow-0 flex-shrink-0 px-1 " v-show="is_active">
-            <button type="button" class="btn btn-outline-danger btn-xs" v-on:click="destroy">
-                <i class="fa fa-trash" aria-hidden="true"></i>
+            <button role="button" type="button" class="btn btn-outline-danger btn-xs" v-on:click="destroy"
+                aria-label="Remove item from cart" data-toggle="tooltip" title="Remove item from cart">
+                <i class="fa fa-trash" aria-hidden="true" ></i>
             </button>
         </div>
     </div>

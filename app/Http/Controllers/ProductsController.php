@@ -57,7 +57,7 @@ class ProductsController extends Controller
 
     public function create()
     {
-        $sellers = \App\Seller::all();
+        $sellers = Seller::all();
 
         return view('products.create', [
             'sellers' => $sellers
@@ -86,13 +86,16 @@ class ProductsController extends Controller
         $product = Product::create([
             'name' => request()['name'],
             'description' => request()['description'],
-            'price' => Money::parseByIntlLocalizedDecimal((string) request()['price'], 'EUR'),
+            'price' => Money::parseByIntlLocalizedDecimal((string) request()['price'], 'EUR')->formatted(),
             'stock' => request()['stock'],
             'user_id' => request()['user_id']
         ]);
 
+
+        $product->load('seller');
+
         if (request()->wantsJson()) {
-            return response($product, 201);
+            return response($product->toArray(), 201);
         }
 
         return redirect($product->path());

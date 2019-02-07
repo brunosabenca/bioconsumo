@@ -1,9 +1,9 @@
 <template>
-<div class="d-flex flex-column mb-3">
+<div class="d-flex flex-column">
     <div class="card flex-grow-0">
         <h5 class="d-flex card-header">
             <div class="flex-grow-1">
-                Order of <span v-text="shortDate(this.open_date)"></span>
+                <a :href="path">Order of <span v-text="shortDate(this.open_date)"></span></a>
                 <div v-cloak>
                     <span class="badge badge-danger text-uppercase" v-show="cancelled">Cancelled</span>
                     <span class="badge badge-success text-uppercase" v-show="is_active">Open</span>

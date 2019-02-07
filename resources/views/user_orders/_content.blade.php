@@ -1,4 +1,5 @@
 <h2>Order of {{ \Carbon\Carbon::parse($user_order->order->open_date)->toFormattedDateString() }}</h2>
+
 <h5><span class="text-muted pull-right">Group Order No. {{ $group_order->id }}</span>
 <div v-cloak>
     <span class="badge badge-danger text-uppercase" v-show="cancelled">Cancelled</span>
@@ -9,5 +10,3 @@
 </h5>
 
 <cart :user_order_id="id" :cartitems="{{ $items }}" :is_active="is_active"></cart>
-
-<br/>
