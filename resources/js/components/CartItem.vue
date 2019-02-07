@@ -1,7 +1,7 @@
 <template>
 <div class="d-flex flex-row flex-wrap flex-md-nowrap shopping-cart-item flex-grow-0 flex-shrink-0 mt-2" :id="'item-' + id">
     <div class="flex-column flex-shrink-0 flex-grow-0 p-2">
-            <img class="img-responsive" src="http://placehold.it/120x80" alt="preview" width="120" height="80">
+            <img class="rounded img-responsive" :src="imagePath" alt="preview" width="120" height="80">
     </div>
 
     <div class="flex-column flex-shrink-1 flex-grow-0 p-2" style="flex-basis: 60em;">
@@ -51,6 +51,7 @@
                 quantity: this.item.quantity,
                 unit: this.item.product.stock_unit_type,
                 price: this.item.price,
+                imagePath: '/images/products/' + this.item.product.id + '.jpg',
                 form: {},
             };
         },

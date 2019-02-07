@@ -40,7 +40,8 @@
     </div>
 </div>
 <!-- Viewing -->
-<div class="card" v-else>
+<div class="card d-block" v-else>
+    <img class="card-img-top img-responsive" :src="imagePath" alt="" >
     <h5 class="card-header level">
         <span class="text-muted" v-if="seller"><span v-text="seller"></span>'s</span>
         <span class="ml-1" v-text="name" v-if="single"></span>
@@ -122,6 +123,7 @@
                 stock_unit_type: this.product.stock_unit_type,
                 quantity: 0,
                 path: '/products/' + this.product.id,
+                imagePath: '/images/products/' + this.product.id + '.jpg',
                 form: {},
                 editing: false,
                 money: {
