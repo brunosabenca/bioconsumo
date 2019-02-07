@@ -93,6 +93,8 @@ class GroupOrdersController extends Controller
             throw $error;
         }
 
+        $group_order->load('sellers');
+
         if (request()->wantsJson()) {
             return response($group_order, 201);
         }
