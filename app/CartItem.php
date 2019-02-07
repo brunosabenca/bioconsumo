@@ -17,7 +17,7 @@ class CartItem extends Model
 
     public function product()
     {
-        return $this->hasOne('App\Product', 'id', 'product_id');
+        return $this->hasOne('App\Product', 'id', 'product_id')->withTrashed();
     }
 
     public function order()
