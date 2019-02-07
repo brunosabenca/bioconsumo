@@ -19,7 +19,7 @@
     </div>
 
     <div class="form-row" >
-        <div class="col-sm-12 col-md-6 col-lg-4" v-for="product in this.items" :key="product.id">
+        <div class="col-sm-12 col-md-6 col-lg-4" v-for="product in filteredItems(items, seller_id)" :key="product.id">
             <product-listing-item :product="product" v-on:deleted="removeProduct(product)" class="m-3"></product-listing-item>
         </div>
     </div>
