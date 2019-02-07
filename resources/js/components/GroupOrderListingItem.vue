@@ -1,29 +1,27 @@
 <template>
 <div class="d-flex flex-column mb-3">
     <div class="card flex-grow-0">
-        <h5 class="card-header">Order of <span v-text="shortDate(this.open_date)"></span>
-            <div v-cloak>
-                <span class="badge badge-danger text-uppercase" v-show="cancelled">Cancelled</span>
-                <span class="badge badge-success text-uppercase" v-show="is_active">Open</span>
-                <span class="badge badge-secondary text-uppercase" v-show="! is_active && ! cancelled">Closed</span>
+        <h5 class="d-flex card-header">
+            <div class="flex-grow-1">
+                Order of <span v-text="shortDate(this.open_date)"></span>
+                <div v-cloak>
+                    <span class="badge badge-danger text-uppercase" v-show="cancelled">Cancelled</span>
+                    <span class="badge badge-success text-uppercase" v-show="is_active">Open</span>
+                    <span class="badge badge-secondary text-uppercase" v-show="! is_active && ! cancelled">Closed</span>
+                </div>
             </div>
+            <h6 v-if="! cancelled && is_active"><span class="text-uppercase small"><strong>closing <span v-text="fromNow(this.close_date)"></span></strong></span></h6>
+            <h6 v-if="! cancelled && ! is_active"><span class="text-uppercase small"><strong>opening <span v-text="fromNow(this.open_date)"></span></strong></span></h6>
         </h5>
-        <div class="card-body d-flex flex-row">
-            <div class="flex-grow-0" style="flex-basis: 15em;">
 
-                <h6 v-if="! cancelled && is_active"><span class="text-uppercase small"><strong>closing <span v-text="fromNow(this.close_date)"></span>
-                    </strong></span></h6>
-
-                <h6 v-if="! cancelled && ! is_active"><span class="text-uppercase small"><strong>opening <span v-text="fromNow(this.open_date)"></span>
-                    </strong></span></h6>
-            </div>
-
-            <div class="ml-2">
-                <h6>Active Sellers:</h6>
-                <ul>
-                    <li v-for="seller in group_order.sellers" v-text="seller.name" v-bind:key="seller.id"></li>
-                </ul>
-            </div>
+        <div class="px-4 py-4">
+            <h6>Active Sellers</h6>
+            <ul class="list-group">
+                <li class="list-group-item" v-for="seller in group_order.sellers" v-bind:key="seller.id">
+                    <img :src="avatarPath(seller.id)" class="rounded-circle z-depth-0" alt="avatar image" height="35">
+                    <span v-text="seller.name"></span>
+                </li>
+            </ul>
         </div>
 
         <div class="flex-grow-0 list-group list-group-flush" v-if="editing">
@@ -143,6 +141,10 @@
                 };
 
                 this.editing = false;
+            },
+
+            avatarPath(id) {
+                return `/images/avatars/${id}.png`;
             }
 
         }

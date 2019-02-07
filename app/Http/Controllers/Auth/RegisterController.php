@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Laravolt\Avatar\Avatar;
 
 class RegisterController extends Controller
 {
@@ -63,10 +64,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        if (array_key_exists('type', $data)) {
+            $type = $data['type'];
+        } else {
+            $type = 'buyer';
+        }
+
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'type' => $type
         ]);
+
+        $avatar = new Avatar();
+        $avatar->create($user->name)->save(public_path('images/avatars/' . $user->id . '.png'), $quality = 90);
+
+        return $user;
     }
 }

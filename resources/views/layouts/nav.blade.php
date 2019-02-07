@@ -18,8 +18,10 @@
           <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
     @else
-      <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}</a>
+      <li class="nav-item avatar dropdown">
+        <a class="nav-link dropdown-toggle p-0" href="#" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="{{asset('/images/avatars/'.auth()->user()->id.'.png')}}" class="rounded-circle z-depth-0" alt="avatar image" height="35">
+        </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
           @can('create orders')<a class="dropdown-item" href="/user/orders/current">Current Order</a>
           <a class="dropdown-item" href="/user/orders/">Order History</a>

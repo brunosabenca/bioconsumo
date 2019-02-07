@@ -11,7 +11,7 @@
         </a>
         @endcan
     </h2>
-    <div v-if="creating" v-cloak>
+    <div v-if="creating" v-cloak class="mb-4">
         <new-group-order-view :sellers="{{ $sellers }}" inline-template
             v-on:creation-cancelled="creating = false"
             v-on:creation-success="addGroupOrder">
@@ -71,8 +71,10 @@
         </new-group-order-view>
     </div>
 
-    <group-order-listing-item  v-for="(item, index) in items" v-bind:key="item.id" :group_order="item"
-        class="my-4 mx-3" v-on:updated-order="updateGroupOrder"></group-order-listing-item>
+    <div class="row">
+        <group-order-listing-item  v-for="(item, index) in items" v-bind:key="item.id" :group_order="item"
+            class="col-sm-12 col-md-6 col-lg-4" v-on:updated-order="updateGroupOrder"></group-order-listing-item>
+    </div>
 </div>
 </group-order-listing-view>
 @endsection
