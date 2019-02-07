@@ -9,8 +9,7 @@
             <product-listing-item :product="product" :single="true"></product-listing-item>
         </div>
     </div>
-    <br/>
-    <a href="/products" class="btn btn-secondary">Return</a>
+    <a href="/products" class="btn btn-secondary mt-2">Return</a>
 </div>
 </product-view>
 @endsection

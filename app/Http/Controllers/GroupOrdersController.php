@@ -159,7 +159,7 @@ class GroupOrdersController extends Controller
             'close_date' => 'required|date|after:open_date',
         ]));
 
-        return $group_order;
+        return $group_order->append('is_active');
     }
 
     /**

@@ -98,9 +98,9 @@
                     this.open_date = this.form.open_date;
                     this.close_date = this.form.close_date;
 
-                    this.$emit('order-updated', response);
+                    this.$emit('order-updated', response.data);
 
-                    this.is_active = response.is_active;
+                    this.is_active = response.data.is_active;
 
                     flash('The order has been updated.');
                 }).catch(error => {
