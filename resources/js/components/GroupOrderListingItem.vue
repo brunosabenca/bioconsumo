@@ -10,8 +10,8 @@
                     <span class="badge badge-secondary text-uppercase" v-show="! is_active && ! cancelled">Closed</span>
                 </div>
             </div>
-            <h6 v-if="! cancelled && is_active"><span class="text-uppercase small"><strong>closing <span v-text="fromNow(this.close_date)"></span></strong></span></h6>
-            <h6 v-if="! cancelled && ! is_active"><span class="text-uppercase small"><strong>opening <span v-text="fromNow(this.open_date)"></span></strong></span></h6>
+            <p class="small" v-if="! cancelled && is_active"><span class="text-uppercase small"><strong>closing <span v-text="fromNow(this.close_date)"></span></strong></span></p>
+            <p class="small" v-if="! cancelled && ! is_active"><span class="text-uppercase small"><strong>opening <span v-text="fromNow(this.open_date)"></span></strong></span></p>
         </h5>
 
         <div class="px-4 py-4">
