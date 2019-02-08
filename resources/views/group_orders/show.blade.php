@@ -16,8 +16,10 @@
     </div>
 
     <div class="row px-4">
-        <div class="col-md-4">
-            <a href="/orders" class="btn btn-secondary" data-toggle="tooltip" title="Back to group order listing">Back</a>
+        <div class="col">
+            <a href="/orders" class="btn btn-sm btn-secondary" data-toggle="tooltip" title="Back to group order listing">
+                <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back
+            </a>
         </div>
     </div>
 </div>

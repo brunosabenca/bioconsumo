@@ -37,8 +37,8 @@
             </div>
         </div>
 
-        <div class="card-footer d-flex flex-row" v-show="! cancelled && authorize('can', 'edit group orders')">
-                <button class="btn btn-primary btn-sm ml-1" v-show="! editing" @click="editing = true"
+        <div class="card-footer d-flex flex-row" v-if="authorize('can', 'edit group orders')">
+                <button class="btn btn-primary btn-sm ml-1" v-show="! editing && ! cancelled" @click="editing = true"
                     data-toggle="tooltip" title="Edit group order">
                     <i class="fa fa-edit" aria-hidden="true"></i>
                     Edit
@@ -126,6 +126,7 @@
                 axios.delete(this.path).then((response) => {
                     this.cancelled = true;
                     this.is_active = false;
+                    this.editing = false;
                     
                     this.$emit('order-updated', response);
 

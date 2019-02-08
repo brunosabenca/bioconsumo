@@ -2,7 +2,7 @@
    <div class="card shopping-cart">
         <div class="card-header bg-dark text-light d-flex justify-content-between">
             <span><i class="fa fa-shopping-cart" aria-hidden="true"></i> Products</span>
-            <a href="/products" class="btn btn-outline-info btn-sm pull-right" v-if="is_active">Continue adding products</a>
+            <a href="/products" class="btn btn-outline-light btn-sm pull-right" v-if="is_active">Continue adding products</a>
         </div>
 
         <div class="card-body">

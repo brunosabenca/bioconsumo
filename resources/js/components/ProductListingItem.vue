@@ -1,8 +1,10 @@
 <template>
-<!-- Editing -->
 <div>
+    <!-- Editing -->
     <div class="card product-card-editing" :id="`product-${product.id}-editing`" v-show="editing">
-        <img class="card-img-top img-responsive" :src="imagePath">
+        <img class="card-img-top img-responsive" :class="stock == 0 ? 'out-of-stock' : ''" :src="imagePath">
+        <span class="badge badge-success stock-badge" v-if="stock > 0">Available</span>
+        <span class="badge badge-danger stock-badge" v-else>Out of stock</span>
         <div class="card-body">
             <div class="form-group">
                 <div class="form-row">
@@ -46,14 +48,18 @@
             </button>
             <button class="btn btn-primary btn-sm" @click="update"
                 data-toggle="tooltip" title="Save changes"
-                v-scroll-to="{el: `#product-${product.id}`, offset: -90}">
+                v-scroll-to="{el: `#product-${product.id}-editing`, offset: -90}">
                 <i class="fa fa-save" aria-hidden="true"></i> Save
             </button>
         </div>
     </div>
+
     <!-- Viewing -->
     <div class="card product-card" :id="`product-${product.id}`" v-show="! editing">
-        <img class="card-img-top img-responsive" :src="imagePath">
+        <img class="card-img-top img-responsive" :class="stock == 0 ? 'out-of-stock' : ''" :src="imagePath">
+        <span class="badge badge-success stock-badge" v-if="stock > 0">Available</span>
+        <span class="badge badge-danger stock-badge" v-else>Out of stock</span>
+
         <div class="card-header product-card-header ">
             <a class="card-link" v-show="! single" :href="`/products/${product.id}`"></a>
             <div class="d-flex align-items-center">
@@ -70,7 +76,6 @@
 
         <div class="card-body">
             <p class="card-text"><span v-text="description"></span></p>
-            <p class="card-text">Stock: <span v-text="stock"></span></p>
         </div>
 
         <div class="card-footer d-flex flex-row align-items-center">

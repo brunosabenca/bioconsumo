@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div v-show="creating" class="row px-4" v-cloak>
+    <div v-show="creating" class="form-group row px-4" v-cloak>
         <div class="col">
             <new-group-order-view :sellers="{{ $sellers }}" inline-template
                 v-on:creation-cancelled="creating = false"
@@ -87,9 +87,9 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-4" v-for="(item, index) in items" v-bind:key="item.id" >
-            <group-order-listing-item class="m-4" :group_order="item" v-on:updated-order="updateGroupOrder"></group-order-listing-item>
+    <div class="row px-4">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3" v-for="(item, index) in items" v-bind:key="item.id" >
+            <group-order-listing-item class="pr-3 pb-5"  :group_order="item" v-on:updated-order="updateGroupOrder"></group-order-listing-item>
         </div>
     </div>
 </div>
