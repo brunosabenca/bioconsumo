@@ -39,8 +39,17 @@
 
 <script>
     $( document ).ready(function() {
-        $('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
+        $('[data-toggle="tooltip"]').tooltip({
+            placement: 'top',
+            trigger : 'hover'
+        });
+
+        $('[data-toggle="tooltip"]').on('click', function () {
+            $(this).tooltip('hide')
+        })
     });
+
+
     @yield('scripts')
 </script>
 </body>
