@@ -79,10 +79,12 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-secondary btn-sm" @click="cancelCreation" v-scroll-to="'#app'">
+                        <button class="btn btn-secondary btn-sm" @click="cancelCreation" v-scroll-to="'#app'"
+                            data-toggle="tooltip" title="Cancel changes">
                             <i class="fa fa-close" aria-hidden="true"></i>
                             Cancel</button>
-                        <button class="btn btn-primary btn-sm" @click="postAddNewProduct">
+                        <button class="btn btn-primary btn-sm" @click="postAddNewProduct"
+                            data-toggle="tooltip" title="Save changes">
                             <i class="fa fa-save" aria-hidden="true"></i>
                             Save</button>
                     </div>
