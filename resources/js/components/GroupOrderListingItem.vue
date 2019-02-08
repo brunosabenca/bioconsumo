@@ -10,8 +10,8 @@
                     <span class="badge badge-secondary text-uppercase" v-show="! is_active && ! cancelled">Closed</span>
                 </div>
             </div>
-            <p class="small" v-if="! cancelled && is_active"><span class="text-uppercase small"><strong>closing <span v-text="fromNow(this.close_date)"></span></strong></span></p>
-            <p class="small" v-if="! cancelled && ! is_active"><span class="text-uppercase small"><strong>opening <span v-text="fromNow(this.open_date)"></span></strong></span></p>
+            <span class="small" v-show="! cancelled && is_active"><span class="text-uppercase small"><strong>closing <span v-text="fromNow(this.close_date)"></span></strong></span></span>
+            <span class="small" v-show="! cancelled && ! is_active"><span class="text-uppercase small"><strong>opening <span v-text="fromNow(this.open_date)"></span></strong></span></span>
         </h5>
 
         <div class="px-4 py-4">
@@ -24,7 +24,7 @@
             </ul>
         </div>
 
-        <div class="flex-grow-0 list-group list-group-flush" v-if="editing">
+        <div class="flex-grow-0 list-group list-group-flush" v-show="editing">
             <div class="d-flex flex-row list-group-item">
                 <div class="form-group">
                     <label for="open-date">Open Date</label>
@@ -37,15 +37,29 @@
             </div>
         </div>
 
-        <div class="card-footer d-flex flex-row" v-if="! cancelled && authorize('can', 'edit group orders')">
-            <div class="level">
-                <button type="submit" class="btn btn-danger btn-sm" aria-label="Delete" @click="destroy">
+        <div class="card-footer d-flex flex-row" v-show="! cancelled && authorize('can', 'edit group orders')">
+                <button class="btn btn-primary btn-sm ml-1" v-show="! editing" @click="editing = true"
+                    data-toggle="tooltip" title="Edit group order">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                    Edit
+                </button>
+
+                <button type="submit" class="btn btn-danger btn-sm" aria-label="Delete" v-show="editing" @click="destroy"
+                    data-toggle="tooltip" title="Cancel group order">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                 </button>
-                <button class="btn btn-primary btn-sm ml-1" v-if="! editing" @click="editing = true">Edit</button>
-                <button class="btn btn-secondary btn-sm ml-1" v-else @click="resetForm">Cancel</button>
-                <button class="btn btn-primary btn-sm ml-1" v-if="editing" @click="update">Save</button>
-            </div>
+
+                <button class="btn btn-secondary btn-sm ml-a" aria-label="Cancel" v-show="editing" @click="resetForm"
+                    data-toggle="tooltip" title="Cancel changes">
+                    <i class="fa fa-close" aria-hidden="true"></i>
+                    Cancel
+                </button>
+
+                <button class="btn btn-primary btn-sm ml-1" aria-label="Save" v-show="editing" @click="update"
+                    data-toggle="tooltip" title="Save changes">
+                    <i class="fa fa-save" aria-hidden="true"></i>
+                    Save
+                </button>
         </div>
     </div>
 </div>
@@ -102,7 +116,7 @@
 
                     this.is_active = response.data.is_active;
 
-                    flash('The order has been updated.');
+                    flash('The order has been updated');
                 }).catch(error => {
                     console.log(error.message);
                 })
@@ -115,9 +129,9 @@
                     
                     this.$emit('order-updated', response);
 
-                    flash('The order has been cancelled.', 'success');
+                    flash('The order has been cancelled', 'success');
                 }).catch((error) => {
-                    flash("The order couldn't be cancelled.", 'danger');
+                    flash("There was a problem cancelling the order", 'danger');
                 });
             }, 
 

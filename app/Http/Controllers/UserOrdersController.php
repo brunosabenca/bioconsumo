@@ -137,7 +137,7 @@ class UserOrdersController extends Controller
         }
 
         return redirect($user_order->path())
-            ->with('flash-message', 'A new order was created');
+            ->with('flash-message', 'Order created');
     }
 
     /**
@@ -158,7 +158,8 @@ class UserOrdersController extends Controller
             ]);
         } else {
             return redirect()->back()
-                ->with('flash-message', "You don't have permission to view that order.");
+                ->with('flash-message', "You don't have permission to view that order")
+                ->with('flash-level', 'warning');
         }
     }
 

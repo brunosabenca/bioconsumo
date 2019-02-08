@@ -32,7 +32,7 @@
                 this.creating = false;
                 this.items.splice(0, 0, order);
 
-                flash('Group order created.')
+                flash('Group order created')
             },
 
             updateGroupOrder(index, data) {

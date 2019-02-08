@@ -32,7 +32,7 @@
         </div>
 
         <div class="flex-column align-self-center flex-grow-0 flex-shrink-0 px-1 " v-show="is_active">
-            <button role="button" type="button" class="btn btn-outline-danger btn-xs" v-on:click="destroy"
+            <button role="button" type="button" class="btn btn-outline-danger btn-xs" v-on:click="destroy($event)"
                 aria-label="Remove item from cart" data-toggle="tooltip" title="Remove item from cart">
                 <i class="fa fa-trash" aria-hidden="true" ></i>
             </button>
@@ -85,7 +85,7 @@
                 })
             },
 
-            destroy() {
+            destroy(event) {
                 let uri = `/cart/item/${this.id}`;
                 axios.delete(uri);
                 this.$emit('deleted', this.id);

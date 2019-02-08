@@ -40,7 +40,7 @@
                 this.creating = false;
                 this.items.splice(0, 0, product);
 
-                flash('Product created.')
+                flash('Product created')
             },
 
             updateProduct(index, data) {

@@ -42,7 +42,7 @@
                     this.open_date = this.form.open_date;
                     this.close_date = this.form.close_date;
 
-                    flash('The order has been updated.');
+                    flash('Your changes have been saved');
                 }).catch(error => {
                     console.log(error.message);
                 })
