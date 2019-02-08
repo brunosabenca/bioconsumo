@@ -93,19 +93,28 @@
         </div>
     </div>
 
-    <div class="form-group row px-4">
-            <label for="seller" class="form-label col-auto" v-if="sellers.length > 1">Seller</label>
-            <select name="seller" class="form-control form-control-sm col-md-2" v-model="seller_id" selected="" v-if="sellers.length > 1">
+    <div class="row px-4">
+        <div class="form-group col-sm-5 col-md-4 col-lg-3 mr-3">
+            <label for="search" class="form-label mr-1 sr-only">Search</label>
+            <vue-fuse name="search" placeholder="Search" class="form-control form-control-sm" 
+                :keys="keys" :list="items" :default-all="true" event-name="results"
+                data-toggle="tooltip" title="Search for products">
+            </vue-fuse>
+        </div>
+
+        <div class="form-group col-sm-4 col-md-3 col-lg-2 ml-a mr-3">
+            <label for="seller" class="form-label mr-1 sr-only" v-if="sellers.length > 1">Filter</label>
+            <select name="seller" class="form-control form-control-sm" v-model="seller_id" selected="" v-if="sellers.length > 1"
+                data-toggle="tooltip" title="Filter results by seller">
                 <option :value="null">All Sellers</option>
                 <option v-for="seller in sellers" :value="seller.id">@{{seller.name}}</option>
             </select>
-            <label for="search" class="form-label col-auto ml-1">Search</label>
-            <vue-fuse name="search" class="col-md-2 form-control form-control-sm" :keys="keys" :list="items" :default-all="true" event-name="results"></vue-fuse>
+        </div>
     </div>
 
-    <div class="row" >
+    <div class="row px-4">
         <div class="col-sm-12 col-md-6 col-lg-4" v-for="product in filteredItems(items, seller_id)" :key="product.id">
-            <product-listing-item class="m-4" :product="product" v-on:deleted="removeProduct(product)"></product-listing-item>
+            <product-listing-item class="pr-3 pb-5" :product="product" v-on:deleted="removeProduct(product)"></product-listing-item>
         </div>
     </div>
 </div>
