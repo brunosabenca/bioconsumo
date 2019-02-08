@@ -81,7 +81,7 @@
                     <div class="card-footer">
                         <button class="btn btn-secondary btn-sm" @click="cancelCreation" v-scroll-to="'#app'"
                             data-toggle="tooltip" title="Cancel changes">
-                            <i class="fa fa-close" aria-hidden="true"></i>
+                            <i class="fa fa-times-circle" aria-hidden="true"></i>
                             Cancel</button>
                         <button class="btn btn-primary btn-sm" @click="postAddNewProduct"
                             data-toggle="tooltip" title="Save changes">
@@ -113,7 +113,7 @@
     </div>
 
     <div class="row px-4">
-        <div class="col-sm-12 col-md-6 col-lg-4" v-for="product in filteredItems(items, seller_id)" :key="product.id">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3" v-for="product in filteredItems(items, seller_id)" :key="product.id">
             <product-listing-item class="pr-3 pb-5" :product="product" v-on:deleted="removeProduct(product)"></product-listing-item>
         </div>
     </div>

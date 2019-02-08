@@ -23,12 +23,14 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
     @yield('head')
 </head>
 <body>
 @include('layouts.nav')
 
-<main id="app" class="bd-content pl-4 pt-5" role="main">
+<main id="app" class="bd-content px-4 pt-5" role="main">
     <div class="my-5">@yield('content')</div>
     <flash message="{{ session('flash-message') }}" level="{{ session('flash-level') ? session('flash-level') : 'success'}}"></flash>
 </main><!-- /.container -->

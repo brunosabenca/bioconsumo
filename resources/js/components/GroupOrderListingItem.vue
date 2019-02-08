@@ -51,7 +51,7 @@
 
                 <button class="btn btn-secondary btn-sm ml-a" aria-label="Cancel" v-show="editing" @click="resetForm"
                     data-toggle="tooltip" title="Cancel changes">
-                    <i class="fa fa-close" aria-hidden="true"></i>
+                    <i class="fa fa-times-circle" aria-hidden="true"></i>
                     Cancel
                 </button>
 

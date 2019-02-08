@@ -1,22 +1,26 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-  <a class="navbar-brand text-uppercase font-weight-bold" href="/">BioConsumo</a>
+  <a class="navbar-brand" href="/">
+    <i class="fa fa-carrot" aria-hidden="true"></i> BioConsumo
+  </a>
+
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbar">
     @auth
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav">
       <li class="nav-item"><a class="nav-link" href="/products">Products</a></li>
       <li class="nav-item"><a class="nav-link" href="/orders">Group Orders</a></li>
     </ul>
     @endauth
+
     <!-- Authentication Links -->
     @if (Route::has('login'))
-    <ul class="navbar-nav mr-sm-2">
+    <ul class="navbar-nav ml-a">
     @guest
-          <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
     @else
       <li class="nav-item avatar dropdown">
         <a class="nav-link dropdown-toggle p-0 m-1" href="#" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

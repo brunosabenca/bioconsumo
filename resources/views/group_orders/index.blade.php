@@ -75,7 +75,7 @@
                     <div class="card-footer">
                         <button class="btn btn-secondary btn-sm" @click="cancelCreation" v-scroll-to="'#app'"
                             data-toggle="tooltip" title="Cancel changes">
-                            <i class="fa fa-close" aria-hidden="true"></i>
+                            <i class="fa fa-times-circle" aria-hidden="true"></i>
                             Cancel</button>
                         <button class="btn btn-primary btn-sm" @click="postAddNewGroupOrder"
                             data-toggle="tooltip" title="Save changes">

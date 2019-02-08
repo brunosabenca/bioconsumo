@@ -1,26 +1,22 @@
 <template>
    <div class="card shopping-cart">
-            <div class="card-header bg-dark text-light">
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                Products
-                <a href="/products" class="btn btn-outline-info btn-sm pull-right" v-if="is_active">Continue adding products</a>
-                <div class="clearfix"></div>
-            </div>
+        <div class="card-header bg-dark text-light d-flex justify-content-between">
+            <span><i class="fa fa-shopping-cart" aria-hidden="true"></i> Products</span>
+            <a href="/products" class="btn btn-outline-info btn-sm pull-right" v-if="is_active">Continue adding products</a>
+        </div>
 
-            <div class="card-body">
-                <div class="d-flex flex-column">
-                    <cart-item v-for="(item, index) in items" :key="item.id" :item="item" :is_active="is_active" v-on:updated="updateTotal()" v-on:deleted="remove(index)"></cart-item>
-                </div>
+        <div class="card-body">
+            <div class="d-flex flex-column">
+                <cart-item v-for="(item, index) in items" :key="item.id" :item="item" :is_active="is_active" v-on:updated="updateTotal()" v-on:deleted="remove(index)"></cart-item>
             </div>
+        </div>
 
-            <div class="card-footer">
-                <div class="pull-right">
-                    <h4><strong><span v-text="total"></span></strong></h4>
-                </div>
+        <div class="card-footer">
+            <div class="d-flex flex-row-reverse">
+                <h4><strong><span v-text="total"></span></strong></h4>
             </div>
-            
+        </div>
     </div>
-
 </template>
 
 <script>

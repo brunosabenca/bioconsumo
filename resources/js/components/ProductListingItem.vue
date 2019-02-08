@@ -1,7 +1,7 @@
 <template>
 <!-- Editing -->
 <div>
-    <div class="card" v-show="editing">
+    <div class="card product-card-editing" :id="`product-${product.id}-editing`" v-show="editing">
         <img class="card-img-top img-responsive" :src="imagePath">
         <div class="card-body">
             <div class="form-group">
@@ -40,27 +40,33 @@
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
             <button class="btn btn-secondary btn-sm ml-a mr-1" @click="resetForm"
-                data-toggle="tooltip" title="Cancel changes">
-                <i class="fa fa-close" aria-hidden="true"></i> Cancel
+                data-toggle="tooltip" title="Cancel changes"
+                v-scroll-to="{el: `#product-${product.id}-editing`, offset: -90}">
+                <i class="fa fa-times-circle" aria-hidden="true"></i> Cancel
             </button>
             <button class="btn btn-primary btn-sm" @click="update"
-                data-toggle="tooltip" title="Save changes">
+                data-toggle="tooltip" title="Save changes"
+                v-scroll-to="{el: `#product-${product.id}`, offset: -90}">
                 <i class="fa fa-save" aria-hidden="true"></i> Save
             </button>
         </div>
     </div>
     <!-- Viewing -->
-    <div class="card" v-show="! editing">
+    <div class="card product-card" :id="`product-${product.id}`" v-show="! editing">
         <img class="card-img-top img-responsive" :src="imagePath">
-        <h5 class="card-header level">
-            <span class="text-muted" v-if="seller"><span v-text="seller"></span>'s</span>
-            <span class="ml-1" v-text="name" v-if="single"></span>
-            <a class="ml-1" v-text="name" :href="`/products/${product.id}`" v-else></a>
-            <span class="ml-a">
-                <span v-text="price"></span>
-                <span class="ml-1 small"> / <span v-text="stock_unit_type"></span></span>
-            </span>
-        </h5>
+        <div class="card-header product-card-header ">
+            <a class="card-link" v-show="! single" :href="`/products/${product.id}`"></a>
+            <div class="d-flex align-items-center">
+                <p class="ml-2 flex-grow-1">
+                    <span v-if="seller"><span v-text="seller"></span>'s</span>
+                    <span v-text="product.name" class="product-name"></span>
+                </p>
+                <p class="product-price">
+                    <span v-text="price"></span>
+                    <span class="ml-1 small">/ <span v-text="stock_unit_type"></span></span>
+                </p>
+            </div>
+        </div>
 
         <div class="card-body">
             <p class="card-text"><span v-text="description"></span></p>
@@ -70,7 +76,9 @@
         <div class="card-footer d-flex flex-row align-items-center">
             <div class="flex-grow-1 ml-1">
                 <button class="flex-grow-1 btn btn-secondary btn-sm" v-show="authorize('owns', product) || authorize('can','edit any product')"
-                    @click="editing = true" data-toggle="tooltip" title="Edit this product">
+                    @click="editing = true"
+                    data-toggle="tooltip" title="Edit this product"
+                    v-scroll-to="{el: `#product-${product.id}`, offset: -90}">
                         <i class="fa fa-edit" aria-hidden="true"></i> Edit
                 </button>
             </div>
