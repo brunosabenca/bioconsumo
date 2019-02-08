@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Laravolt\Avatar\Avatar;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 
 class UsersTableSeeder extends Seeder
 {
@@ -45,11 +47,22 @@ class UsersTableSeeder extends Seeder
                             ->each(
                                 function($product) use (&$seller) { 
                                     $seller->products()->save($product)->make();
-                                    $avatar = new Avatar();
-                                    $avatar->create($seller->name)->save(public_path('images/avatars/' . $seller->id . '.png'), $quality = 90);
+                                    //$this->fetchProductImages($product->id);
                                 }
                             );
+                    $avatar = new Avatar();
+                    $avatar->create($seller->name)->save(public_path('images/avatars/' . $seller->id . '.png'), $quality = 90);
                 }
             );
+    }
+
+    protected function fetchProductImages($id) {
+        $url = "https://loremflickr.com/640/480/vegetables";
+        $info = pathinfo($url);
+        $contents = file_get_contents($url);
+        $file = '/tmp/' . $info['basename'];
+        file_put_contents($file, $contents);
+        $uploaded_file = new UploadedFile($file, $info['basename']);
+        Storage::putFileAs('images/products/', $uploaded_file, $id.'.jpg');
     }
 }
