@@ -11,8 +11,8 @@
                 <a href="#"  @click="creating ? creating = false : creating = true"
                     role="button" class="small" aria-label="Create new group order"
                     data-toggle="tooltip" title="Create new group order">
-                    <i v-if="creating" class="fa fa-minus-square" aria-hidden="true"></i>
-                    <i v-else class="fa fa-plus-square" aria-hidden="true" v-cloak></i>
+                    <i v-show="creating" class="fa fa-minus-square" aria-hidden="true" v-cloak></i>
+                    <i v-show="!creating" class="fa fa-plus-square" aria-hidden="true" v-cloak></i>
                 </a>
                 @endcan
             </h2>
