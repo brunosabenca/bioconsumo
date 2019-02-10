@@ -24,7 +24,7 @@
     @else
       <li class="nav-item avatar dropdown">
         <a class="nav-link dropdown-toggle p-0 m-1" href="#" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src="{{asset('/images/avatars/'.auth()->user()->id.'.png')}}" class="rounded-circle z-depth-0" alt="avatar image" height="35">
+          <img src="{{asset('/storage/avatars/user-'.auth()->user()->id.'.png')}}" class="rounded-circle z-depth-0" alt="avatar image" height="35">
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-dropdown">
           @can('create orders')<a class="dropdown-item" href="/user/orders/current">Current Order</a>

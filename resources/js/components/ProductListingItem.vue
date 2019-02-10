@@ -146,7 +146,7 @@
                 stock_unit_type: this.product.stock_unit_type,
                 quantity: 0,
                 path: '/products/' + this.product.id,
-                imagePath: '/images/products/' + this.product.id + '.jpg',
+                imagePath: '/storage/products/product-' + this.product.id + '.jpg',
                 form: {},
                 editing: false,
                 money: {
