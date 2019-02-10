@@ -51,7 +51,7 @@
                 quantity: this.item.quantity,
                 unit: this.item.product.stock_unit_type,
                 price: this.item.price,
-                imagePath: '/images/products/' + this.item.product.id + '.jpg',
+                imagePath: '/storage/products/product-' + this.item.product.id + '.jpg',
                 form: {},
             };
         },

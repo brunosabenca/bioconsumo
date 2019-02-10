@@ -159,7 +159,7 @@
             },
 
             avatarPath(id) {
-                return `/images/avatars/${id}.png`;
+                return `/storage/avatars/user-${id}.png`;
             }
 
         }
