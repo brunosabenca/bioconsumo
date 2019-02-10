@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Laravolt\Avatar\Avatar;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\UploadedFile;
 
 class UsersTableSeeder extends Seeder
 {
@@ -14,15 +11,12 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $avatar = new Avatar();
-
         $user = factory(App\Admin::class, 1)->create([
             'name' => 'Bruno',
             'email' => 'bruno@bruno.com',
             'password' => bcrypt('sabenca')
         ])->first();
         $user->assignRole('admin');
-        $avatar->create($user->name)->save(public_path('images/avatars/' . $user->id . '.png'), $quality = 90);
 
         $user = factory(App\Buyer::class, 1)->create([
             'name' => 'Joel',
@@ -30,7 +24,6 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('martins'),
         ])->first();
         $user->assignRole('buyer');
-        $avatar->create($user->name)->save(public_path('images/avatars/' . $user->id . '.png'), $quality = 90);
 
         $user = factory(App\Seller::class, 1)->create([
             'name' => 'Ivo',
@@ -38,31 +31,31 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('barros'),
         ])->first();
         $user->assignRole('seller');
-        $avatar->create($user->name)->save(public_path('images/avatars/' . $user->id . '.png'), $quality = 90);
+
+        $user = factory(App\Seller::class, 1)->create([
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => bcrypt('example'),
+        ])->first();
+        $user->assignRole('buyer');
+
+        $user = factory(App\Seller::class, 1)->create([
+            'name' => 'Jane Doe',
+            'email' => 'jane@example.com',
+            'password' => bcrypt('example'),
+        ])->first();
+        $user->assignRole('admin');
 
         factory(App\Seller::class, 3)->create() 
             ->each( 
                 function ($seller) {
                     factory(App\Product::class, 10)->create()
-                            ->each(
-                                function($product) use (&$seller) { 
-                                    $seller->products()->save($product)->make();
-                                    //$this->fetchProductImages($product->id);
-                                }
-                            );
-                    $avatar = new Avatar();
-                    $avatar->create($seller->name)->save(public_path('images/avatars/' . $seller->id . '.png'), $quality = 90);
+                        ->each(
+                            function($product) use (&$seller) { 
+                                $seller->products()->save($product)->make();
+                            }
+                        );
                 }
             );
-    }
-
-    protected function fetchProductImages($id) {
-        $url = "https://loremflickr.com/640/480/vegetables";
-        $info = pathinfo($url);
-        $contents = file_get_contents($url);
-        $file = '/tmp/' . $info['basename'];
-        file_put_contents($file, $contents);
-        $uploaded_file = new UploadedFile($file, $info['basename']);
-        Storage::putFileAs('images/products/', $uploaded_file, $id.'.jpg');
     }
 }

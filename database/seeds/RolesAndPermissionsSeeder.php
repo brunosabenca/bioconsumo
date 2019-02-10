@@ -16,39 +16,79 @@ class RolesAndPermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // create permissions
-        Permission::create(['name' => 'create products']);
-        Permission::create(['name' => 'edit products']);
-        Permission::create(['name' => 'delete products']);
+        // Create permissions
+        $permissions = [
+            'create products',
+            'edit products',
+            'delete products',
 
-        Permission::create(['name' => 'edit any product']);
-        Permission::create(['name' => 'delete any product']);
+            'edit any product',
+            'delete any product',
 
-        Permission::create(['name' => 'create group orders']);
-        Permission::create(['name' => 'edit group orders']);
-        Permission::create(['name' => 'cancel group orders']);
+            'create group orders',
+            'edit group orders',
+            'cancel group orders',
 
-        Permission::create(['name' => 'create orders']);
-        Permission::create(['name' => 'edit orders']);
-        Permission::create(['name' => 'cancel orders']);
+            'create orders',
+            'edit orders',
+            'cancel orders',
 
-        Permission::create(['name' => 'add items to cart']);
-        Permission::create(['name' => 'remove items from cart']);
-        Permission::create(['name' => 'edit cart contents']);
+            'add items to cart',
+            'remove items from cart',
+            'edit cart contents',
+        ];
 
-        // create roles and assign created permissions
-        $seller = Role::create(['name' => 'seller'])
-            ->givePermissionTo([
-                'create products', 'edit products', 'delete products',
-            ]);
+        $this->createPermissions($permissions);
 
-        $buyer = Role::create(['name' => 'buyer'])
-            ->givePermissionTo([
+        // Create roles and assign created permissions
+
+        // Seller
+        try {
+            $seller = Role::findByName('seller');
+        } catch (Exception $e) {
+            $seller = Role::create(['name' => 'seller']);
+        }
+        $seller_permissions = [
+            'create products', 'edit products', 'delete products',
+        ];
+        $this->assignPermissions($seller, $seller_permissions);
+
+        // Buyer
+        try {
+            $buyer = Role::findByName('buyer');
+        } catch (Exception $e) {
+            $buyer = Role::create(['name' => 'buyer']);
+        }
+        $buyer_permissions = [
                 'create orders', 'edit orders', 'cancel orders',
                 'add items to cart', 'remove items from cart', 'edit cart contents'
-            ]);
+        ];
+        $this->assignPermissions($buyer, $buyer_permissions);
 
-        $admin = Role::create(['name' => 'admin']);
+        // Admin
+        try {
+            $admin = Role::findByName('admin');
+        } catch (Exception $e) {
+            $admin = Role::create(['name' => 'admin']);
+        }
         $admin->givePermissionTo(Permission::all());
+    }
+
+    protected function createPermissions($permissions) {
+        foreach ($permissions as $permission) {
+            try {
+                $a_permission = Permission::create(['name' => $permission]);
+            } catch (Exception $e) {
+                $a_permission = $permission;
+            }
+        }
+    }
+
+    protected function assignPermissions($role, $permissions) {
+        foreach ($permissions as $permission) {
+            if (!$role->hasPermissionTo($permission)) {
+                $role->givePermissionTo($permission);
+            }
+        }
     }
 }
