@@ -12,39 +12,25 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $user = factory(App\Admin::class, 1)->create([
-            'name' => 'Bruno',
-            'email' => 'bruno@bruno.com',
-            'password' => bcrypt('sabenca')
+            'name' => 'Bruno Sabença',
+            'email' => 'bruno@example.com',
+            'password' => bcrypt('example')
         ])->first();
         $user->assignRole('admin');
 
         $user = factory(App\Buyer::class, 1)->create([
-            'name' => 'Joel',
-            'email' => 'joel@joel.com',
-            'password' => bcrypt('martins'),
+            'name' => 'Joel Martins',
+            'email' => 'joel@example.com',
+            'password' => bcrypt('example'),
         ])->first();
         $user->assignRole('buyer');
 
         $user = factory(App\Seller::class, 1)->create([
-            'name' => 'Ivo',
-            'email' => 'ivo@ivo.com',
-            'password' => bcrypt('barros'),
+            'name' => 'Ivo Barros',
+            'email' => 'ivo@example.com',
+            'password' => bcrypt('example'),
         ])->first();
         $user->assignRole('seller');
-
-        $user = factory(App\Seller::class, 1)->create([
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
-            'password' => bcrypt('example'),
-        ])->first();
-        $user->assignRole('buyer');
-
-        $user = factory(App\Seller::class, 1)->create([
-            'name' => 'Jane Doe',
-            'email' => 'jane@example.com',
-            'password' => bcrypt('example'),
-        ])->first();
-        $user->assignRole('admin');
 
         factory(App\Seller::class, 3)->create() 
             ->each( 
