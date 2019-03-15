@@ -5,7 +5,7 @@
     </div>
 
     <div class="flex-column flex-shrink-1 flex-grow-0 p-2" style="flex-basis: 60em;">
-        <h4 class="product-name"><strong v-text="item.product.name"></strong></h4>
+        <h4 class="product-name"><a :href="`/products/${item.product.id}`"><strong v-text="item.product.name"></strong></a></h4>
         <h5>
             <small v-text="item.product.description"></small>
         </h5>
