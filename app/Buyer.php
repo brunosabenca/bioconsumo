@@ -4,7 +4,7 @@ namespace App;
 
 class Buyer extends User
 {
-    use \Tightenco\Parental\HasParent;
+    use \Parental\HasParent;
 
     protected $guard_name = 'web';
 
