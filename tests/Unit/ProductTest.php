@@ -12,9 +12,10 @@ class ProductTest extends TestCase
     /** @test */
     public function a_product_has_a_path()
     {
+        $user = factory(\App\Admin::class)->create();
         $product = factory('App\Product')->create();
 
-        $this->assertEquals(
+        $this->actingAs($user)->assertEquals(
             "/products/{$product->id}",
             $product->path()
         );

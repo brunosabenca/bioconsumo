@@ -21,9 +21,10 @@ class ListProductsTest extends TestCase
     /** @test */
     public function a_user_can_view_a_single_product()
     {
+        $user = factory(\App\Admin::class)->create();
         $product = factory('App\Product')->create();
 
-        $response = $this->get($product->path());
+        $response = $this->actingAs($user)->get($product->path());
         $response->assertSee($product->name);
     }
 }
