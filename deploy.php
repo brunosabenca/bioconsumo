@@ -21,12 +21,18 @@ add('writable_dirs', []);
 set('allow_anonymous_stats', false);
 
 // Hosts
-
 host('ec2-18-224-22-153.us-east-2.compute.amazonaws.com')
+    ->user('ec2-user')
+    ->port(22)
+    ->configFile('~/.ssh/config')
+    ->identityFile('~/.ssh/id_rsa')
+    ->forwardAgent(true)
+    ->multiplexing(true)
+    ->addSshOption('UserKnownHostsFile', '/dev/null')
+    ->addSshOption('StrictHostKeyChecking', 'no')
     ->set('deploy_path', '/var/www/html/bioconsumo.brunosabenca');
 
 // Tasks
-
 task('build', function () {
     run('cd {{release_path}} && build');
 });
@@ -35,5 +41,4 @@ task('build', function () {
 after('deploy:failed', 'deploy:unlock');
 
 // Migrate database before symlink new release.
-
 before('deploy:symlink', 'artisan:migrate');

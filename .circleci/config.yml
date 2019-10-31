@@ -52,8 +52,9 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "5c:10:ed:37:1d:d5:b6:bd:14:09:48:af:97:16:54:0a"
+            - "f8:5a:d7:aa:12:8e:52:f1:19:a5:b9:95:29:1e:55:45"
       - run: ssh-keyscan ec2-18-224-22-153.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
+      - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run:
           name: Install Deployer
           command: |
