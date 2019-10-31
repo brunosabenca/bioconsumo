@@ -44,7 +44,7 @@ jobs:
             php artisan migrate:fresh --seed --force
       - run: ./vendor/bin/phpunit
 
-deploy:
+  deploy:
     docker:
       - image: circleci/php:7.2-browsers
     working_directory: ~/bioconsumo
