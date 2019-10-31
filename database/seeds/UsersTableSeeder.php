@@ -14,30 +14,30 @@ class UsersTableSeeder extends Seeder
         $user = factory(App\Admin::class, 1)->create([
             'name' => 'Bruno Sabença',
             'email' => 'bruno@example.com',
-            'password' => bcrypt('example')
+            'password' => Hash::make('example')
         ])->first();
         $user->assignRole('admin');
 
         $user = factory(App\Buyer::class, 1)->create([
             'name' => 'Joel Martins',
             'email' => 'joel@example.com',
-            'password' => bcrypt('example'),
+            'password' => Hash::make('example'),
         ])->first();
         $user->assignRole('buyer');
 
         $user = factory(App\Seller::class, 1)->create([
             'name' => 'Ivo Barros',
             'email' => 'ivo@example.com',
-            'password' => bcrypt('example'),
+            'password' => Hash::make('example'),
         ])->first();
         $user->assignRole('seller');
 
-        factory(App\Seller::class, 3)->create() 
-            ->each( 
+        factory(App\Seller::class, 3)->create()
+            ->each(
                 function ($seller) {
                     factory(App\Product::class, 10)->create()
                         ->each(
-                            function($product) use (&$seller) { 
+                            function($product) use (&$seller) {
                                 $seller->products()->save($product)->make();
                             }
                         );
