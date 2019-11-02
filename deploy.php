@@ -32,10 +32,20 @@ host('ec2-18-224-22-153.us-east-2.compute.amazonaws.com')
     ->addSshOption('StrictHostKeyChecking', 'no')
     ->set('deploy_path', '/var/www/html/bioconsumo.brunosabenca');
 
-// Tasks
-task('build', function () {
-    run('cd {{release_path}} && build');
+// Yarn
+set('bin/yarn', function () {
+    return run('which yarn');
 });
+task('yarn:install-and-build', function () {
+    if (has('previous_release')) {
+        if (test('[ -d {{previous_release}}/node_modules ]')) {
+            run('cp -R {{previous_release}}/node_modules {{release_path}}');
+        }
+    }
+    run("cd {{release_path}} && {{bin/yarn}}");
+    run('cd {{release_path}} && yarn production');
+});
+after('deploy:update_code', 'yarn:install-and-build');
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
