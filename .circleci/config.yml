@@ -46,7 +46,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/php:7.2-browsers
+      - image: circleci/php:7.2-node
     working_directory: ~/bioconsumo
     steps:
       - add_ssh_keys:
