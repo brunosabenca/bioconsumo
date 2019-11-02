@@ -49,12 +49,17 @@ jobs:
       - image: circleci/php:7.2-browsers
     working_directory: ~/bioconsumo
     steps:
-      - checkout
       - add_ssh_keys:
           fingerprints:
             - "f8:5a:d7:aa:12:8e:52:f1:19:a5:b9:95:29:1e:55:45"
       - run: ssh-keyscan ec2-18-224-22-153.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
       - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - checkout
+      - run:
+          name: Build production assets
+          command: |
+            yarn
+            yarn production
       - run:
           name: Install Deployer
           command: |
